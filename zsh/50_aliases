@@ -1,0 +1,57 @@
+#!/bin/zsh
+
+
+alias vlc='G_SLICE=always-malloc vlc'
+
+autoload zmv
+alias mmv='noglob zmv -W'
+
+alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
+alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
+
+alias du="du -hcs"
+alias df="df -h"
+
+alias btgui="btdownloadgui --max_upload_rate 2 --responsefile"
+alias btnc="btdownloadcurses --max_upload_rate 2 --responsefil"
+alias btm="btlaunchmanycurses"
+
+alias ls="ls --color=auto"
+alias ls="ls --color=auto"
+alias la="ls --color=always -a"
+alias ll="ls --color=always -l"
+alias lla="ls --color=always -la"
+alias lal="ls --color=always -la"
+
+alias egrep='egrep --color=tty -d skip'
+alias fgrep='fgrep --color=tty -d skip'
+alias grep='grep --color=tty -d skip'
+
+alias md='mkdir'
+alias rd='rmdir'
+alias rm='rm -i'
+
+alias e=$EDITOR
+alias v=$VISUAL
+
+#alias v="/usr/share/vim/vim63/macros/less.sh -u NONE -U NONE -c 'set ft=man mouse=a'"
+cvi () {
+    vim -O ${${1%.[hc]}%.}.{h,c}
+}
+xvi () {
+    vim -O ${${${1%.h}%.cpp}%.}.{h,cpp}
+}
+ovi () {
+    vim -O ${${1%.ml}%.}.ml{i,}
+}
+
+alias br='bts --mbox show'
+
+
+
+
+
+
+
+
+

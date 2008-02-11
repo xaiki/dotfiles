@@ -1,0 +1,107 @@
+lftp http://madism.org/~madcoder/dotfiles/zsh/
+mv zsh zsh
+mv zsh .zsh
+mv zshrc .zshrc
+avahi-di
+rehash
+avahi-discover
+ssh root@arnold.local
+./starttls --user xaiki --pass caca --auth-login --port 587 mail.corp.openwide.fr
+ps auxf | grep startt
+man perlreftut
+man perlref
+perldoc -f int
+cat /proc/3/cpuset
+cat /proc/3/status
+man 2 stat
+apropos /proc/stat
+apropos /proc/ | grep stat
+apropos stat
+apropos stat | grep proc
+cat /proc/3/stat
+make clean-package-uboot
+man chop
+perldoc -f chop
+man Expect
+make clean-package-coreutils
+make update-makefile ; make update ; make setup
+cd OpenMoko
+find . -name 'openmoko*'
+e /home/xaiki/Wrk/Sagem/OpenEmbedded/OpenMoko/build/tmp/work/i686-linux/coreutils-native-5.3.0-r1/coreutils-5.3.0/lib/utimens.h
+gnuclient -v /home/xaiki/Wrk/Sagem/OpenEmbedded/OpenMoko/build/tmp/work/i686-linux/coreutils-native-5.3.0-r1/coreutils-5.3.0/lib/utimens.h
+find . -name 'openmoko*' patches
+find . -name 'openmoko*' openembedded/packages
+find openembedded/packages -name 'openmoko*'
+find . -name 'openmoko-devel-image'
+find . -name 'openmoko-devel-image*'
+ln -sf .zsh-madcoder/* .
+ln -sf .zsh-madcoder/.zsh* .
+ls -la .zsh
+ls -la .zsh*
+find . -name '4.20*'
+ls openembedded/packages/file/file_4.20.bb
+e openembedded/packages/file/file_4.20.bb
+cd
+cd Wrk/Sagem/Ikanos/LX_2618_RG_5_2_00-SourceCode-Sagem-2007-04-17/LX_2618_RG_5_2_00_13APR2007_xDSL_Source_Rel/buildroot/package/file
+make all
+git log
+git commit --amend
+git commit --amend -m "" Makefile
+git commit --amend Makefile
+grep -re 'uclibc' .
+cd toolchain
+cd uClibc
+less uclibc.mk
+cd openembedded
+git add .
+rm -rf build/tmp
+autoload tetris
+tetris
+make openmoko update
+make openmoko-devel-image
+cd src
+mkdir pkg-gnome
+cd pkg-gnome
+svn ls svn.debian.org
+svn ls svn://svn.debian.org
+svn ls http://svn.debian.org
+svn ls http://svn.debian.org/svn
+svn ls svn://svn.debian.org/svn
+svn ls svn+ssh://svn.debian.org/svn
+svn ls svn://svn.debian.org/pkg-gnome/desktop/unstable/gnome-system-tools
+svn co svn://svn.debian.org/pkg-gnome/desktop/unstable/gnome-system-tools
+rm -rf gnome-system-tools/
+svn co svn+ssh://svn.debian.org/pkg-gnome/desktop/unstable/gnome-system-tools
+svn co svn+ssh://svn.debian.org/svn/pkg-gnome/desktop/unstable/gnome-system-tools
+cd gnome-system-tools
+ssh sceen.net
+cd ..
+svn co svn+ssh://svn.debian.org/svn/pkg-gnome/desktop/unstable/system-tools-backends
+cd system-tools-backends
+e debian/system-tools-backends.init.dbus
+gnuclient debian/system-tools-backends.init.dbus
+bg
+rm -rf debian/system-tools-backends.prerm
+apropos watch
+apt-cache search watch
+uupdate
+apt-cache search uuscan
+apt-cache search uupdate
+dpkg -L devscript
+dpkg -L devscripts
+uupdate -h
+uupdate --help
+man uupdate
+uscan
+ls
+uscan --help
+uscan --verbose
+man dh_install
+man dh_installinit
+man update-rc.d
+sudo apt-get install svn-buildpackage
+svn-buildpackage
+sudo apt-get source system-tools-backends
+. ~/.zsh/60_prompt
+zsh
+screen

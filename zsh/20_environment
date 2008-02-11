@@ -1,0 +1,24 @@
+#! /bin/zsh
+
+export EMAIL="xaiki@cxhome.ath.cx"
+export FULLNAME="Niv Sardi"
+
+export DEBEMAIL="xaiki@debian.org"
+export DEBFULLNAME=$FULLNAME
+
+#export GIT_AUTHOR_NAME=$FULLNAME
+#export GIT_COMMITTER_NAME=$FULLNAME
+#export GIT_AUTHOR_EMAIL=$DEBEMAIL
+#export GIT_COMMITTER_EMAIL=$DEBEMAIL
+
+export CVS_RSH="ssh"
+export MANWIDTH=80
+export EDITOR='gnuclient'
+export VISUAL='gnuclient'
+export CCACHE_DIR=$HOME/.ccache
+
+export RLWRAP_HOME=~/.cache/rlwrap/
+export GTK_IM_MODULE=xim
+
+export LC_MESSAGES=C
+export LC_ALL=

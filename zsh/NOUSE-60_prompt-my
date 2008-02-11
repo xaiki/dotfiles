@@ -1,0 +1,89 @@
+#! /bin/zsh
+
+autoload colors
+colors
+
+rst="%{%b%s%u$reset_color%}"
+bgc="%{%(?.$rst.%S)%}"
+
+function __git_branch {
+    local git_dir ref br;
+    col="%{$fg[$1]%}"
+    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
+    ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+    br=${ref#refs/heads/}
+    echo "$col%{$fg[yellow]%}:%{$fg[cyan]%}$br$col"
+}
+
+function rprompt {
+    local col ch1 ch2
+    col="%{$fg[$2]%}"
+    ch1=$col${1[1]}
+    ch2=$col${1[2]}
+
+    RPROMPT="$rst$ch1$ch2$rst"
+}
+
+function lprompt {
+    local col1 col2 ch1 ch2
+    col1="%{%b$fg[$2]%}"
+    col2="%{$4$fg[$3]%}"
+    ch1=$col1${1[1]}
+    ch2=$col1${1[2]}
+
+    PROMPT="$rst$ch1%B%~%b$ch2$rst
+$bgc$ch1$col2%n %m$ch2$rst\${__git_branch} "
+}
+
+if [ $UID -eq 0 ]; then
+    PATH=~root/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+    PROMPT="$bgc%{%B$fg[yellow]%}[%{$fg[red]%}%n %m%{$fg[yellow]%}]$rst "
+    RPROMPT="$rst%{$fg[red]%}(%B%{$fg[red]%}%~%b%{$fg[red]%})$rst "
+else
+    PATH="/usr/lib/ccache:${HOME}/bin:${HOME}/.madconf/bin:${PATH}"
+    case $HOST in
+        red|beacon|mad|exile|papyrus|ogu*)
+            lprompt '[]' red yellow
+            rprompt '()' red
+            ;;
+        olympe|artemis|hades|ares|homekeeper|aphrodite|chevere)
+            lprompt '[]' yellow blue %B
+            rprompt '[]' yellow
+            ;;
+        jamlikhet|djali|murphy|xnet|mnemosyne|yuuai|ozgurluk)
+            CDPATH=".:/home/x2000habouzit/dev"
+            lprompt '()' yellow green
+            rprompt '[]' yellow
+            ;;
+        costa)
+            lprompt '<>' green yellow
+            rprompt '[]' green
+            ;;
+        *)
+            if [ ${$(hostname -f)#*.} = "debian.org" ]; then
+                lprompt '<>' green yellow
+                rprompt '[]' green
+            else
+                lprompt '[]' none none %B
+                rprompt '[]' none
+            fi
+            ;;
+    esac
+fi
+
+if [ -n "$debian_chroot" ]; then
+    PROMPT="$bgc%{$fg[yellow]%}%B${debian_chroot}%b ${PROMPT}"
+fi
+
+if [[ "$TERM" == "screen" ]]; then
+    PROMPT="${PROMPT}%{kzsh\\%}"
+
+    preexec () {
+        local CMD=${1[(wr)^(*=*|sudo|-*)]}
+        echo -ne "\ek$CMD\e\\"
+    }
+fi
+
+unset rst bgc
+
+
