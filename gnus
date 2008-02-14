@@ -12,6 +12,32 @@
 ;; gnu.emacs.help
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
+(set-face-attribute 'default nil :font "Dejavu Sans Mono-8")
+(copy-face 'default 'mysubject)
+(setq gnus-face-1 'mysubject)
+
+;; (copy-face 'default 'gnus-mouse-face-5)
+;;  (set-face-foreground 'gnus-mouse-face-5 "yellow")
+
+(copy-face 'default 'mytime)
+(set-face-foreground 'mytime "indianred4")
+(setq gnus-face-2 'mytime)
+
+(copy-face 'default 'mythreads)
+(set-face-foreground 'mythreads "indianred4")
+(setq gnus-face-3 'mythreads)
+
+(copy-face 'default 'mygrey)
+(set-face-foreground 'mygrey "grey")
+(setq gnus-face-4 'mygrey)
+
+(copy-face 'default 'myblack)
+(set-face-foreground 'myblack "grey60")
+(setq gnus-face-5 'myblack)
+
+(copy-face 'default 'mybiggernumbers)
+(set-face-foreground 'mybiggernumbers "indianred4")
+(setq gnus-face-6 'mybiggernumbers)
 
 ;; ====== Réglages validés =================================
 
@@ -739,7 +765,10 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "relay.melbourne.sgi.com")
+(setq smtpmail-smtp-server "mail.sceen.net")
+(setq smtpmail-starttls-credentials
+      '(("mail.sceen.net" 25)))
+(setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-send-mail-function 'smtpmail-send-it)
 
@@ -927,35 +956,6 @@ more then one article."
     (setq gnus-sum-thread-tree-single-leaf "`-> ")))       ; "\\-> "
 
  (setq gnus-summary-same-subject "")
-
-  (copy-face 'default 'mysubject)
-  (setq gnus-face-1 'mysubject)
-
-;; (copy-face 'default 'gnus-mouse-face-5)
-;;  (set-face-foreground 'gnus-mouse-face-5 "yellow")
-
-  (copy-face 'default 'mytime)
-  (set-face-foreground 'mytime "indianred4")
-  (setq gnus-face-2 'mytime)
-
-  (copy-face 'default 'mythreads)
-  (set-face-foreground 'mythreads "indianred4")
-  (setq gnus-face-3 'mythreads)
-
-  (copy-face 'default 'mygrey)
-  (set-face-foreground 'mygrey "grey")
-  (setq gnus-face-4 'mygrey)
-
-  (copy-face 'default 'myblack)
-  (set-face-foreground 'myblack "grey60")
-  (setq gnus-face-5 'myblack)
-
-  (copy-face 'default 'mybiggernumbers)
-  (set-face-foreground 'mybiggernumbers "indianred4")
-  (setq gnus-face-6 'mybiggernumbers)
-
-
-
 
 ;; test group summary
 ; Group-line
