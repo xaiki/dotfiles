@@ -705,17 +705,18 @@
 
 ;;  -*-*-*-*-*-{   trivial cite   }-*-*-*-*-*-*-
 ;;  ( http://shasta.cs.uiuc.edu/~lrclause/tc.html )
-(autoload 'trivial-cite "tc" t t)
+;;(autoload 'trivial-cite "tc" t t)
 
-(setq message-cite-function 'trivial-cite)
+;;(setq message-cite-function 'trivial-cite)
+(setq message-cite-function 'message-cite-original-without-signature)
 ;; we want a space after the citation-char '>'
 ;(setq tc-citation-string "> ")
-(setq tc-citation-string "> ")
+;;(setq tc-citation-string "> ")
 ;; we want to toggle with S-mouse-2 (tc-unfill-paragraph) the auto. filled
 ;; paragraphes (they are highlighted if you move the mouse over it)
-(setq tc-mouse-overlays t)
+;;(setq tc-mouse-overlays t)
 ;; This can avoid the "malformed field" error
-(setq tc-gnus-nntp-header-hack t)
+;;(setq tc-gnus-nntp-header-hack t)
 ;; customize the attribution
 ;(setq tc-make-attribution 'tc-fancy-attribution)
 
@@ -729,7 +730,7 @@
 ;;      (insert (mail-header-from message-reply-headers) " a tapoté :\n\n")
 ;;      )))
 ;(setq mail-extr-ignore-single-names nil) ;permet de considérer un real-name d'un seul mot
-(add-hook 'mail-citation-hook 'trivial-cite) ;aussi pour le mail
+;;(remove-hook 'mail-citation-hook 'trivial-cite) ;aussi pour le mail
 (setq tc-debug-level 1
       mail-extr-ignore-single-names nil
       mail-extr-ignore-realname-equals-mailbox-name nil
