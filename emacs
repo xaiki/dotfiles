@@ -398,50 +398,57 @@
 	     (turn-on-auto-fill)
 	     (setq fill-column 70)))
 
-;; Eshell
-(defun eshell/clear (&optional n) (recenter (if n n 0)))
-(defun eshell/emacs (&rest files) (mapc 'find-file (mapcar 'expand-file-name files)))
-(add-hook 'shell-mode-hook 'n-shell-mode-hook)
-(defun n-shell-mode-hook ()
-  "12Jan2002 - sailor, shell mode customizations."
-  (local-set-key '[up] 'comint-previous-input)
-  (local-set-key '[down] 'comint-next-input)
-  (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
-  (setq comint-input-sender 'n-shell-simple-send)
-  )
+;; shell-mode
+;; (remove-hook 'comint-output-filter-functions
+;;           'ansi-color-apply)
+(setq ansi-color-for-comint-mode t)
+(remove-hook 'comint-output-filter-functions
+	     'comint-strip-ctrl-m)
 
-(defun n-shell-simple-send (proc command)
-  "17Jan02 - sailor. Various commands pre-processing before sending to shell."
-  (cond
-   ;; Checking for clear command and execute it.
-   ((string-match "^[ \t]*clear[ \t]*$" command)
-    (comint-send-string proc "\n")
-    (erase-buffer)
-    )
-   ;; Checking for man command and execute it.
-   ((string-match "^[ \t]*man[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
-    (funcall 'man (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+;; ;; Eshell
+;; (defun eshell/clear (&optional n) (recenter (if n n 0)))
+;; (defun eshell/emacs (&rest files) (mapc 'find-file (mapcar 'expand-file-name files)))
+;; (add-hook 'shell-mode-hook 'n-shell-mode-hook)
+;; (defun n-shell-mode-hook ()
+;;   "12Jan2002 - sailor, shell mode customizations."
+;;   (local-set-key '[up] 'comint-previous-input)
+;;   (local-set-key '[down] 'comint-next-input)
+;;   (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
+;;   (setq comint-input-sender 'n-shell-simple-send)
+;;   )
+
+;; (defun n-shell-simple-send (proc command)
+;;   "17Jan02 - sailor. Various commands pre-processing before sending to shell."
+;;   (cond
+;;    ;; Checking for clear command and execute it.
+;;    ((string-match "^[ \t]*clear[ \t]*$" command)
+;;     (comint-send-string proc "\n")
+;;     (erase-buffer)
+;;     )
+;;    ;; Checking for man command and execute it.
+;;    ((string-match "^[ \t]*man[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
+;;     (funcall 'man (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
    
-   ((string-match "^[ \t]*\\(?:emacs\\|vi\\)[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
+;;    ((string-match "^[ \t]*\\(?:emacs\\|vi\\)[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
 
-    ;;(message (format "command %s command" command))
-    (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+;;     ;;(message (format "command %s command" command))
+;;     (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
 
-   ((string-match "^[ \t]*\\(?:more\\|less\\)[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
+;;    ((string-match "^[ \t]*\\(?:more\\|less\\)[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
 
-    ;;(message (format "command %s command" command))
-    (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+;;     ;;(message (format "command %s command" command))
+;;     (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
 
-   ;; Send other commands to the default handler.
-   (t (comint-simple-send proc command))
-   )
-  )
+;;    ;; Send other commands to the default handler.
+;;    (t (comint-simple-send proc command))
+;;    )
+;;   )
 
 ;; Theme
 ;;(color-theme-blue-mood)
