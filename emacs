@@ -453,11 +453,11 @@
 ;;(color-theme-word-perfect)
 
 ;; Fixer la taille de la police employée sous X
+(set-face-attribute 'default nil :font "ProFontWindows-10")
+
 (if window-system (progn 
-		    (set-default-font "Bitstream Mono-10")
 		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
 		    (color-theme-blue-mood)))
-(add-to-list 'default-frame-alist '(font . "Bitstream Mono-10"))
 
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))

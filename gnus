@@ -12,31 +12,35 @@
 ;; gnu.emacs.help
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
-(set-face-attribute 'default nil :font "Dejavu Sans Mono-8")
-(copy-face 'default 'mysubject)
+(set-face-attribute 'default nil :font "Bitstream Vera Sans Mono-7")
+
+(copy-face 'default 'gnus-default)
+(set-face-attribute 'gnus-default nil :font "Bitstream Vera Sans Mono-7")
+
+(copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
 (setq gnus-mouse-face-5 t)
-(copy-face 'default 'gnus-mouse-face-5)
+(copy-face 'gnus-default 'gnus-mouse-face-5)
 (set-face-foreground 'gnus-mouse-face-5 "yellow")
 
-(copy-face 'default 'mytime)
+(copy-face 'gnus-default 'mytime)
 (set-face-foreground 'mytime "indianred4")
 (setq gnus-face-2 'mytime)
 
-(copy-face 'default 'mythreads)
+(copy-face 'gnus-default 'mythreads)
 (set-face-foreground 'mythreads "indianred4")
 (setq gnus-face-3 'mythreads)
 
-(copy-face 'default 'mygrey)
+(copy-face 'gnus-default 'mygrey)
 (set-face-foreground 'mygrey "grey")
 (setq gnus-face-4 'mygrey)
 
-(copy-face 'default 'myblack)
+(copy-face 'gnus-default 'myblack)
 (set-face-foreground 'myblack "grey60")
 (setq gnus-face-5 'myblack)
 
-(copy-face 'default 'mybiggernumbers)
+(copy-face 'gnus-default 'mybiggernumbers)
 (set-face-foreground 'mybiggernumbers "indianred4")
 (setq gnus-face-6 'mybiggernumbers)
 
