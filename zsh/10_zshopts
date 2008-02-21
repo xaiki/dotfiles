@@ -57,7 +57,7 @@ setopt no_csh_null_glob     # don't erase not matched globs silently
 
 #[ d-g ]########################################################################
 setopt dvorak               # use only regular (qw|az)erty
-setopt no_emacs             # use rather bindkeys that builtin
+setopt emacs             # use rather bindkeys that builtin
 setopt equals               # perform = file expansions
 setopt no_err_exit          # don't weant to see exit status even if nonzero
 setopt no_err_return        # no return from a function with non 0 ending cmds
@@ -161,7 +161,6 @@ setopt transient_rprompt    # better for cut/paste
 #setopt typeset_silent       #
 #setopt unset                #
 #setopt verbose              #
-setopt vi                   # use bindkeys
 setopt no_xtrace            # do not debug by default
 setopt zle                  # use zsh le
 
