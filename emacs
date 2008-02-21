@@ -1,3 +1,4 @@
+;; -*- lisp -*-
 ;;(server-start)
 (require 'gnuserv-compat)
 (gnuserv-start)
@@ -453,12 +454,10 @@
 
 ;; Fixer la taille de la police employée sous X
 (if window-system (progn 
-		    (set-default-font "Dejavu Sans Mono-8")
-		    (set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
-		    (color-theme-blue-mood)
-		    
-		    (add-to-list 'default-frame-alist '(font . "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*"))))
-		   
+		    (set-default-font "Dejavu Sans Mono-10")
+		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
+		    (color-theme-blue-mood)))
+(add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono-10"))
 
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
