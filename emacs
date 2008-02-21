@@ -453,7 +453,7 @@
 ;;(color-theme-word-perfect)
 
 ;; Fixer la taille de la police employée sous X
-(set-face-attribute 'default nil :font "ProFontWindows-10")
+(set-face-attribute 'default nil :font "ProFontWindows-9")
 
 (if window-system (progn 
 		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
