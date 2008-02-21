@@ -1,0 +1,30 @@
+[alias]
+	cat=-p cat-file -p
+	co=checkout -m
+	ci=commit -s
+	st=status
+	pop=reset HEAD~1
+	unstash=stash apply
+	amend=commit -s --amend
+	k=!gitk -- origin/next `git symbolic-ref HEAD` `git symbolic-ref HEAD | sed -e 's~refs/heads/~refs/remotes/origin/~'`
+	p=!git push origin `git-symbolic-ref HEAD`
+	debtag=!git tag -f -a -s -m `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'` `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'`
+	authors=shortlog -n -s -e
+[color]
+	branch=auto
+	diff=auto
+	status=auto
+	pager=true
+[merge]
+	verbosity = 1
+[clean]
+	requireForce = false
+[giggle]
+	compact-mode = false
+	main-window-geometry = 778x610+133+0
+
+
+
+
+
+
