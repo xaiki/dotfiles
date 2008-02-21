@@ -12,10 +12,8 @@
 ;; gnu.emacs.help
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
-(set-face-attribute 'default nil :font "Bitstream Vera Sans Mono-7")
-
 (copy-face 'default 'gnus-default)
-(set-face-attribute 'gnus-default nil :font "Bitstream Vera Sans Mono-7")
+(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
 
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
@@ -232,7 +230,7 @@
         ((+ 86400 (gnus-seconds-today)) . "Yest %k:%M") ;hier            = hier 14:39
         ((+ 604800 (gnus-seconds-today)) . "%a  %k:%M") ;dans la semaine = sam  14:39
         ((gnus-seconds-month) . "%a  %d")               ;ce mois         = sam  28
-        ((gnus-seconds-year) . "%b %d")                 ;durant l'année  = mai  28
+        ((gnus-seconds-year) . "%b  %d")                 ;durant l'année  = mai  28
         (t . "%b %d '%y")))                             ;le reste        = mai  28 '05
 
 ; Indentation des threads
@@ -881,6 +879,20 @@ more then one article."
 ;;               (vertical 1.0
 ;;                         (summary 0.3)
 ;;                         (article 1.0)))))
+
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+               (vertical 50 (group 1.0))
+               (vertical 1.0
+                         (summary 0.30 point)
+                         (article 1.0)))))
+
+(gnus-add-configuration
+ '(summary
+   (horizontal 1.0
+               (vertical 50 (group 1.0))
+               (vertical 1.0 (summary 1.0 point)))))e
 
 
 ;; permet la saisie d'un message dans une nouvelle frame
