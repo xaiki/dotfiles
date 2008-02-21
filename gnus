@@ -16,8 +16,9 @@
 (copy-face 'default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
-;; (copy-face 'default 'gnus-mouse-face-5)
-;;  (set-face-foreground 'gnus-mouse-face-5 "yellow")
+(setq gnus-mouse-face-5 t)
+(copy-face 'default 'gnus-mouse-face-5)
+(set-face-foreground 'gnus-mouse-face-5 "yellow")
 
 (copy-face 'default 'mytime)
 (set-face-foreground 'mytime "indianred4")
@@ -88,6 +89,11 @@
 ;;(setq gnus-agent nil
 ;;          gnus-agent-cache nil)
 
+;; setup imap
+(setq imap-log t)
+(setq imap-debug t)
+(setq imap-store-password t)
+(setq nnimap-request-list-method 'imap-mailbox-list)
 
 ;;serveur news principal
 (setq gnus-select-method
@@ -186,7 +192,7 @@
 ;;                     T C-h - Overview about the commands
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
-(setq  gnus-topic-display-empty-topics nil      ;nil = cacher les topics vides
+(setq  gnus-topic-display-empty-topics t      ;nil = cacher les topics vides
        gnus-topic-indent-level 2)
 
 ;; Format d'affichage des topics
@@ -407,8 +413,8 @@
 ;;        (setq browse-url-browser-function (quote browse-url-galeon))
 ;;        (setq browse-url-galeon-arguments (quote ("-n")))))
 
-(add-hook 'gnus-summary-mode-hook
-         (global-set-key [w] 'gnus-article-hide-citation))
+;;(remove-hook 'gnus-summary-mode-hook
+;;         (global-set-key [w] 'gnus-article-hide-citation))
 (add-hook 'gnus-summary-mode-hook
           ( lambda ()
             (setq header-line-format "Flags   Date               From           Score   Size          Subject " )))
