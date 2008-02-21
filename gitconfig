@@ -1,3 +1,6 @@
+[user]
+	name  = Niv Sardi
+	email = xaiki@debian.org
 [alias]
 	cat=-p cat-file -p
 	co=checkout -m
