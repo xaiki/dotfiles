@@ -401,9 +401,19 @@
 ;; shell-mode
 ;; (remove-hook 'comint-output-filter-functions
 ;;           'ansi-color-apply)
+(setq shell-file-name "/bin/sh")
 (setq ansi-color-for-comint-mode t)
-(remove-hook 'comint-output-filter-functions
-	     'comint-strip-ctrl-m)
+
+(defun xa1-prompt-in-shell (&optional ignore) 
+  (backward-char 2)
+  (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
+  )
+
+(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+;;(remove-hook 'comint-output-filter-functions
+;;	     'comint-strip-ctrl-m)
+
+
 
 ;; ;; Eshell
 ;; (defun eshell/clear (&optional n) (recenter (if n n 0)))
@@ -556,6 +566,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(calendar-today-marker (quote calendar-today))
  '(column-number-mode t)
  '(debian-changelog-full-name "Niv Sardi")
  '(debian-changelog-mailing-address "xaiki@debian.org")
@@ -579,8 +590,13 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(calendar-today ((t (:inverse-video t :underline t))))
+ '(custom-button-unraised ((t (:inherit underline :background "white" :foreground "black" :inverse-video t))))
+ '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
- '(gnus-signature ((t (:foreground "dark red" :slant italic)))))
+ '(gnus-signature ((t (:foreground "dark red" :slant italic))))
+ '(widget-field ((t (:background "gray85" :foreground "black"))))
+ '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
 
 
