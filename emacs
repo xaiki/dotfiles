@@ -561,6 +561,26 @@
 (setq locale-coding-system 'utf-8)
 (setq locale-preferred-coding-systems 'utf-8)
 
+;; Calendar
+(add-hook 'today-visible-calendar-hook 'calendar-mark-today)
+
+;; Org mode
+;; The following lines are always needed.  Choose your own keys.
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-font-lock-mode 1)                     ; for all buffers
+(add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
+(add-hook 'mail-mode-hook 'turn-on-orgstruct)
+(add-hook 'mail-mode-hook 'turn-on-orgtbl)
+
+;; Remember
+(org-remember-insinuate)
+(setq org-directory "~/org/")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map "\C-cr" 'org-remember)
+
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
