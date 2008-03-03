@@ -56,13 +56,13 @@
 (require 'iswitchb)
 (iswitchb-default-keybindings)
 
-;; Répertoire des scripts
+;; RÃ©pertoire des scripts
 (add-to-list 'load-path "~/.elisp")
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
 
-;; Pour avoir les thèmes
+;; Pour avoir les thÃ¨mes
 (require 'color-theme)
 
 
@@ -80,7 +80,7 @@
 
 ;;**********
 ;;
-;; Définition des locales
+;; DÃ©finition des locales
 ;;
 ;;********************
 
@@ -184,7 +184,7 @@
   nil) ; indicates buffer-not-saved for write-file-hook
 (define-key ctl-x-map " " 'delete-trailing-space)
 
-;; la nouvelle fonction est associée au raccourci C-x espace
+;; la nouvelle fonction est associÃ©e au raccourci C-x espace
 
 ;; mpd
 (require 'libempd)
@@ -380,7 +380,7 @@
 			    auto-mode-alist))
 
 
-;; C-Mode par défaut
+;; C-Mode par dÃ©faut
 ;;(add-hook 'c-mode-common-hook
 	  ;; (lambda () (c-toggle-auto-hungry-state 1))
 ;;	  ;; remap RET with C-j (newline-and-indent)
@@ -469,7 +469,7 @@
 ;;(color-theme-whateveryouwant)
 ;;(color-theme-word-perfect)
 
-;; Fixer la taille de la police employée sous X
+;; Fixer la taille de la police employÃ©e sous X
 (set-face-attribute 'default nil :font "ProFontWindows-9")
 
 (if window-system (progn 
@@ -479,7 +479,7 @@
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
 
-;; Surligne les parenthèses
+;; Surligne les parenthÃ¨ses
 (show-paren-mode 1)
 
 ;; On zone quand emacs est inactif depuis t en secondes.
@@ -518,7 +518,7 @@
 (occur (current-word)))
 (global-set-key (quote [f3]) 'call-occur)
 
-;; On crée un backup directory pour avoir les "~" dans un seul et unique répertoire.
+;; On crÃ©e un backup directory pour avoir les "~" dans un seul et unique rÃ©pertoire.
 (defun make-backup-file-name (file)
   (concat "~/.backup/" (file-name-nondirectory file) "~"))
 
