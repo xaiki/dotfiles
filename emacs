@@ -61,13 +61,13 @@
 (require 'iswitchb)
 (iswitchb-default-keybindings)
 
-;; Répertoire des scripts
+;; RÃ©pertoire des scripts
 (add-to-list 'load-path "~/.elisp")
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
 
-;; Pour avoir les thèmes
+;; Pour avoir les thÃ¨mes
 (require 'color-theme)
 
 
@@ -85,7 +85,7 @@
 
 ;;**********
 ;;
-;; Définition des locales
+;; DÃ©finition des locales
 ;;
 ;;********************
 
@@ -189,7 +189,7 @@
   nil) ; indicates buffer-not-saved for write-file-hook
 (define-key ctl-x-map " " 'delete-trailing-space)
 
-;; la nouvelle fonction est associée au raccourci C-x espace
+;; la nouvelle fonction est associÃ©e au raccourci C-x espace
 
 ;; mpd
 (require 'libempd)
@@ -387,7 +387,7 @@
 			    auto-mode-alist))
 
 
-;; C-Mode par défaut
+;; C-Mode par dÃ©faut
 ;;(add-hook 'c-mode-common-hook
 	  ;; (lambda () (c-toggle-auto-hungry-state 1))
 ;;	  ;; remap RET with C-j (newline-and-indent)
@@ -405,50 +405,67 @@
 	     (turn-on-auto-fill)
 	     (setq fill-column 70)))
 
-;; Eshell
-(defun eshell/clear (&optional n) (recenter (if n n 0)))
-(defun eshell/emacs (&rest files) (mapc 'find-file (mapcar 'expand-file-name files)))
-(add-hook 'shell-mode-hook 'n-shell-mode-hook)
-(defun n-shell-mode-hook ()
-  "12Jan2002 - sailor, shell mode customizations."
-  (local-set-key '[up] 'comint-previous-input)
-  (local-set-key '[down] 'comint-next-input)
-  (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
-  (setq comint-input-sender 'n-shell-simple-send)
+;; shell-mode
+;; (remove-hook 'comint-output-filter-functions
+;;           'ansi-color-apply)
+(setq shell-file-name "/bin/sh")
+(setq ansi-color-for-comint-mode t)
+
+(defun xa1-prompt-in-shell (&optional ignore) 
+  (backward-char 2)
+  (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
 
-(defun n-shell-simple-send (proc command)
-  "17Jan02 - sailor. Various commands pre-processing before sending to shell."
-  (cond
-   ;; Checking for clear command and execute it.
-   ((string-match "^[ \t]*clear[ \t]*$" command)
-    (comint-send-string proc "\n")
-    (erase-buffer)
-    )
-   ;; Checking for man command and execute it.
-   ((string-match "^[ \t]*man[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
-    (funcall 'man (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+;;(remove-hook 'comint-output-filter-functions
+;;	     'comint-strip-ctrl-m)
+
+
+
+;; ;; Eshell
+;; (defun eshell/clear (&optional n) (recenter (if n n 0)))
+;; (defun eshell/emacs (&rest files) (mapc 'find-file (mapcar 'expand-file-name files)))
+;; (add-hook 'shell-mode-hook 'n-shell-mode-hook)
+;; (defun n-shell-mode-hook ()
+;;   "12Jan2002 - sailor, shell mode customizations."
+;;   (local-set-key '[up] 'comint-previous-input)
+;;   (local-set-key '[down] 'comint-next-input)
+;;   (local-set-key '[(shift tab)] 'comint-next-matching-input-from-input)
+;;   (setq comint-input-sender 'n-shell-simple-send)
+;;   )
+
+;; (defun n-shell-simple-send (proc command)
+;;   "17Jan02 - sailor. Various commands pre-processing before sending to shell."
+;;   (cond
+;;    ;; Checking for clear command and execute it.
+;;    ((string-match "^[ \t]*clear[ \t]*$" command)
+;;     (comint-send-string proc "\n")
+;;     (erase-buffer)
+;;     )
+;;    ;; Checking for man command and execute it.
+;;    ((string-match "^[ \t]*man[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
+;;     (funcall 'man (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
    
-   ((string-match "^[ \t]*\\(?:emacs\\|vi\\)[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
+;;    ((string-match "^[ \t]*\\(?:emacs\\|vi\\)[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
 
-    ;;(message (format "command %s command" command))
-    (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+;;     ;;(message (format "command %s command" command))
+;;     (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
 
-   ((string-match "^[ \t]*\\(?:more\\|less\\)[ \t]*\\(.*\\)$" command)
-    (comint-send-string proc "\n")
+;;    ((string-match "^[ \t]*\\(?:more\\|less\\)[ \t]*\\(.*\\)$" command)
+;;     (comint-send-string proc "\n")
 
-    ;;(message (format "command %s command" command))
-    (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
-    )
+;;     ;;(message (format "command %s command" command))
+;;     (funcall 'find-file-other-window (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
+;;     )
 
-   ;; Send other commands to the default handler.
-   (t (comint-simple-send proc command))
-   )
-  )
+;;    ;; Send other commands to the default handler.
+;;    (t (comint-simple-send proc command))
+;;    )
+;;   )
 
 ;; Theme
 ;;(color-theme-blue-mood)
@@ -469,7 +486,7 @@
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
 
-;; Surligne les parenthèses
+;; Surligne les parenthÃ¨ses
 (show-paren-mode 1)
 
 ;; On zone quand emacs est inactif depuis t en secondes.
@@ -508,7 +525,7 @@
 (occur (current-word)))
 (global-set-key (quote [f3]) 'call-occur)
 
-;; On crée un backup directory pour avoir les "~" dans un seul et unique répertoire.
+;; On crÃ©e un backup directory pour avoir les "~" dans un seul et unique rÃ©pertoire.
 (defun make-backup-file-name (file)
   (concat "~/.backup/" (file-name-nondirectory file) "~"))
 
@@ -551,11 +568,32 @@
 (setq locale-coding-system 'utf-8)
 (setq locale-preferred-coding-systems 'utf-8)
 
+;; Calendar
+(add-hook 'today-visible-calendar-hook 'calendar-mark-today)
+
+;; Org mode
+;; The following lines are always needed.  Choose your own keys.
+(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-font-lock-mode 1)                     ; for all buffers
+(add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
+(add-hook 'mail-mode-hook 'turn-on-orgstruct)
+(add-hook 'mail-mode-hook 'turn-on-orgtbl)
+
+;; Remember
+(org-remember-insinuate)
+(setq org-directory "~/org/")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(define-key global-map "\C-cr" 'org-remember)
+
+
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(calendar-today-marker (quote calendar-today))
  '(column-number-mode t)
  '(debian-changelog-full-name "Niv Sardi")
  '(debian-changelog-mailing-address "xaiki@debian.org")
@@ -579,8 +617,13 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(calendar-today ((t (:inverse-video t :underline t))))
+ '(custom-button-unraised ((t (:inherit underline :background "white" :foreground "black" :inverse-video t))))
+ '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
- '(gnus-signature ((t (:foreground "dark red" :slant italic)))))
+ '(gnus-signature ((t (:foreground "dark red" :slant italic))))
+ '(widget-field ((t (:background "gray85" :foreground "black"))))
+ '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
 
 
