@@ -1,0 +1,78 @@
+#! /bin/zsh
+
+autoload colors && colors
+
+function title() {
+  # escape '%' chars in $1, make nonprintables visible
+  a=${(V)1//\%/\%\%}
+
+  # Truncate command, and join lines.
+  a=$(print -Pn "%40>...>$a" | tr -d "\n")
+
+  case $TERM in
+  screen)
+    print -Pn "\e]2;$a @ $2\a" # plain xterm title
+    print -Pn "\ek$a\e\\"      # screen title (in ^A")
+    print -Pn "\e_$2   \e\\"   # screen location
+    ;;
+  xterm*|rxvt)
+    print -Pn "\e]2;$a $2\a" # plain xterm title
+    ;;
+  esac
+}
+
+# preexec is called just before any command line is executed
+function preexec() {
+  title "'$1'" "%n@%m(%35<...<%~)"
+}
+
+precmd() {
+    local git_dir ref
+
+    title "zsh" "%n@%m(%35<...<%~)"
+    
+    psvar=()
+#    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
+    ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+#    psvar[1]=${$(readlink -f ${git_dir:h})/$HOME/'~'}
+    psvar[1]=${ref#refs/heads/}
+    (( psvar[2]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
+}
+
+_mad_prompt_setup() {
+    local rst
+    local -a pcc
+    local -A pc
+
+    rst="%{$reset_color%}"
+    pcc[1]="%{${1:-$fg_bold[green]}%}"
+    pcc[2]="%{${2:-$fg_no_bold[red]}%}"
+
+#%{$'\e[s\e[A\e[4Dasd┐\e[u'$rst%}
+#%{$'\e[400C\e[20D'%}"────────────────────
+    PROMPT="\
+$pcc[1]┌[%{$fg_bold[magenta]%}%\$(print -P %2v)<...<%~%<<%(1v.%{$fg_bold[yellow]%}:%{$fg_bold[cyan]%}%1v.)%{$fg_bold[red]%}$pcc[1]]
+$pcc[1]└[$pcc[2]%m%s$pcc[1]] $rst"
+    RPROMPT="%(?..%{$fg_bold[red]%}%? )$pcc[1]($pcc[2]%T$pcc[1])$rst"%{$'\e[s\e[A\e[${#TZ}D\e[2D$ppc[1][$ppc[2]${TZ}$ppc[1]]┐\e[u'$rst%}
+    SPROMPT="zsh: correct %{$fg_bold[blue]%} '%R' $rst to %{$fg_bold[magenta]%} '%r' $rst? [%BN%byae] "
+    POSTEDIT=$reset_color
+}
+
+if [ $UID -eq 0 ]; then
+    PATH=~root/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH
+    PROMPT="$bgc%{$fg_bold[yellow]%}[%{$fg_bold[red]%}%n %m%{$fg_bold[yellow]%}]%{$reset_color%} "
+    RPROMPT="$rst%{$fg_no_bold[red]%}(%{$fg_bold[red]%}%~%{$fg_no_bold[red]%})%{$reset_color%} "
+else
+    PATH="/usr/lib/ccache:${HOME}/bin:${HOME}/.madconf/bin:${PATH}"
+    _mad_prompt_setup
+fi
+
+if [[ "$TERM" == "screen" ]]; then
+    PROMPT="${PROMPT}%{kzsh\\%}"
+
+    preexec () {
+        local CMD=${1[(wr)^(*=*|sudo|-*)]}
+        echo -ne "\ek$CMD\e\\"
+    }
+fi
+

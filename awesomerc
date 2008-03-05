@@ -1,0 +1,533 @@
+screen "0" {
+  general {
+    border = 1
+    snap = 8
+    resize_hints = true
+    sloppy_focus = true
+    sloppy_focus_raise = false
+    new_become_master = true
+    new_get_focus = true
+    font = "ProfontWindows-9"
+    opacity_unfocused = -1
+    floating_placement = "smart"
+  }
+  statusbar "mystatusbar" {
+    position = "top"
+    height = 0
+    width = 0
+    taglist "mytaglist" {
+      x = -1
+      y = -1
+      align = "auto"
+      mouse {
+        modkey = {}
+        button = "1"
+        command = "tag_view"
+      }
+      mouse {
+        modkey = {"Mod1"}
+        button = "1"
+        command = "client_tag"
+      }
+      mouse {
+        modkey = {}
+        button = "3"
+        command = "tag_toggleview"
+      }
+      mouse {
+        modkey = {"Mod1"}
+        button = "3"
+        command = "client_toggletag"
+      }
+      mouse {
+        modkey = {}
+        button = "4"
+        command = "tag_viewnext"
+      }
+      mouse {
+        modkey = {}
+        button = "5"
+        command = "tag_viewprev"
+      }
+    }
+    layoutinfo "mylayoutinfo" {
+      x = -1
+      y = -1
+      align = "auto"
+      mouse {
+        modkey = {}
+        button = "1"
+        command = "tag_setlayout"
+        arg = "+1"
+      }
+      mouse {
+        modkey = {}
+        button = "4"
+        command = "tag_setlayout"
+        arg = "+1"
+      }
+      mouse {
+        modkey = {}
+        button = "3"
+        command = "tag_setlayout"
+        arg = "-1"
+      }
+      mouse {
+        modkey = {}
+        button = "5"
+        command = "tag_setlayout"
+        arg = "-1"
+      }
+    }
+    tasklist "mytasklist" {
+      x = -1
+      y = -1
+      mouse {
+        modkey = {}
+        button = "4"
+        command = "client_focusnext"
+        # arg = ""
+      }
+      mouse {
+        modkey = {}
+        button = "5"
+        command = "client_focusprev"
+        # arg = ""
+      }
+      mouse {
+        modkey = {"Mod1"}
+        button = "4"
+        command = "client_swapnext"
+        # arg = ""
+      }
+      mouse {
+        modkey = {"Mod1"}
+        button = "5"
+        command = "client_swapprev"
+        # arg = ""
+      }
+      # fg = ""
+      # bg = ""
+      # focus_fg = ""
+      # focus_bg = ""
+      # font = ""
+      text_align = "left"
+      show = "tags"
+      show_icons = true
+    }
+  }
+  tags {
+    tag "one" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "two" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "three" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "four" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "five" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "six" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "seven" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "eight" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+    tag "nine" {
+      layout = "tile"
+      mwfact = 0.500000
+      nmaster = 1
+      ncol = 1
+    }
+  }
+  colors {
+    normal_border = "#111111"
+    normal_bg = "#111111"
+    normal_fg = "#eeeeee"
+    focus_border = "#6666ff"
+    focus_bg = "#6666ff"
+    focus_fg = "#ffffff"
+    urgent_bg = "#ff0000"
+    urgent_fg = "#ffffff"
+    tab_border = "#ff0000"
+  }
+  layouts {
+    layout "tile" {
+      image = "/usr/share/awesome/icons/layouts/tilew.png"
+    }
+    layout "tileleft" {
+      image = "/usr/share/awesome/icons/layouts/tileleftw.png"
+    }
+    layout "tilebottom" {
+      image = "/usr/share/awesome/icons/layouts/tilebottomw.png"
+    }
+    layout "tiletop" {
+      image = "/usr/share/awesome/icons/layouts/tiletopw.png"
+    }
+    layout "max" {
+      image = "/usr/share/awesome/icons/layouts/maxw.png"
+    }
+    layout "spiral" {
+      image = "/usr/share/awesome/icons/layouts/spiralw.png"
+    }
+    layout "dwindle" {
+      image = "/usr/share/awesome/icons/layouts/dwindlew.png"
+    }
+    layout "floating" {
+      image = "/usr/share/awesome/icons/layouts/floatingw.png"
+    }
+  }
+  padding {
+    top = 0
+    bottom = 0
+    right = 0
+    left = 0
+  }
+}
+rules {
+  rule {
+    # xproperty_name = ""
+    # xproperty_value = ""
+    name = "Gimp"
+    # tags = ""
+    # icon = ""
+    float = "true"
+    master = "auto"
+    screen = -1
+    opacity = -1.000000
+  }
+  rule {
+    name = "awn"
+    float = "true"
+    tags = ""
+    master = "false"
+}
+  rule {
+    name = "avant"
+    float = "true"
+    tags = ""
+    master = "false"
+}
+
+  rule {
+    # xproperty_name = ""
+    # xproperty_value = ""
+    name = "MPlayer"
+    # tags = ""
+    # icon = ""
+    float = "true"
+    master = "auto"
+    screen = -1
+    opacity = -1.000000
+  }
+  rule {
+    # xproperty_name = ""
+    # xproperty_value = ""
+    name = "Acroread"
+    # tags = ""
+    # icon = ""
+    float = "true"
+    master = "auto"
+    screen = -1
+    opacity = -1.000000
+  }
+  rule {
+    # xproperty_name = ""
+    # xproperty_value = ""
+    name = "pinentry"
+    # tags = ""
+    # icon = ""
+    float = "true"
+    master = "auto"
+    screen = -1
+    opacity = -1.000000
+  }
+}
+keys {
+  key {
+    modkey = {"Mod1"}
+    key = "Return"
+    command = "spawn"
+    arg = "exec x-terminal-emulator"
+  }
+  key {
+    modkey = {"Mod4"}
+    key = "space"
+    command = "tag_setlayout"
+    arg = "+1"
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "space"
+    command = "tag_setlayout"
+    arg = "-1"
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "b"
+    command = "statusbar_toggle"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "j"
+    command = "client_focusnext"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "k"
+    command = "client_focusprev"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "Tab"
+    command = "focus_history"
+    arg = "-1"
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "j"
+    command = "client_swapnext"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "k"
+    command = "client_swapprev"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "j"
+    command = "screen_focus"
+    arg = "+1"
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "k"
+    command = "screen_focus"
+    arg = "-1"
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "h"
+    command = "tag_setmwfact"
+    arg = "-0.05"
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "l"
+    command = "tag_setmwfact"
+    arg = "+0.05"
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "h"
+    command = "tag_setnmaster"
+    arg = "+1"
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "l"
+    command = "tag_setnmaster"
+    arg = "-1"
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "h"
+    command = "tag_setncol"
+    arg = "+1"
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "t"
+    command = "tag_setncol"
+    arg = "-1"
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "Escape"
+    command = "tag_prev_selected"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "Left"
+    command = "tag_viewprev"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "Right"
+    command = "tag_viewnext"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "m"
+    command = "client_togglemax"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "Return"
+    command = "client_zoom"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "space"
+    command = "client_togglefloating"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "s"
+    command = "client_togglescratch"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "s"
+    command = "client_setscratch"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "c"
+    command = "client_kill"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "q"
+    command = "quit"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "r"
+    command = "exec"
+    arg = "awesome"
+  }
+  key {
+    modkey = {"Mod1"}
+    key = "0"
+    command = "tag_view"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Control"}
+    key = "0"
+    command = "tag_toggleview"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift"}
+    key = "0"
+    command = "client_tag"
+    # arg = ""
+  }
+  key {
+    modkey = {"Mod1", "Shift", "Control"}
+    key = "0"
+    command = "client_toggletag"
+    # arg = ""
+  }
+  keylist {
+    modkey = {"Mod1"}
+    keylist = {"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9"}
+    command = "tag_view"
+    arglist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+  }
+  keylist {
+    modkey = {"Mod1", "Control"}
+    keylist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    command = "tag_toggleview"
+    arglist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+  }
+  keylist {
+    modkey = {"Mod1", "Shift"}
+    keylist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    command = "client_tag"
+    arglist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+  }
+  keylist {
+    modkey = {"Mod1", "Shift", "Control"}
+    keylist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+    command = "client_toggletag"
+    arglist = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
+  }
+}
+mouse {
+  root {
+    modkey = {}
+    button = "3"
+    command = "spawn"
+    arg = "exec x-terminal-emulator"
+  }
+  root {
+    modkey = {}
+    button = "4"
+    command = "tag_viewnext"
+    # arg = ""
+  }
+  root {
+    modkey = {}
+    button = "5"
+    command = "tag_viewprev"
+    # arg = ""
+  }
+  client {
+    modkey = {"Mod1"}
+    button = "1"
+    command = "client_movemouse"
+    # arg = ""
+  }
+  client {
+    modkey = {"Mod1"}
+    button = "2"
+    command = "client_zoom"
+    # arg = ""
+  }
+  client {
+    modkey = {"Mod1"}
+    button = "3"
+    command = "client_resizemouse"
+    # arg = ""
+  }
+}
