@@ -1,7 +1,10 @@
 ;; -*- lisp -*-
-;;(server-start)
-(require 'gnuserv-compat)
-(gnuserv-start)
+(server-start)
+
+(condition-case nil
+    '((require 'gnuserv-compat)
+      (gnuserv-start))
+  (file-error nil))
 
 (require 'tramp)
 
@@ -18,7 +21,9 @@
 (setq cssm-indent-level 8)
 
 
-(require 'ecb)
+(condition-case nil
+    (require 'ecb)
+  (file-error nil))
 
 (require 'font-lock)
 (setq initial-major-mode
@@ -33,9 +38,9 @@
 (global-font-lock-mode t)
 
 
-;;(condition-case nil
-;;    (require 'w3m)
-;;  (file-error nil))
+(condition-case nil
+    (require 'w3m)
+  (file-error nil))
 
 
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
@@ -227,64 +232,66 @@
 ;;       'mew-send-hook))
 
 ;;   bbdb
-;;  (require 'bbdb)
-
-;;  (setq bbdb-north-american-phone-numbers-p nil)
-;;  (setq bbdb-check-zip-codes-p nil)
-;;  (autoload 'bbdb-insinuate-mew      "bbdb-mew"   "Hook BBDB into Mew")
-;;  (add-hook 'mew-init-hook 'bbdb-insinuate-mew)
-(setq bbdb-send-mail-style 'gnus)
-
-;;  (setq
-;;   bbdb-offer-save 'auto
-;;   bbdb/news-auto-create-p nil
-;;   bbdb/mail-auto-create-p nil
-;;   bbdb-north-american-phone-numbers-p nil
-;;   bbdb-default-area-code nil
-;;   bbdb-complete-name-allow-cycling t
-;;   bbdb-complete-name-full-completion t
-;;   bbdb-notice-auto-save-file t
-;;   bbdb-completion-type 'primary-or-name
-;;  )
-
-;; Insane Big brother DataBase (Adressbook)
-(require 'bbdb)
-;; (setq load-path (cons (concat "/usr/share/emacs21/site-lisp/bbdb") load-path))
-;; (setq load-path (cons (concat "/usr/share/emacs/site-lisp/bbdb/lisp") load-path))
-;; (provide 'bbdb/load-path)
-;; (load-library "bbdb")
-;; (provide 'bbdb-autoloads)
-;; (load-library "bbdb-com")
-(load-library "bbdb-gnus")
-;;(bbdb-initialize)
-(bbdb-initialize 'gnus 'message)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-(add-hook 'mail-setup-hook 'bbdb-define-all-aliases)
-(setq
- bbdb-offer-save 'auto
- bbdb/news-auto-create-p nil
- bbdb/mail-auto-create-p nil
- bbdb/gnus-summary-known-poster-mark "+"
- bbdb/gnus-summary-mark-known-posters t
- bbdb/gnus-summary-show-bbdb-names t
- bbdb/gnus-summary-prefer-bbdb-data t
- bbdb/gnus-summary-prefer-real-names 'bbdb
- bbdb-north-american-phone-numbers-p nil
- bbdb-default-area-code nil
- bbdb-complete-name-allow-cycling t
- bbdb-complete-name-full-completion t
- bbdb-notice-auto-save-file t
- bbdb-completion-type 'primary-or-name
-)
-(setq bbdb-display-layout nil)
-(setq bbdb-use-pop-up '(quote horiz))
-(setq bbdb-use-pop-up nil)
-(setq bbdb-pop-up-target-lines 5)
-(setq bbdb-pop-up-display-layout nil)
-(setq bbdb-pop-up-elided-display nil)
-(message "BBDB initialized")
-
-
+(condition-case nil
+    '((require 'bbdb)
+      
+      ;;  (setq bbdb-north-american-phone-numbers-p nil)
+      ;;  (setq bbdb-check-zip-codes-p nil)
+      ;;  (autoload 'bbdb-insinuate-mew      "bbdb-mew"   "Hook BBDB into Mew")
+      ;;  (add-hook 'mew-init-hook 'bbdb-insinuate-mew)
+      (setq bbdb-send-mail-style 'gnus)
+      
+      ;;  (setq
+      ;;   bbdb-offer-save 'auto
+      ;;   bbdb/news-auto-create-p nil
+      ;;   bbdb/mail-auto-create-p nil
+      ;;   bbdb-north-american-phone-numbers-p nil
+      ;;   bbdb-default-area-code nil
+      ;;   bbdb-complete-name-allow-cycling t
+      ;;   bbdb-complete-name-full-completion t
+      ;;   bbdb-notice-auto-save-file t
+      ;;   bbdb-completion-type 'primary-or-name
+      ;;  )
+      
+      ;; Insane Big brother DataBase (Adressbook)
+      ;;(require 'bbdb)
+      ;; (setq load-path (cons (concat "/usr/share/emacs21/site-lisp/bbdb") load-path))
+      ;; (setq load-path (cons (concat "/usr/share/emacs/site-lisp/bbdb/lisp") load-path))
+      ;; (provide 'bbdb/load-path)
+      ;; (load-library "bbdb")
+      ;; (provide 'bbdb-autoloads)
+      ;; (load-library "bbdb-com")
+      ;;(load-library "bbdb-gnus")
+      ;;(bbdb-initialize)
+      ;;(bbdb-initialize 'gnus 'message)
+      ;;(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+      ;;(add-hook 'mail-setup-hook 'bbdb-define-all-aliases)
+      (setq
+       bbdb-offer-save 'auto
+       bbdb/news-auto-create-p nil
+       bbdb/mail-auto-create-p nil
+       bbdb/gnus-summary-known-poster-mark "+"
+       bbdb/gnus-summary-mark-known-posters t
+       bbdb/gnus-summary-show-bbdb-names t
+       bbdb/gnus-summary-prefer-bbdb-data t
+       bbdb/gnus-summary-prefer-real-names 'bbdb
+       bbdb-north-american-phone-numbers-p nil
+       bbdb-default-area-code nil
+       bbdb-complete-name-allow-cycling t
+       bbdb-complete-name-full-completion t
+       bbdb-notice-auto-save-file t
+       bbdb-completion-type 'primary-or-name
+       )
+      (setq bbdb-display-layout nil)
+      (setq bbdb-use-pop-up '(quote horiz))
+      (setq bbdb-use-pop-up nil)
+      (setq bbdb-pop-up-target-lines 5)
+      (setq bbdb-pop-up-display-layout nil)
+      (setq bbdb-pop-up-elided-display nil)
+      (message "BBDB initialized")
+      )
+  (file-error nil))
+      
 ;;
 
 ;; eom
@@ -453,9 +460,9 @@
 ;;(color-theme-word-perfect)
 
 ;; Fixer la taille de la police employée sous X
-(set-face-attribute 'default nil :font "ProFontWindows-10")
 
 (if window-system (progn 
+		    (set-face-attribute 'default nil :font "ProFontWindows-10")
 		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
 		    (color-theme-blue-mood)))
 
