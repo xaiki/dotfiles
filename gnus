@@ -774,7 +774,7 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "mail.sceen.net")
+(setq smtpmail-smtp-server "mail.sceen.net") ;; (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
 (setq smtpmail-starttls-credentials
       '(("mail.sceen.net" 25)))
 (setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
@@ -1109,7 +1109,7 @@ more then one article."
 
 ;;modification de message-expand-name pour chercher dans eudc si défini
 ;;puis dans bbdb
-(setq message-expand-name-databases '(eudc));'(eudc bbdb))
+(setq message-expand-name-databases '(eudc bbdb));'(eudc bbdb))
 ;; (defun message-expand-name ()
 ;;   (let ((res nil) (dbs message-expand-name-databases))
 ;;      (while (and dbs (null res))
