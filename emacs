@@ -18,7 +18,7 @@
 (setq cssm-indent-level 8)
 
 
-(require 'ecb)
+;;(require 'ecb)
 
 (require 'font-lock)
 (setq initial-major-mode
