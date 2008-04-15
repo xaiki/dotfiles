@@ -18,7 +18,7 @@
 (setq cssm-indent-level 8)
 
 
-(require 'ecb)
+;; (require 'ecb)
 
 (require 'font-lock)
 (setq initial-major-mode
@@ -324,9 +324,9 @@
 
 
 ;; On supprime les menus et la scroll bar (vim-like)
-(tool-bar-mode nil)
-(menu-bar-mode nil)
-(scroll-bar-mode nil)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; On veut editer fvwmrc
 (setq auto-mode-alist
@@ -409,11 +409,9 @@
   (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
 
-(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+(remove-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
 ;;(remove-hook 'comint-output-filter-functions
 ;;	     'comint-strip-ctrl-m)
-
-
 
 ;; ;; Eshell
 ;; (defun eshell/clear (&optional n) (recenter (if n n 0)))
@@ -574,12 +572,54 @@
 (add-hook 'mail-mode-hook 'turn-on-orgstruct)
 (add-hook 'mail-mode-hook 'turn-on-orgtbl)
 
+;; Planner
+(require 'planner)
+(setq planner-project "MainPlanner")
+
+(setq muse-project-alist
+      '(("MainPlanner"
+	 ("~/Plans"           ;; where your Planner pages are located
+	  :default "TaskPool" ;; use value of `planner-default-page'
+	  :major-mode planner-mode
+	  :visit-link planner-visit-link)
+	 
+	 ;; This next part is for specifying where Planner pages
+	 ;; should be published and what Muse publishing style to
+	 ;; use.  In this example, we will use the XHTML publishing
+	 ;; style.
+	 
+	 (:base "planner-xhtml"
+		;; where files are published to
+		;; (the value of `planner-publishing-directory', if
+		;;  you have a configuration for an older version
+		;;  of Planner)
+		:path "~/public_html/Plans"))))
+
+(require 'planner-gnus)
+(planner-gnus-insinuate)
+
+(require 'planner-log-edit)
+
 ;; Remember
+(require 'remember)
 (org-remember-insinuate)
 (setq org-directory "~/org/")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map "\C-cr" 'org-remember)
 
+(setq remember-annotation-functions '(org-remember-annotation))
+(setq remember-handler-functions '(org-remember-handler))
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+
+(require 'remember-planner)
+(setq remember-handler-functions '(remember-planner-append))
+(setq remember-annotation-functions planner-annotation-functions)
+
+(autoload 'remember "remember" nil t)
+(autoload 'remember-region "remember" nil t)
+
+(define-key global-map "\C-R" 'remember)
+(define-key global-map "\M-R" 'remember-region)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
