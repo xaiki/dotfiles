@@ -1,4 +1,28 @@
 ;; -*- lisp -*-
+
+;; Emacs packages used by this config file:
+;; auctex	integrated document editing environment for TeX etc.
+;; bbdb		The Insidious Big Brother Database (email rolodex) for Emacs
+;; cscope	Interactively examine a C program source
+;; debian-el	Emacs helpers specific to Debian users
+;; devscripts-el	
+;; dpkg-dev-el	Emacs helpers specific to Debian development
+;; emacsen-common	Common facilities for all emacsen
+;; emacs-goodies-el	Miscellaneous add-ons for Emacs
+;; erc		an IRC client for Emacs
+;; gnus		A versatile News and mailing list reader for Emacsen.
+;; gnus-bonus-el Miscellaneous add-ons for Gnus
+;; gnuserv	Allows you to attach to an already running Emacs
+;; mule-ucs	universal encoding system for Mule
+;; muse-el	Author and publish projects using Wiki-like markup
+;; planner-el	personal information manager for Emacs
+;; remember-el	remember text within Emacs
+;; speedbar	Everything browser, or Dired on steroids
+;; w3m-el	simple Emacs interface of w3m
+
+;; Planed to be used:
+;; namazu2	Full text search engine (namazu binary and cgi)v
+ 
 ;;(server-start)
 (require 'gnuserv-compat)
 (gnuserv-start)
