@@ -17,6 +17,9 @@
 (setq cssm-indent-function #'cssm-c-style-indenter)
 (setq cssm-indent-level 8)
 
+(require 'git)
+(require 'git-blame)
+(require 'vc-git)
 
 ;; (require 'ecb)
 
