@@ -601,6 +601,52 @@
 (require 'planner-gnus)
 (planner-gnus-insinuate)
 
+(defun planner-gnus-annotation-from-summary ()
+  "If called from a Gnus summary buffer, return an annotation.
+Suitable for use in `planner-annotation-functions'."
+  (when (equal major-mode 'gnus-summary-mode)
+    (let ((articles (gnus-summary-work-articles nil)))
+      (planner-make-link
+       (concat "gnus://" gnus-newsgroup-name "/"
+               (mapconcat (lambda (article-number)
+                            (planner-gnus-get-message-id article-number))
+                          (gnus-summary-work-articles nil) "\\|"))
+       (if (= 1 (length articles))
+           (let ((headers (gnus-data-header (assq (car articles)
+                                                  gnus-newsgroup-data))))
+             (if (gnus-news-group-p gnus-newsgroup-name)
+                 (concat "Post "
+                         (if (and planner-ignored-from-addresses
+                                  (string-match
+                                   planner-ignored-from-addresses
+                                   (mail-header-from headers)))
+                             ""
+                           (concat "from "
+                                   (planner-get-name-from-address
+                                    (mail-header-from headers))
+                                   " "))
+                         "on "
+                         gnus-newsgroup-name)
+               (concat "E-Mail "
+                       (if (and planner-ignored-from-addresses
+                                (mail-header-from headers)
+                                (string-match planner-ignored-from-addresses
+                                              (mail-header-from headers))
+                                (assq 'To
+                                      (mail-header-extra headers)))
+                           ;; Mail from me, so use the To: instead
+                           (concat "to " (planner-get-name-from-address
+                                          (cdr (assq 'To
+                                                     (mail-header-extra
+                                                      headers)))))
+                         ;; Mail to me, so use the From:
+                         (concat "from " (planner-get-name-from-address
+                                          (mail-header-from headers))))
+		       (concat " [" (mail-header-subject headers) "]"))))
+         (concat (number-to-string (length articles))
+                 " E-Mails from folder " gnus-newsgroup-name))
+       t))))
+
 (require 'planner-log-edit)
 
 ;; Remember
