@@ -55,7 +55,9 @@
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "xaiki@sgi.com")
+(if (string-match "itchy" system-name)
+    (setq user-mail-address "xaiki@sgi.com")
+  (setq user-mail-address "xaiki@cxhome.ath.cx"))
 
 ;; mes autre adresses : en répondant à un message permet de réutiliser l'adresse du To:/From:/CC: de ce message
 (setq message-alternative-emails
@@ -93,8 +95,8 @@
 ;;          gnus-agent-cache nil)
 
 ;; setup imap
-;;(setq imap-log nil)
-;;(setq imap-debug nil)
+(setq imap-log t)
+(setq imap-debug t)
 (setq imap-store-password t)
 (setq nnimap-request-list-method 'imap-mailbox-list)
 
@@ -775,7 +777,9 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "mail")
+(if (string-match "itchy" system-name)
+    (setq smtpmail-smtp-server "mail")
+  (setq smtpmail-smtp-server "mail.sceen.net")
 (setq smtpmail-starttls-credentials
       '(("mail.sceen.net" 25)))
 (setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))

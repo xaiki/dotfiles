@@ -439,9 +439,11 @@
   (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
 
-(remove-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+;;(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
 ;;(remove-hook 'comint-output-filter-functions
 ;;	     'comint-strip-ctrl-m)
+
+
 
 ;; ;; Eshell
 ;; (defun eshell/clear (&optional n) (recenter (if n n 0)))
