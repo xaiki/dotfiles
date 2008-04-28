@@ -1,4 +1,31 @@
 ;; -*- lisp -*-
+
+;; Emacs packages used by this config file:
+;; auctex	integrated document editing environment for TeX etc.
+;; bbdb		The Insidious Big Brother Database (email rolodex) for Emacs
+;; cscope	Interactively examine a C program source
+;; debian-el	Emacs helpers specific to Debian users
+;; devscripts-el	
+;; dpkg-dev-el	Emacs helpers specific to Debian development
+;; emacsen-common	Common facilities for all emacsen
+;; emacs-goodies-el	Miscellaneous add-ons for Emacs
+;; erc		an IRC client for Emacs
+;; gnus		A versatile News and mailing list reader for Emacsen.
+;; gnus-bonus-el Miscellaneous add-ons for Gnus
+;; gnuserv	Allows you to attach to an already running Emacs
+;; mule-ucs	universal encoding system for Mule
+;; muse-el	Author and publish projects using Wiki-like markup
+;; planner-el	personal information manager for Emacs
+;; remember-el	remember text within Emacs
+;; speedbar	Everything browser, or Dired on steroids
+;; w3m-el	simple Emacs interface of w3m
+
+;; Planed to be used:
+;; namazu2	Full text search engine (namazu binary and cgi)v
+
+;; Répertoire des scripts
+(add-to-list 'load-path "~/.elisp")
+ 
 ;;(server-start)
 (require 'gnuserv-compat)
 (gnuserv-start)
@@ -17,6 +44,9 @@
 (setq cssm-indent-function #'cssm-c-style-indenter)
 (setq cssm-indent-level 8)
 
+(require 'git)
+(require 'git-blame)
+(require 'vc-git)
 
 ;;(require 'ecb)
 
@@ -55,9 +85,6 @@
 ;; seulement et pas uniquement un prefixe
 (require 'iswitchb)
 (iswitchb-default-keybindings)
-
-;; Répertoire des scripts
-(add-to-list 'load-path "~/.elisp")
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
@@ -324,9 +351,9 @@
 
 
 ;; On supprime les menus et la scroll bar (vim-like)
-(tool-bar-mode nil)
-(menu-bar-mode nil)
-(scroll-bar-mode nil)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
 
 ;; On veut editer fvwmrc
 (setq auto-mode-alist
@@ -359,7 +386,8 @@
 (setq tab-width 8)
 (setq indent-tabs-mode t)
 (setq c-basic-offset 8)
-
+(setq perl-indent-level 8)
+(setq sh-basic-offset 8)
 
 (require 'pabbrev)
 
@@ -409,7 +437,7 @@
   (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
 
-(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+;;(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
 ;;(remove-hook 'comint-output-filter-functions
 ;;	     'comint-strip-ctrl-m)
 
@@ -574,12 +602,100 @@
 (add-hook 'mail-mode-hook 'turn-on-orgstruct)
 (add-hook 'mail-mode-hook 'turn-on-orgtbl)
 
+;; Planner
+(require 'planner)
+(setq planner-project "MainPlanner")
+
+(setq muse-project-alist
+      '(("MainPlanner"
+	 ("~/Plans"           ;; where your Planner pages are located
+	  :default "TaskPool" ;; use value of `planner-default-page'
+	  :major-mode planner-mode
+	  :visit-link planner-visit-link)
+	 
+	 ;; This next part is for specifying where Planner pages
+	 ;; should be published and what Muse publishing style to
+	 ;; use.  In this example, we will use the XHTML publishing
+	 ;; style.
+	 
+	 (:base "planner-xhtml"
+		;; where files are published to
+		;; (the value of `planner-publishing-directory', if
+		;;  you have a configuration for an older version
+		;;  of Planner)
+		:path "~/public_html/Plans"))))
+
+(require 'planner-gnus)
+(planner-gnus-insinuate)
+
+(defun planner-gnus-annotation-from-summary ()
+  "If called from a Gnus summary buffer, return an annotation.
+Suitable for use in `planner-annotation-functions'."
+  (when (equal major-mode 'gnus-summary-mode)
+    (let ((articles (gnus-summary-work-articles nil)))
+      (planner-make-link
+       (concat "gnus://" gnus-newsgroup-name "/"
+               (mapconcat (lambda (article-number)
+                            (planner-gnus-get-message-id article-number))
+                          (gnus-summary-work-articles nil) "\\|"))
+       (if (= 1 (length articles))
+           (let ((headers (gnus-data-header (assq (car articles)
+                                                  gnus-newsgroup-data))))
+             (if (gnus-news-group-p gnus-newsgroup-name)
+                 (concat "Post "
+                         (if (and planner-ignored-from-addresses
+                                  (string-match
+                                   planner-ignored-from-addresses
+                                   (mail-header-from headers)))
+                             ""
+                           (concat "from "
+                                   (planner-get-name-from-address
+                                    (mail-header-from headers))
+                                   " "))
+                         "on "
+                         gnus-newsgroup-name)
+               (concat "E-Mail "
+                       (if (and planner-ignored-from-addresses
+                                (mail-header-from headers)
+                                (string-match planner-ignored-from-addresses
+                                              (mail-header-from headers))
+                                (assq 'To
+                                      (mail-header-extra headers)))
+                           ;; Mail from me, so use the To: instead
+                           (concat "to " (planner-get-name-from-address
+                                          (cdr (assq 'To
+                                                     (mail-header-extra
+                                                      headers)))))
+                         ;; Mail to me, so use the From:
+                         (concat "from " (planner-get-name-from-address
+                                          (mail-header-from headers))))
+		       (concat " [" (mail-header-subject headers) "]"))))
+         (concat (number-to-string (length articles))
+                 " E-Mails from folder " gnus-newsgroup-name))
+       t))))
+
+(require 'planner-log-edit)
+
 ;; Remember
+(require 'remember)
 (org-remember-insinuate)
 (setq org-directory "~/org/")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (define-key global-map "\C-cr" 'org-remember)
 
+(setq remember-annotation-functions '(org-remember-annotation))
+(setq remember-handler-functions '(org-remember-handler))
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+
+(require 'remember-planner)
+(setq remember-handler-functions '(remember-planner-append))
+(setq remember-annotation-functions planner-annotation-functions)
+
+(autoload 'remember "remember" nil t)
+(autoload 'remember-region "remember" nil t)
+
+(define-key global-map "\C-R" 'remember)
+(define-key global-map "\M-R" 'remember-region)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
