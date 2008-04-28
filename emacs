@@ -22,6 +22,9 @@
 
 ;; Planed to be used:
 ;; namazu2	Full text search engine (namazu binary and cgi)v
+
+;; Répertoire des scripts
+(add-to-list 'load-path "~/.elisp")
  
 ;;(server-start)
 (require 'gnuserv-compat)
@@ -82,9 +85,6 @@
 ;; seulement et pas uniquement un prefixe
 (require 'iswitchb)
 (iswitchb-default-keybindings)
-
-;; Répertoire des scripts
-(add-to-list 'load-path "~/.elisp")
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
@@ -373,6 +373,8 @@
 
 (require 'xcscope)
 
+(defun 8tab-mode ()
+
 ;; Torvalds a dit:
 (defun linux-c-mode ()
   "C mode with adjusted values for the linux kernel."
@@ -386,7 +388,8 @@
 (setq tab-width 8)
 (setq indent-tabs-mode t)
 (setq c-basic-offset 8)
-
+(setq perl-indent-level 8)
+(setq sh-basic-offset 8)
 
 (require 'pabbrev)
 
