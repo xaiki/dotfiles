@@ -4,7 +4,7 @@ export LANG=en_US.UTF-8
 setxkbmap dvorak &
 #e16 & 
 awesome & gnome-terminal & xcompmngr -cnf &
-/usr/lib/control-center/gnome-settings-daemon &
+gnome-settings-daemon &
 gnome-keyring-daemon &
 gnome-volume-manager &
 #gnome-panel &
