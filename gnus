@@ -55,12 +55,15 @@
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "xaiki@cxhome.ath.cx")
+(if (string-match "itchy" system-name)
+    (setq user-mail-address "xaiki@sgi.com")
+  (setq user-mail-address "xaiki@cxhome.ath.cx"))
 
 ;; mes autre adresses : en répondant à un message permet de réutiliser l'adresse du To:/From:/CC: de ce message
 (setq message-alternative-emails
       (regexp-opt (cons user-mail-address
-                        '("xaiki@debian.org"
+                        '("xaiki@cxhome.ath.cx"
+			  "xaiki@debian.org"
                           "xaiki@sgi.com"
                           "xaiki@openwide.fr"
                           "xaiki+.*@cxhome.ath.cx"
@@ -313,7 +316,6 @@
                         ; line of dashes.  Shame!
         "^ *--------*$" ; Double-shame!
         "^________*$"   ; Underscores are also popular
-        "^========*$"
         "^----- Original Message -----$"
 
         )) ; Pervert!
@@ -419,7 +421,8 @@
 ;;         (global-set-key [w] 'gnus-article-hide-citation))
 (add-hook 'gnus-summary-mode-hook
           ( lambda ()
-            (setq header-line-format "Flags   Date               From           Score   Size          Subject " )))
+            (setq header-line-format "Flags   Date               From           Score   Size          Subject " )
+	    (highlight-current-line-minor-mode)))
 
 ;; décodage des parties mml
 ;; auteur : drkm de fr.comp.applications.emacs
@@ -774,7 +777,9 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "mail.sceen.net") ;; (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
+(if (string-match "itchy" system-name)
+    (setq smtpmail-smtp-server "mail")
+  (setq smtpmail-smtp-server "mail.sceen.net")
 (setq smtpmail-starttls-credentials
       '(("mail.sceen.net" 25)))
 (setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
@@ -831,7 +836,9 @@
 ;(setq gnus-select-method (quote (nntp "news.free.fr")))
 
 ;affichage des anciens message lus (assez pour afficher les threads)
-(setq gnus-fetch-old-headers nil) ;'some)
+(setq gnus-fetch-old-headers t) ;'some)
+(setq gnus-build-sparse-threads 'more) ;'some)
+
 ;; On garde les threads en un seul morceau meme si le sujet change
 ;(setq gnus-gather-loose-threads t) ;???
 (setq gnus-summary-thread-gathering-function
@@ -1009,7 +1016,8 @@ more then one article."
 ; Header-line
 (add-hook 'gnus-group-mode-hook
           ( lambda ()
-            (setq header-line-format "    Ticked    New     Unread   Group" )))
+            (setq header-line-format "    Ticked    New     Unread   Group" )
+	    (highlight-current-line-minor-mode)))
 
 ;; change les citations.
 ;(add-hook 'gnus-part-display-hook 'sk-change-cite-mark)
