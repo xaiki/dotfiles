@@ -373,8 +373,6 @@
 
 (require 'xcscope)
 
-(defun 8tab-mode ()
-
 ;; Torvalds a dit:
 (defun linux-c-mode ()
   "C mode with adjusted values for the linux kernel."
