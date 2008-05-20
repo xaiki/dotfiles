@@ -780,6 +780,7 @@
 (if (string-match "itchy" system-name)
     (setq smtpmail-smtp-server "mail")
   (setq smtpmail-smtp-server "mail.sceen.net")
+)
 (setq smtpmail-starttls-credentials
       '(("mail.sceen.net" 25)))
 (setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
