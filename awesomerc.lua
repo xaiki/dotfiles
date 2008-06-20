@@ -335,9 +335,9 @@ end
 -- Hook called every second
 function hook_timer ()
    -- For unix time_t lovers
-   mytextbox:set("text", " " .. os.time() .. " time_t ")
+   -- mytextbox:set("text", " " .. os.time() .. " time_t ")
    -- Otherwise use:
-   -- mytextbox:set("text", " " .. os.date() .. " ")
+   mytextbox:set("text", " " .. os.date() .. " ")
 end
 
 -- Set up some hooks

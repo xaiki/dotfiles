@@ -13,7 +13,7 @@
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
 (copy-face 'default 'gnus-default)
-(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
+;;(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
 
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
@@ -1015,6 +1015,9 @@ more then one article."
         ;; If the group doesn't match the rules above
         (t . my-gnus-group-line-groupname-face)))
 ; Header-line
+(set-face-background 'highlight-current-line-face "purple4")
+
+
 (add-hook 'gnus-group-mode-hook
           ( lambda ()
             (setq header-line-format "    Ticked    New     Unread   Group" )
