@@ -108,8 +108,8 @@
               ;;(nntp-authinfo-password "xxxxxx")
               ))
 (setq gnus-secondary-select-methods '(
-				      (nnimap "cxhome.ath.cx"
-					      (nnimap-address "imap.cxhome.ath.cx")
+				      (nnimap "sceen.net"
+					      (nnimap-address "imap.sceen.net")
 					      (nnimap-authenticator login)
 					      (nnimap-stream tls)
 					      (remove-prefix "INBOX.")
@@ -778,11 +778,12 @@
 
 ;comment envoyer les msg
 (if (string-match "itchy" system-name)
-    (setq smtpmail-smtp-server "mail")
+    (setq smtpmail-smtp-server "mail.melbourne.sgi.com")
   (setq smtpmail-smtp-server "mail.sceen.net")
+  )
 (setq smtpmail-starttls-credentials
-      '(("mail.sceen.net" 25)))
-(setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
+      '(("imap.sceen.net" 25)))
+(setq smtpmail-auth-credentials '(("imap.sceen.net" 25 "xaiki" nil)))
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-send-mail-function 'smtpmail-send-it)
 
