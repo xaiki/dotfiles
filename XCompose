@@ -6,6 +6,7 @@
 # Part 0 - Simon's definitions
 <Multi_key> <period> <minus>		: "…" U2026 # HORIZONTAL ELLIPSIS
 <Multi_key> <less> <3>			: "♥" U2665 # BLACK HEART SUIT
+<Multi_key> <P> <H>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
 
 # Part 1 - Manual definitions
 
