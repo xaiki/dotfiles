@@ -5,7 +5,7 @@
 ;; bbdb		The Insidious Big Brother Database (email rolodex) for Emacs
 ;; cscope	Interactively examine a C program source
 ;; debian-el	Emacs helpers specific to Debian users
-;; devscripts-el	
+;; devscripts-el
 ;; dpkg-dev-el	Emacs helpers specific to Debian development
 ;; emacsen-common	Common facilities for all emacsen
 ;; emacs-goodies-el	Miscellaneous add-ons for Emacs
@@ -25,12 +25,12 @@
 
 ;; Répertoire des scripts
 (add-to-list 'load-path "~/.elisp")
- 
+
 ;;(server-start)
 (require 'gnuserv-compat)
 (gnuserv-start)
 
-(require 'tramp)
+(require 'tramp nil t)
 
 (require 'mule)
 ;;(require 'un-define)
@@ -44,24 +44,25 @@
 (setq cssm-indent-function #'cssm-c-style-indenter)
 (setq cssm-indent-level 8)
 
-(require 'git)
-(require 'git-blame)
-(require 'vc-git)
+(require 'git nil t)
+(require 'git-blame nil t)
+(require 'vc-git nil t)
 
 ;;(require 'ecb)
 
-(require 'font-lock)
-(setq initial-major-mode
-      (lambda ()
-	(text-mode)
-	(font-lock-mode)))
-(setq font-lock-mode-maximum-decoration t
-      font-lock-use-default-fonts t
-      font-lock-use-default-colors t)
+(if (require 'font-lock nil t)
+    (progn
+      (setq initial-major-mode
+	    (lambda ()
+	      (text-mode)
+	      (font-lock-mode)))
+      (setq font-lock-mode-maximum-decoration t
+	    font-lock-use-default-fonts t
+	    font-lock-use-default-colors t)
 
-(setq font-lock-maximum-size nil)	; trun off limit on font lock mode
-(global-font-lock-mode t)
-
+      (setq font-lock-maximum-size nil)	; trun off limit on font lock mode
+      (global-font-lock-mode t)
+      ))
 
 ;;(condition-case nil
 ;;    (require 'w3m)
@@ -76,23 +77,20 @@
 (setq column-number-mode t)
 (display-time)
 
-(setq next-line-add-newlines t)	
+(setq next-line-add-newlines t)
 (setq scroll-preserve-screen-position t); pour pouvoir scroller normalement
 (auto-compression-mode t)               ; permet d'ouvrir les gz a la volee
 (transient-mark-mode t)
 
 ;; completion du nom du buffer a selectionner en tapant une partie du nom
 ;; seulement et pas uniquement un prefixe
-(require 'iswitchb)
-(iswitchb-default-keybindings)
+(if (require 'iswitchb nil t)
+    (progn
+      (iswitchb-default-keybindings)
+      ))
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
-
-;; Pour avoir les thèmes
-(require 'color-theme)
-
-
 
 ;; Pour avoir le hello world
 ;; (require 'hello-world)
@@ -114,7 +112,7 @@
 ;; On veut les accents
 ;; Deprecated
 ;; (standard-display-european 1)
-(require 'iso-transl)
+(require 'iso-transl nil t)
 ;;(require 'utf-8)
 (standard-display-8bit 160 255)
 (set-input-mode t nil 0 7)
@@ -214,8 +212,10 @@
 ;; la nouvelle fonction est associée au raccourci C-x espace
 
 ;; mpd
-(require 'libempd)
-(setq empd-hostname "ayamaru.cxhome.ath.cx")
+(if (require 'libempd nil t)
+    (progn
+      (setq empd-hostname "ayamaru.cxhome.ath.cx")
+))
 
 
 (defun match-paren (arg)
@@ -275,46 +275,43 @@
 ;;  )
 
 ;; Insane Big brother DataBase (Adressbook)
-(require 'bbdb)
-;; (setq load-path (cons (concat "/usr/share/emacs21/site-lisp/bbdb") load-path))
-;; (setq load-path (cons (concat "/usr/share/emacs/site-lisp/bbdb/lisp") load-path))
-;; (provide 'bbdb/load-path)
-;; (load-library "bbdb")
-;; (provide 'bbdb-autoloads)
-;; (load-library "bbdb-com")
-(load-library "bbdb-gnus")
-;;(bbdb-initialize)
-(bbdb-initialize 'gnus 'message)
-(add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-(add-hook 'mail-setup-hook 'bbdb-define-all-aliases)
-(setq
- bbdb-offer-save 'auto
- bbdb/news-auto-create-p nil
- bbdb/mail-auto-create-p nil
- bbdb/gnus-summary-known-poster-mark "+"
- bbdb/gnus-summary-mark-known-posters t
- bbdb/gnus-summary-show-bbdb-names t
- bbdb/gnus-summary-prefer-bbdb-data t
- bbdb/gnus-summary-prefer-real-names 'bbdb
- bbdb-north-american-phone-numbers-p nil
- bbdb-default-area-code nil
- bbdb-complete-name-allow-cycling t
- bbdb-complete-name-full-completion t
- bbdb-notice-auto-save-file t
- bbdb-completion-type 'primary-or-name
-)
-(setq bbdb-display-layout nil)
-(setq bbdb-use-pop-up '(quote horiz))
-(setq bbdb-use-pop-up nil)
-(setq bbdb-pop-up-target-lines 5)
-(setq bbdb-pop-up-display-layout nil)
-(setq bbdb-pop-up-elided-display nil)
-(message "BBDB initialized")
-
-
-;;
-
-;; eom
+(if (require 'bbdb nil t)
+    (progn
+      ;; (setq load-path (cons (concat "/usr/share/emacs21/site-lisp/bbdb") load-path))
+      ;; (setq load-path (cons (concat "/usr/share/emacs/site-lisp/bbdb/lisp") load-path))
+      ;; (provide 'bbdb/load-path)
+      ;; (load-library "bbdb")
+      ;; (provide 'bbdb-autoloads)
+      ;; (load-library "bbdb-com")
+      (load-library "bbdb-gnus")
+      ;;(bbdb-initialize)
+      (bbdb-initialize 'gnus 'message)
+      (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+      (add-hook 'mail-setup-hook 'bbdb-define-all-aliases)
+      (setq
+       bbdb-offer-save 'auto
+       bbdb/news-auto-create-p nil
+       bbdb/mail-auto-create-p nil
+       bbdb/gnus-summary-known-poster-mark "+"
+       bbdb/gnus-summary-mark-known-posters t
+       bbdb/gnus-summary-show-bbdb-names t
+       bbdb/gnus-summary-prefer-bbdb-data t
+       bbdb/gnus-summary-prefer-real-names 'bbdb
+       bbdb-north-american-phone-numbers-p nil
+       bbdb-default-area-code nil
+       bbdb-complete-name-allow-cycling t
+       bbdb-complete-name-full-completion t
+       bbdb-notice-auto-save-file t
+       bbdb-completion-type 'primary-or-name
+       )
+      (setq bbdb-display-layout nil)
+      (setq bbdb-use-pop-up '(quote horiz))
+      (setq bbdb-use-pop-up nil)
+      (setq bbdb-pop-up-target-lines 5)
+      (setq bbdb-pop-up-display-layout nil)
+      (setq bbdb-pop-up-elided-display nil)
+      (message "BBDB initialized")
+      ))
 
 ;; Handy little redo function.
 (global-set-key [(control x)(control r)] 'redo)
@@ -340,15 +337,9 @@
 (global-set-key [?\M-\C-,] 'tool-bar-mode)
 (global-set-key [?\C-:]    'goto-line)
 
-
-
-
-
 ;; Zenirc
 ;;(setq zenirc-server-alist
 ;;      '(("irc.freenode.net" nil nil "xaiki-emacs" nil)))
-
-
 
 ;; On supprime les menus et la scroll bar (vim-like)
 (tool-bar-mode -1)
@@ -371,7 +362,7 @@
            (font-lock-fontify-buffer)))
 
 
-(require 'xcscope)
+(require 'xcscope nil t)
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
@@ -390,8 +381,6 @@
 (setq sh-basic-offset 8)
 
 (require 'pabbrev)
-
-
 (setq auto-mode-alist (cons '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode)
 			    auto-mode-alist))
 
@@ -432,7 +421,7 @@
 (setq shell-file-name "/bin/sh")
 (setq ansi-color-for-comint-mode t)
 
-(defun xa1-prompt-in-shell (&optional ignore) 
+(defun xa1-prompt-in-shell (&optional ignore)
   (backward-char 2)
   (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
@@ -468,7 +457,7 @@
 ;;     (comint-send-string proc "\n")
 ;;     (funcall 'man (replace-regexp-in-string "[ \t]*$" "" (match-string 1 command)))
 ;;     )
-   
+
 ;;    ((string-match "^[ \t]*\\(?:emacs\\|vi\\)[ \t]*\\(.*\\)$" command)
 ;;     (comint-send-string proc "\n")
 
@@ -501,9 +490,13 @@
 (set-face-attribute 'default nil :font "-xos4-terminus-medium-r-normal-*-*-120-*-*-c-*-paratype-pt154")
 ;;(set-face-attribute 'default nil :font "ProFontWindows-9")
 
-(if window-system (progn 
+(if window-system (progn
 		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
-		    (color-theme-blue-mood)))
+		    ;; Pour avoir les thèmes
+		    (if (require 'color-theme)
+			(progn
+			  (color-theme-blue-mood)))
+		    ))
 
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
@@ -532,14 +525,11 @@
 (global-set-key [C-mouse-4] 'down-a-lot)
 (global-set-key [C-mouse-5] 'up-a-lot)
 
-
 ;;********************
 ;;
 ;; Fonctions lispiennes :
 ;;
 ;;********************
-
-
 
 ;; Fonction d'occurence
 (defun call-occur()
@@ -604,100 +594,104 @@
 (add-hook 'mail-mode-hook 'turn-on-orgtbl)
 
 ;; Planner
-(require 'planner)
-(setq planner-project "MainPlanner")
+(if (require 'planner nil t)
+    (progn
+      (setq planner-project "MainPlanner")
 
-(setq muse-project-alist
-      '(("MainPlanner"
-	 ("~/Plans"           ;; where your Planner pages are located
-	  :default "TaskPool" ;; use value of `planner-default-page'
-	  :major-mode planner-mode
-	  :visit-link planner-visit-link)
-	 
-	 ;; This next part is for specifying where Planner pages
-	 ;; should be published and what Muse publishing style to
-	 ;; use.  In this example, we will use the XHTML publishing
-	 ;; style.
-	 
-	 (:base "planner-xhtml"
-		;; where files are published to
-		;; (the value of `planner-publishing-directory', if
-		;;  you have a configuration for an older version
-		;;  of Planner)
-		:path "~/public_html/Plans"))))
+      (setq muse-project-alist
+	    '(("MainPlanner"
+	       ("~/Plans"           ;; where your Planner pages are located
+		:default "TaskPool" ;; use value of `planner-default-page'
+		:major-mode planner-mode
+		:visit-link planner-visit-link)
 
-(require 'planner-gnus)
-(planner-gnus-insinuate)
+	       ;; This next part is for specifying where Planner pages
+	       ;; should be published and what Muse publishing style to
+	       ;; use.  In this example, we will use the XHTML publishing
+	       ;; style.
 
-(defun planner-gnus-annotation-from-summary ()
-  "If called from a Gnus summary buffer, return an annotation.
+	      (:base "planner-xhtml"
+		     ;; where files are published to
+		     ;; (the value of `planner-publishing-directory', if
+		     ;;  you have a configuration for an older version
+		     ;;  of Planner)
+		     :path "~/public_html/Plans"))))
+
+      (if (require 'planner-gnus nil t)
+	  (progn (planner-gnus-insinuate)))
+
+      (defun planner-gnus-annotation-from-summary ()
+	"If called from a Gnus summary buffer, return an annotation.
 Suitable for use in `planner-annotation-functions'."
-  (when (equal major-mode 'gnus-summary-mode)
-    (let ((articles (gnus-summary-work-articles nil)))
-      (planner-make-link
-       (concat "gnus://" gnus-newsgroup-name "/"
-               (mapconcat (lambda (article-number)
-                            (planner-gnus-get-message-id article-number))
-                          (gnus-summary-work-articles nil) "\\|"))
-       (if (= 1 (length articles))
-           (let ((headers (gnus-data-header (assq (car articles)
-                                                  gnus-newsgroup-data))))
-             (if (gnus-news-group-p gnus-newsgroup-name)
-                 (concat "Post "
-                         (if (and planner-ignored-from-addresses
-                                  (string-match
-                                   planner-ignored-from-addresses
-                                   (mail-header-from headers)))
-                             ""
-                           (concat "from "
-                                   (planner-get-name-from-address
-                                    (mail-header-from headers))
-                                   " "))
-                         "on "
-                         gnus-newsgroup-name)
-               (concat "E-Mail "
-                       (if (and planner-ignored-from-addresses
-                                (mail-header-from headers)
-                                (string-match planner-ignored-from-addresses
-                                              (mail-header-from headers))
-                                (assq 'To
-                                      (mail-header-extra headers)))
-                           ;; Mail from me, so use the To: instead
-                           (concat "to " (planner-get-name-from-address
-                                          (cdr (assq 'To
-                                                     (mail-header-extra
-                                                      headers)))))
-                         ;; Mail to me, so use the From:
-                         (concat "from " (planner-get-name-from-address
-                                          (mail-header-from headers))))
-		       (concat " [" (mail-header-subject headers) "]"))))
-         (concat (number-to-string (length articles))
-                 " E-Mails from folder " gnus-newsgroup-name))
-       t))))
+	(when (equal major-mode 'gnus-summary-mode)
+	  (let ((articles (gnus-summary-work-articles nil)))
+	    (planner-make-link
+	     (concat "gnus://" gnus-newsgroup-name "/"
+		     (mapconcat (lambda (article-number)
+				  (planner-gnus-get-message-id article-number))
+				(gnus-summary-work-articles nil) "\\|"))
+	     (if (= 1 (length articles))
+		 (let ((headers (gnus-data-header (assq (car articles)
+							gnus-newsgroup-data))))
+		   (if (gnus-news-group-p gnus-newsgroup-name)
+		       (concat "Post "
+			       (if (and planner-ignored-from-addresses
+				       (string-match
+					planner-ignored-from-addresses
+					(mail-header-from headers)))
+				   ""
+				 (concat "from "
+					 (planner-get-name-from-address
+					  (mail-header-from headers))
+					 " "))
+			       "on "
+			      gnus-newsgroup-name)
+		     (concat "E-Mail "
+			     (if (and planner-ignored-from-addresses
+				     (mail-header-from headers)
+				     (string-match planner-ignored-from-addresses
+						   (mail-header-from headers))
+				     (assq 'To
+					   (mail-header-extra headers)))
+				 ;; Mail from me, so use the To: instead
+				 (concat "to " (planner-get-name-from-address
+						(cdr (assq 'To
+							   (mail-header-extra
+							    headers)))))
+			       ;; Mail to me, so use the From:
+			       (concat "from " (planner-get-name-from-address
+						(mail-header-from headers))))
+			     (concat " [" (mail-header-subject headers) "]"))))
+	      (concat (number-to-string (length articles))
+		      " E-Mails from folder " gnus-newsgroup-name))
+	     t))))
 
-(require 'planner-log-edit)
+      (require 'planner-log-edit nil t)
 
-;; Remember
-(require 'remember)
-(org-remember-insinuate)
-(setq org-directory "~/org/")
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(define-key global-map "\C-cr" 'org-remember)
+      ;; Remember
+      (if (require 'remember nil t)
+	  (progn
+	    (org-remember-insinuate)
+	    (setq org-directory "~/org/")
+	    (setq org-default-notes-file (concat org-directory "/notes.org"))
+	    (define-key global-map "\C-cr" 'org-remember)
 
-(setq remember-annotation-functions '(org-remember-annotation))
-(setq remember-handler-functions '(org-remember-handler))
-(add-hook 'remember-mode-hook 'org-remember-apply-template)
+	    (setq remember-annotation-functions '(org-remember-annotation))
+	    (setq remember-handler-functions '(org-remember-handler))
+	    (add-hook 'remember-mode-hook 'org-remember-apply-template)
 
-(require 'remember-planner)
-(setq remember-handler-functions '(remember-planner-append))
-(setq remember-annotation-functions planner-annotation-functions)
+	    (if (require 'remember-planner nil t)
+		(progn
+		  (setq remember-handler-functions '(remember-planner-append))
+		  (setq remember-annotation-functions planner-annotation-functions)))
 
-(autoload 'remember "remember" nil t)
-(autoload 'remember-region "remember" nil t)
+	    (autoload 'remember "remember" nil t)
+	    (autoload 'remember-region "remember" nil t)
 
-(define-key global-map "\C-R" 'remember)
-(define-key global-map "\M-R" 'remember-region)
-
+	    (define-key global-map "\C-R" 'remember)
+	    (define-key global-map "\M-R" 'remember-region)
+	    ))
+      ))
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
