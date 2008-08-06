@@ -92,8 +92,8 @@
 ;;          gnus-agent-cache nil)
 
 ;; setup imap
-(setq imap-log t)
-(setq imap-debug t)
+(setq imap-log nil)
+(setq imap-debug nil)
 (setq imap-store-password t)
 (setq nnimap-request-list-method 'imap-mailbox-list)
 
