@@ -482,13 +482,14 @@
 ;;(color-theme-whateveryouwant)
 ;;(color-theme-word-perfect)
 
-;; Fixer la taille de la police employée sous X
-(set-face-attribute 'default nil :font "-xos4-terminus-medium-r-normal-*-*-120-*-*-c-*-paratype-pt154")
-;;(set-face-attribute 'default nil :font "ProFontWindows-9")
-
 (if window-system (progn
 		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
 		    ;; Pour avoir les thèmes
+		    ;; Fixer la taille de la police employée sous X
+		    (if (not set-face-attribute 'default nil :font "ProFontWindows-9")
+			(progn
+			  (set-face-attribute 'default nil :font "-xos4-terminus-medium-r-normal-*-*-120-*-*-c-*-paratype-pt154")))
+
 		    (if (require 'color-theme)
 			(progn
 			  (color-theme-blue-mood)))
