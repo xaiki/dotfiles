@@ -26,9 +26,9 @@
 ;; Répertoire des scripts
 (add-to-list 'load-path "~/.elisp")
 
-;;(server-start)
-(require 'gnuserv-compat)
-(gnuserv-start)
+(server-start)
+;;(require 'gnuserv-compat)
+;;(gnuserv-start)
 
 (require 'tramp nil t)
 
