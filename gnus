@@ -99,27 +99,25 @@
 
 ;;serveur news principal
 (setq gnus-select-method
-      '(nnnil ""
-	      ;;nntp "news.free.fr"
-	      ;;(nntp-authinfo-user "sebastien.kirche")
-	      ;;(nntp-authinfo-password "xxxxxx")
-	      ))
-(setq gnus-secondary-select-methods '(
-				      (nnimap "sceen.net"
-					      (nnimap-address "imap.sceen.net")
-					      (nnimap-authenticator login)
-					      (nnimap-stream tls)
-					      (remove-prefix "INBOX.")
-					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo"))
-				      (nnimap "sgi.com"
-					      (nnimap-address "mail-asg.melbourne.sgi.com")
-					      (nnimap-authenticator login)
-					      ;;(nnimap-stream tls)
-					      (remove-prefix "INBOX.")
-					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo")))
-      )
+      '(nnnil ""))
+(defun turn-off-backup ()
+  (set (make-local-variable 'backup-inhibited) t))
+
+(setq gnus-secondary-select-methods
+      '(
+	(nnimap "sgi.com"
+		(nnimap-address "mail-asg.melbourne.sgi.com")
+		(nnimap-authenticator login)
+		;;(nnimap-stream tls)
+		(remove-prefix "INBOX.")
+		(nnimap-authinfo-file
+		 "/home/xaiki/.imap-authinfo"))
+	(nnfolder "patches"
+		  (nnfolder-directory "~/Wrk/pending-patches/")
+		  (nnfolder-active-file "~/Wrk/pending-patches/active")
+		  (nnfolder-save-buffer-hook 'turn-off-backup)
+		  (nnfolder-get-new-mail t))
+	))
 
 ;; on peut créer un .authinfo sur le modále :
 ;;machine foo.bar.com login your_username password your_pass
@@ -644,15 +642,14 @@
 ;;archivage de mes messages / posts
 (setq gnus-gcc-mark-as-read t)
 (setq gnus-message-archive-method
-      '(nnml "archives"
-	     (nnml-directory "~/.gnus.d/archives")
-	     (nnml-active-file "~/.gnus.d/archives/active")
-	     (nnml-inhibit-expiry t)
-	     (nnml-get-new-mail nil)))
+      '(nnfolder "archives"
+		 (nnfolder-directory "~/.gnus.d/archives")
+		 (nnfolder-active-file "~/.gnus.d/archives/active")
+		 (nnfolder-get-new-mail nil)))
 (setq gnus-message-archive-group
       '((if (message-news-p)
-	    (concat "nnml+archives:News-sent." (format-time-string "%Y-%m"))
-	  (concat "nnml+archives:Mail-sent." (format-time-string "%Y-%m"))
+	    (concat "nnfolder+archives:News-sent." (format-time-string "%Y-%m"))
+	  (concat "nnfolder+archives:Mail-sent." (format-time-string "%Y-%m"))
 	  )))
 
 ;; Lorsqu'un article n'est plus disponible dans le serveur NNTP, on utilise
@@ -779,7 +776,7 @@
 
 ;comment envoyer les msg
 (if (string-match "itchy" system-name)
-    (setq smtpmail-smtp-server "mail.melbourne.sgi.com")
+    (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
   (setq smtpmail-smtp-server "mail.sceen.net")
   )
 (setq smtpmail-starttls-credentials
