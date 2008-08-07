@@ -168,8 +168,6 @@
 ;; (defun my-verify-sign ()
 ;;   ( mc-verify ))
 
-
-
 (defun recode-buffer ()
   "Recodes buffer in UTF-8"
   (interactive)
@@ -180,7 +178,6 @@
     (insert (decode-coding-string (string-make-unibyte text) coding-system)))
   )
 
-
 (defun recode-region (start end &optional coding-system)
   "Replace the region with a recoded text."
   (interactive "r\n\zCoding System (utf-8): ")
@@ -189,7 +186,6 @@
 	(text (buffer-substring start end)))
     (delete-region start end)
     (insert (decode-coding-string (string-make-unibyte text) coding-system))))
-
 
 ;; Un petit morceau de code qui permet de supprimer les espaces
 ;; qui restent en fin de ligne.
@@ -727,6 +723,7 @@ Suitable for use in `planner-annotation-functions'."
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
+ '(message-header-subject ((t (:foreground "light blue" :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
  '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
 
