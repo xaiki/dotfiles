@@ -95,8 +95,8 @@
 ;;          gnus-agent-cache nil)
 
 ;; setup imap
-(setq imap-log t)
-(setq imap-debug t)
+(setq imap-log nil)
+(setq imap-debug nil)
 (setq imap-store-password t)
 (setq nnimap-request-list-method 'imap-mailbox-list)
 
@@ -107,21 +107,31 @@
               ;;(nntp-authinfo-user "sebastien.kirche")
               ;;(nntp-authinfo-password "xxxxxx")
               ))
+
+(defun turn-off-backup ()
+  (set (make-local-variable 'backup-inhibited) t))
+
 (setq gnus-secondary-select-methods '(
-				      (nnimap "cxhome.ath.cx"
-					      (nnimap-address "imap.cxhome.ath.cx")
-					      (nnimap-authenticator login)
-					      (nnimap-stream tls)
-					      (remove-prefix "INBOX.")
-					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo"))
+				      ;;				      (nnimap "cxhome.ath.cx"
+				      ;;					      (nnimap-address "imap.cxhome.ath.cx")
+				      ;;					      (nnimap-authenticator login)
+				      ;;					      (nnimap-stream tls)
+				      ;;					      (remove-prefix "INBOX.")
+				      ;;					      (nnimap-authinfo-file
+				      ;;					       "/home/xaiki/.imap-authinfo"))
 				      (nnimap "sgi.com"
 					      (nnimap-address "mail-asg.melbourne.sgi.com")
 					      (nnimap-authenticator login)
 					      ;;(nnimap-stream tls)
 					      (remove-prefix "INBOX.")
 					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo")))
+					       "/home/xaiki/.imap-authinfo"))
+				      (nnfolder "patches"
+					    (nnfolder-directory "~/Wrk/pending-patches/")
+					    (nnfolder-active-file "~/Wrk/pending-patches/active")
+					    (nnfolder-save-buffer-hook 'turn-off-backup)
+					    (nnfolder-get-new-mail t))				      
+				      )
       )
 
 ;; on peut créer un .authinfo sur le modále :
@@ -643,15 +653,14 @@
 ;;archivage de mes messages / posts
 (setq gnus-gcc-mark-as-read t)
 (setq gnus-message-archive-method
-      '(nnml "archives"
-             (nnml-directory "~/.gnus.d/archives")
-             (nnml-active-file "~/.gnus.d/archives/active")
-             (nnml-inhibit-expiry t)
-             (nnml-get-new-mail nil)))
+      '(nnfolder "archives"
+             (nnfolder-directory "~/.gnus.d/archives")
+             (nnfolder-active-file "~/.gnus.d/archives/active")
+             (nnfolder-get-new-mail nil)))
 (setq gnus-message-archive-group
       '((if (message-news-p)
-            (concat "nnml+archives:News-sent." (format-time-string "%Y-%m"))
-          (concat "nnml+archives:Mail-sent." (format-time-string "%Y-%m"))
+            (concat "nnfolder+archives:News-sent." (format-time-string "%Y-%m"))
+          (concat "nnfolder+archives:Mail-sent." (format-time-string "%Y-%m"))
           )))
 
 ;; Lorsqu'un article n'est plus disponible dans le serveur NNTP, on utilise
@@ -778,7 +787,7 @@
 
 ;comment envoyer les msg
 (if (string-match "itchy" system-name)
-    (setq smtpmail-smtp-server "mail")
+    (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
   (setq smtpmail-smtp-server "mail.sceen.net")
 )
 (setq smtpmail-starttls-credentials
@@ -1015,8 +1024,8 @@ more then one article."
         ;; If the group doesn't match the rules above
         (t . my-gnus-group-line-groupname-face)))
 ; Header-line
-(set-face-background 'highlight-current-line-face "purple4")
-
+(highlight-current-line-minor-mode -1)
+(set-face-background 'highlight-current-line-face "purple")
 
 (add-hook 'gnus-group-mode-hook
           ( lambda ()
