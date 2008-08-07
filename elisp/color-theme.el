@@ -11014,33 +11014,6 @@ a large theme."
      (yellow ((t (:foreground "yellow"))))
      (zmacs-region ((t (:background "Cyan4")))))))
 
-(defun color-theme-xa1 ()
-  "Color theme by Xa1 beurk beurk beurk."
-  (interactive)
-  (color-theme-install
-   '(color-theme-xa1
-     ((background-color . "#081727")
-      (background-mode . dark)
-      ;;       (border-color . "black")
-      (cursor-color . "green")
-      (foreground-color . "#eeeeee")
-      (mouse-color . "white")
-      ;;     ((background-color . "DodgerBlue4")
-      ;;     (background-mode . dark)
-      ;;      (background-toolbar-color . "#bfbfbfbfbfbf")
-      (border-color . "Blue")
-      ;;      (border-color . "#000000000000")
-      (bottom-toolbar-shadow-color . "#6c6c68686868")
-      (cursor-color . "DarkGoldenrod1")
-      (foreground-color . "white smoke")
-      ;;      (mouse-color . "black")
-      (top-toolbar-shadow-color . "#e5e5e0e0e1e1"))
-     ((vc-annotate-very-old-color . "#0046FF"))
-     (default ((t (nil))))
-     (blue ((t (:foreground "blue"))))
-     (bold ((t (:bold t))))
-     )))
-
 (defun color-theme-blue-mood ()
   "Color theme by Nelson Loyola, created 2002-04-15.
 Includes cperl, custom, font-lock, p4, speedbar, widget."
@@ -11153,6 +11126,36 @@ Includes cperl, custom, font-lock, p4, speedbar, widget."
      (widget-single-line-field-face ((t (:background "gray85"))))
      (yellow ((t (:foreground "yellow"))))
      (zmacs-region ((t (:background "white" :foreground "midnightblue")))))))
+
+(defun color-theme-xa1 ()
+  "Color theme by Xa1 beurk beurk beurk."
+  (interactive)
+  (color-theme-blue-mood)
+  (let ((color-theme-is-cumulative t))
+    (color-theme-install
+     '(color-theme-xa1
+       ((background-color . "black")
+	(background-mode . dark)
+	;;       (border-color . "black")
+	(cursor-color . "green")
+	(foreground-color . "#eeeeee")
+	(mouse-color . "white")
+	;;     ((background-color . "DodgerBlue4")
+	;;     (background-mode . dark)
+	;;      (background-toolbar-color . "#bfbfbfbfbfbf")
+	(border-color . "Blue")
+	;;      (border-color . "#000000000000")
+	(bottom-toolbar-shadow-color . "#6c6c68686868")
+	(cursor-color . "DarkGoldenrod1")
+	(foreground-color . "white smoke")
+	;;      (mouse-color . "black")
+	(top-toolbar-shadow-color . "#e5e5e0e0e1e1"))
+       ((vc-annotate-very-old-color . "#0046FF"))
+       (default ((t (nil))))
+       (blue ((t (:foreground "blue"))))
+       (bold ((t (:bold t))))
+       )))
+  )
 
 (defun color-theme-euphoria ()
   "Color theme by oGLOWo, created 2000-04-19.
