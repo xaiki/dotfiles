@@ -1016,13 +1016,17 @@ more then one article."
 	;; If the group doesn't match the rules above
 	(t . my-gnus-group-line-groupname-face)))
 ; Header-line
-(set-face-background 'highlight-current-line-face "purple4")
-
+(if (require 'highlight-current-line)
+    (progn
+      (highlight-current-line nil)
+      (set-face-background 'highlight-current-line-face "purple4")
+      (add-hook 'gnus-group-mode-hook
+		(lambda ()
+		  (highlight-current-line-minor-mode)))))
 
 (add-hook 'gnus-group-mode-hook
-	  ( lambda ()
-	    (setq header-line-format "    Ticked    New     Unread   Group" )
-	    (highlight-current-line-minor-mode)))
+	  (lambda ()
+	    (setq header-line-format "    Ticked    New     Unread   Group" )))
 
 ;; change les citations.
 ;(add-hook 'gnus-part-display-hook 'sk-change-cite-mark)
