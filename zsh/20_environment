@@ -23,4 +23,4 @@ export GTK_IM_MODULE=xim
 export LC_MESSAGES=C
 export LC_ALL=
 
-export HOME=`realpath ~`
+export HOME=`readlink -f $HOME`

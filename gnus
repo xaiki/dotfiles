@@ -115,7 +115,7 @@
 	(nnfolder "patches"
 		  (nnfolder-directory "~/Wrk/pending-patches/")
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
-		  (nnfolder-save-buffer-hook 'turn-off-backup)
+;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
 		  (nnfolder-get-new-mail t))
 	))
 
@@ -777,7 +777,7 @@
 ;comment envoyer les msg
 (if (string-match "itchy" system-name)
     (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
-  (setq smtpmail-smtp-server "mail.sceen.net")
+  (setq smtpmail-smtp-server "localhost")
   )
 (setq smtpmail-starttls-credentials
       '(("imap.sceen.net" 25)))
