@@ -3,6 +3,7 @@
 -- Include awesome library, with lots of useful function!
 require("awful")
 require("tabulous")
+require("io")
 
 -- Uncomment this to activate autotabbing
 -- tabulous.autotab_start()
@@ -16,7 +17,16 @@ terminal = "xterm"
 -- If you do not like this or do not have such a key,
 -- I suggest you to remap Mod4 to another key using xmodmap or other tools.
 -- However, you can use another modifier like Mod1, but it may interact with others.
-modkey = "Mod4"
+
+io.popen("uname")
+if io.read == "lagoh" then
+   modkey = "Mod1"
+else 
+   modkey = "Mod1"
+end
+io.close()
+
+print modkey
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =

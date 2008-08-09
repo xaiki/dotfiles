@@ -1,4 +1,5 @@
-;;; debian-mr-copyright-mode.el --- major mode for machine-readable debian/copyright files
+;;; debian-mr-copyright-mode.el ---
+;;;         major mode for machine-readable debian/copyright files
 
 ;; Copyright (C) 2001, 2003 Free Software Foundation, Inc.
 ;; Copyright (C) 2003, 2004, 2005 Peter S Galbraith <psg@debian.org>
@@ -9,10 +10,10 @@
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 ;;
-;; debian-mr-copyright-mode.el is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;; debian-mr-copyright-mode.el is distributed in the hope that it will
+;; be useful, but WITHOUT ANY WARRANTY; without even the implied
+;; warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+;; See the GNU General Public License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
 ;; along with your Debian installation, in /usr/share/common-licenses/GPL
@@ -30,6 +31,11 @@
 
 (defcustom debian-mr-copyright-field-face 'font-lock-keyword-face
   "The face to use to highligh fields names"
+  :type 'face
+  :group 'debian-mr-copyright)
+
+(defcustom debian-mr-copyright-extended-field-face 'font-lock-comment-face
+  "The face to use to highligh extended fields names"
   :type 'face
   :group 'debian-mr-copyright)
 
@@ -60,62 +66,68 @@
   (modify-syntax-entry ?#  "<"  debian-mr-copyright-syntax-table)
   (modify-syntax-entry ?\n "> " debian-mr-copyright-syntax-table))
 
-(defvar debian-mr-copyright-field-regexp "^\\(\\(\\sw\\|-\\)+:\\)")
+(defconst debian-mr-copyright-field-regexp "^\\(\\(\\sw\\|-\\)+:\\)")
 
-;; (defvar debian-mr-copyright-value-regexp 
+;; (defconst debian-mr-copyright-value-regexp
 ;;   "[-a-zA-Z0-9+.*,[:blank:]]+")
 
 ;; Valid licenses, extracted from the web page
 ;; http://wiki.debian.org/Proposals/CopyrightFormat
 ;; 15/03/08
-(defvar debian-mr-copyright-valid-licenses
+(defconst debian-mr-copyright-valid-licenses
   '("GPL-any" "GPL-1" "GPL-1+" "GPL-2" "GPL-2+" "GPL-3" "GPL-3+"
     "LGPL-any" "LGPL-2" "LGPL-2+" "LGPL-2.1" "LGPL-2.1+" "LGPL-3" "LGPL-3+"
-    "PSF" "PSF-2" "GFDL-any" "GFDL-1.2" "GFDL-1.2+" "GAP" "BSD-2" "BSD-3" 
+    "PSF" "PSF-2" "GFDL-any" "GFDL-1.2" "GFDL-1.2+" "GAP" "BSD-2" "BSD-3"
     "BSD-4" "Apache-1.0" "Apache-1.1" "Apache-2.0" "MPL-1.1" "Artistic"
-    "Artistic-2.0" "LPPL-1.3a" "ZPL" "ZPL-2.1" "EPL-1.1" "EFL-2" 
+    "Artistic-2.0" "LPPL-1.3a" "ZPL" "ZPL-2.1" "EPL-1.1" "EFL-2"
     "CC-BY-3" "ZLIB" "other")
   )
 
-(defvar debian-mr-copyright-value-regexp  ".+")
+(defconst debian-mr-copyright-value-regexp  ".+")
 
-(defvar debian-mr-copyright-imenu-expression 
-  '((nil (concat "^\\(Files\\):" 
+(defconst debian-mr-copyright-imenu-expression
+  '((nil (concat "^\\(Files\\):"
 		 debian-mr-copyright-value-regexp
 		 "$") 2))
   "The expression for imenu elements" )
 
-(defvar debian-mr-copyright-fields
-  '("Copyright")
+(defconst debian-mr-copyright-fields
+  '("Copyright"
+    "Format-Specification"
+    "Upstream-Name"
+    "Upstream-Source"
+    "Packaged-Date"
+    "Packaged-By"
+    )
   "Valid fields names (but Files and License).")
 
-(defvar debian-mr-copyright-fields-regexp
+(defconst debian-mr-copyright-fields-regexp
   (concat
    "^"
    (let ((max-specpdl-size 1000))
-     (regexp-opt debian-mr-copyright-fields t))
-   ":\\(" 
-   debian-mr-copyright-value-regexp
-   "\\)$" )
-  "font-lock regexp matching known fields.")
+     (regexp-opt debian-mr-copyright-fields t))))
+;;   ":\\("
+;;   debian-mr-copyright-value-regexp
+;;   "\\)$" )
+;;  "font-lock regexp matching known fields.")
 
-(defvar debian-mr-copyright-license-regexp
+(defconst debian-mr-copyright-license-regexp
   (concat
-   "^\\(License\\):\\(?:[[:blank:]]*" 
+   "^\\(License\\):\\(?:[[:blank:]]*"
    (let ((max-specpdl-size 1000))
      (regexp-opt debian-mr-copyright-valid-licenses t))
    "[[:blank:]]*\\|\\(.+\\)\\)$" )
   "font-lock regexp matching known or unkown licenses.")
 
 
-(defvar debian-mr-copyright-files-regexp
-  (concat 
-   "^\\(Files\\):\\(" 
+(defconst debian-mr-copyright-files-regexp
+  (concat
+   "^\\(Files\\):\\("
    debian-mr-copyright-value-regexp
    "\\)$" )
   "font-lock regexp matchin Files: fields.")
 
-(defvar debian-mr-copyright-font-lock-keywords
+(defconst debian-mr-copyright-font-lock-keywords
   `(
     (,debian-mr-copyright-fields-regexp
      (1 debian-mr-copyright-field-face)
@@ -126,8 +138,9 @@
     (,debian-mr-copyright-license-regexp
      (1 debian-mr-copyright-field-face)
      (2 debian-mr-copyright-files-face nil t) ;Not to fail if missing
-     (3 debian-mr-copyright-invalid-face)
-     )
+     (3 debian-mr-copyright-invalid-face))
+    (,debian-mr-copyright-extended-field-regexp
+     (1 debian-mr-copyright-extended-field-face))
     )
   )
 
@@ -137,14 +150,16 @@
 ;;      (2 debian-mr-copyright-files-face))
 
 
-(defvar debian-mr-copyright-mode-menu nil)
+(defconst debian-mr-copyright-mode-menu nil)
 
 ;;;###autoload
 
 (define-derived-mode debian-mr-copyright-mode fundamental-mode "Debian Control"
-  "A major mode for editing machine-readable Debian copyright files (i.e. debian/copyright)."
+  "A major mode for editing machine-readable Debian copyright files
+ (i.e. debian/copyright)."
   (if (< emacs-major-version 21)
-      (message "debian-mr-copyright-mode only supports emacsen version >= 21; disabling features")
+      (message "debian-mr-copyright-mode only supports emacsen version >= 21
+; disabling features")
     (progn
       (set-syntax-table debian-mr-copyright-syntax-table)
       ;; Comments
@@ -153,22 +168,22 @@
       (make-local-variable 'comment-start)
       (make-local-variable 'comment-end)
       (setq comment-start "#"
-            comment-end "")
+	    comment-end "")
 
       (make-local-variable 'font-lock-defaults)
-      (setq font-lock-defaults 
-            '(debian-mr-copyright-font-lock-keywords
-              nil           ;;; Keywords only? No, let it do syntax via table.
-              nil           ;;; case-fold?
-              nil           ;;; Local syntax table.
-              nil           ;;; Use `backward-paragraph' ? No
-              ))
+      (setq font-lock-defaults
+	    '(debian-mr-copyright-font-lock-keywords
+	      nil	;;; Keywords only? No, let it do syntax via table.
+	      nil	;;; case-fold?
+	      nil	;;; Local syntax table.
+	      nil	;;; Use `backward-paragraph' ? No
+	      ))
       )
     )
   )
 
 
-(add-to-list 'auto-mode-alist '("/debian/copyright\\'" . 
+(add-to-list 'auto-mode-alist '("/debian/copyright\\'" .
 				debian-mr-copyright-mode))
 
 ;;;###autoload(add-to-list 'auto-mode-alist '("/debian/control\\'" . debian-mr-copyright-mode))
