@@ -11,7 +11,7 @@ require("wicked")
 theme_path = "/usr/local/share/awesome/themes/default"
 
 -- This is used later as the default terminal to run.
-terminal = "xterm"
+terminal = "gnome-terminal --window"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
