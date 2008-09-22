@@ -69,7 +69,7 @@ beautiful.init(theme_path)
 awful.beautiful.register(beautiful)
 
 -- Uncomment this to activate autotabbing
-tabulous.autotab_start()
+-- tabulous.autotab_start()
 -- }}}
 
 -- {{{ Tags
@@ -103,7 +103,7 @@ mytaglist.label = awful.widget.taglist.label.all
 
 -- Create a tasklist widget
 mytasklist = widget({ type = "tasklist", name = "mytasklist" })
-mytasklist:mouse_add(mouse({ }, 1, function (object, c) c:focus_set(); c:raise() end))
+mytasklist:mouse_add(mouse({ }, 1, function (object, c) focus = c; c:raise() end))
 mytasklist:mouse_add(mouse({ }, 4, function () awful.client.focusbyidx(1) end))
 mytasklist:mouse_add(mouse({ }, 5, function () awful.client.focusbyidx(-1) end))
 mytasklist.label = awful.widget.tasklist.label.currenttags
@@ -170,7 +170,7 @@ wicked.register(loadavgwidget, 'function', function (widget, args)
 
    f:close()
 
-   return ' <span color=\'white\'>load</span>: ' .. p .. ' | '
+   return ' ' .. p .. ' | '
 end, 4)
 
 -- Execute command and return its output. You probably wan't only execute commands with one
@@ -248,9 +248,9 @@ function get_cpu_widgets (n)
    n = 0
    gov = get_cpu_gov_short(n)
    speed = get_cpu_speed(n)
-   
-   r =      ' <span color=\'white\'>cpu[' .. n .. ']</span>:'
-   r = r .. ' <span color=\'green\'>'.. speed..'</span>Mhz '
+
+   r = ' '
+   r = r .. '<span color=\'green\'>'.. speed..'</span>Mhz '
    r = r .. gov..' ' 
    return r
 end, 5)
@@ -329,7 +329,7 @@ for i = 1, keynumber do
                    end):add()
     keybinding({ modkey, "Shift" }, "F" .. i,
                    function ()
-                       local sel = client.focus_get()
+                       local sel = client.focus
                        if sel then
                            if tags[sel.screen][i] then
                                awful.client.movetotag(tags[sel.screen][i])
@@ -338,7 +338,7 @@ for i = 1, keynumber do
                    end):add()
     keybinding({ modkey, "Control", "Shift" }, "F" .. i,
                    function ()
-                       local sel = client.focus_get()
+                       local sel = client.focus
                        if sel then
                            if tags[sel.screen][i] then
                                awful.client.toggletag(tags[sel.screen][i])
@@ -359,15 +359,15 @@ keybinding({ modkey, "Shift" }, "q", awesome.quit):add()
 
 -- Client manipulation
 keybinding({ modkey }, "m", awful.client.maximize):add()
-keybinding({ modkey, "Shift" }, "c", function () client.focus_get():kill() end):add()
-keybinding({ modkey }, "j", function () awful.client.focusbyidx(1); client.focus_get():raise() end):add()
-keybinding({ modkey }, "k", function () awful.client.focusbyidx(-1);  client.focus_get():raise() end):add()
+keybinding({ modkey, "Shift" }, "c", function () client.focus:kill() end):add()
+keybinding({ modkey }, "j", function () awful.client.focusbyidx(1); client.focus:raise() end):add()
+keybinding({ modkey }, "k", function () awful.client.focusbyidx(-1);  client.focus:raise() end):add()
 keybinding({ modkey, "Shift" }, "j", function () awful.client.swap(1) end):add()
 keybinding({ modkey, "Shift" }, "k", function () awful.client.swap(-1) end):add()
 keybinding({ modkey, "Control" }, "j", function () awful.screen.focus(1) end):add()
 keybinding({ modkey, "Control" }, "k", function () awful.screen.focus(-1) end):add()
 keybinding({ modkey, "Control" }, "space", awful.client.togglefloating):add()
-keybinding({ modkey, "Control" }, "Return", function () client.focus_get():swap(awful.client.master()) end):add()
+keybinding({ modkey, "Control" }, "Return", function () client.focus:swap(awful.client.master()) end):add()
 keybinding({ modkey }, "o", awful.client.movetoscreen):add()
 keybinding({ modkey }, "Tab", awful.client.focus.history.previous):add()
 
@@ -401,7 +401,7 @@ keybinding({ modkey, "Control" }, "y", function ()
             tabbedview = tabulous.tab_create()
             tabulous.tab(tabbedview, nextclient)
         else
-            tabulous.tab(tabbedview, client.focus_get())
+            tabulous.tab(tabbedview, client.focus)
         end
     else
         tabulous.tab(tabbedview, nextclient)
@@ -478,7 +478,7 @@ end
 function hook_mouseover(c)
     -- Sloppy focus, but disabled for magnifier layout
     if awful.layout.get(c.screen) ~= "magnifier" then
-        c:focus_set()
+       client.focus = c
     end
 end
 
@@ -498,7 +498,7 @@ function hook_manage(c)
     -- if they're not focusable, so set border anyway.
     c.border_width = beautiful.border_width
     c.border_color = beautiful.border_normal
-    c:focus_set()
+    client.focus = c
 
     -- Check if the application should be floating.
     local cls = c.class
@@ -532,14 +532,14 @@ function hook_arrange(screen)
         "<bg image=\"/usr/local/share/awesome/icons/layouts/" .. awful.layout.get(screen) .. "w.png\" resize=\"true\"/>"
 
     -- If no window has focus, give focus to the latest in history
-    if not client.focus_get() then
+    if not client.focus then
         local c = awful.client.focus.history.get(screen, 0)
-        if c then c:focus_set() end
+        if c then client.focus = c end
     end
 
     -- Uncomment if you want mouse warping
     --[[
-    local sel = client.focus_get()
+    local sel = client.focus
     if sel then
         local c_c = sel.coords
         local m_c = mouse.coords
