@@ -32,8 +32,8 @@ precmd() {
     title "zsh" "%n@%m(%35<...<%~)"
     
     psvar=()
-#    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
-    ref=$(git-symbolic-ref HEAD 2> /dev/null) || return
+#    git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
 #    psvar[1]=${$(readlink -f ${git_dir:h})/$HOME/'~'}
     psvar[1]=${ref#refs/heads/}
     (( psvar[2]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
