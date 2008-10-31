@@ -35,3 +35,6 @@ end
 document nofence
 Disable memory allocation debugging through Electric Fence (efence(3)).
 end
+
+# needed for allowing XFS to mount filesystems without dropping into gdb
+handle SIGSEGV nostop noprint pass
