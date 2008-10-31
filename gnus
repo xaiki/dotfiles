@@ -18,6 +18,14 @@
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
+(setq my-gnus-group-ilne-groupname-unread-face-1 t)
+(copy-face 'gnus-default 'my-gnus-group-ilne-groupname-unread-face-1)
+(set-face-foreground 'my-gnus-group-ilne-groupname-unread-face-1 "yellow")
+
+(setq my-gnus-group-ilne-groupname-read-face-3 t)
+(copy-face 'gnus-default 'my-gnus-group-ilne-groupname-read-face-3)
+(set-face-foreground 'my-gnus-group-ilne-groupname-read-face-3 "red")
+
 (setq gnus-mouse-face-5 t)
 (copy-face 'gnus-default 'gnus-mouse-face-5)
 (set-face-foreground 'gnus-mouse-face-5 "yellow")
@@ -45,10 +53,10 @@
 ;; ====== Réglages validés =================================
 
 ;; dossiers
-;(setq gnus-home-directory  "~/.gnus.d")
-;(setq message-directory    "~/.gnus.d/Mail")
-;(setq gnus-directory       "~/.gnus.d/News")
-;(setq gnus-agent-directory "~/.gnus.d/agent")
+(setq gnus-home-directory  "~/.gnus.d")
+(setq message-directory    "~/.gnus.d/Mail")
+(setq gnus-directory       "~/.gnus.d/News")
+(setq gnus-agent-directory "~/.gnus.d/agent")
 
 ;;----- identité --------------------------------------------
 (setq user-full-name "Niv Sardi")
@@ -90,6 +98,8 @@
 ;(setq gnus-agent t) ;plus nécessaire en 21.3.50 ?
 ;;(setq gnus-agent nil
 ;;          gnus-agent-cache nil)
+
+(setq gnus-asynchronous t)
 
 ;; setup imap
 (setq imap-log nil)
@@ -252,8 +262,9 @@
 
 ; Trier les threads en fonctions du score, puis par date
 (setq gnus-thread-sort-functions
-      '(gnus-thread-sort-by-date
-	gnus-thread-sort-by-total-score))
+      '(gnus-thread-sort-by-total-score
+	gnus-thread-sort-by-date
+	))
 
 ; Ne mettre en cache que les articles définis comme persistants
 ;(setq gnus-use-cache 'passive)
@@ -284,11 +295,15 @@
       "\[ Snip %n lines (%l Characters) \]\n")
 
 ; Couper les lignes trop longues
-; (setq-default gnus-treat-fill-long-lines t)
+(setq-default gnus-treat-fill-long-lines t)
 (setq gnus-article-strip-blank-lines t)
 
 ; Mise en couleur de la signature
 (setq gnus-treat-highlight-signature 'last)
+
+(setq gnus-treat-unsplit-urls t)
+(setq gnus-treat-hide-citation t)
+(setq gnus-treat-x-pgp-sig 'head)
 
 ; Veut pas des gorets !
 ;(add-hook 'gnus-part-display-hook 'gnus-article-hide-citation-maybe)
