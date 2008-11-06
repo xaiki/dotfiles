@@ -18,13 +18,13 @@
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
-(setq my-gnus-group-ilne-groupname-unread-face-1 t)
-(copy-face 'gnus-default 'my-gnus-group-ilne-groupname-unread-face-1)
-(set-face-foreground 'my-gnus-group-ilne-groupname-unread-face-1 "yellow")
+(setq my-gnus-group-line-groupname-unread-face-1 t)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-1)
+(set-face-foreground 'my-gnus-group-line-groupname-unread-face-1 "yellow")
 
-(setq my-gnus-group-ilne-groupname-read-face-3 t)
-(copy-face 'gnus-default 'my-gnus-group-ilne-groupname-read-face-3)
-(set-face-foreground 'my-gnus-group-ilne-groupname-read-face-3 "red")
+(setq my-gnus-group-line-groupname-unread-face-3 t)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-3)
+(set-face-foreground 'my-gnus-group-line-groupname-unread-face-3 "red")
 
 (setq gnus-mouse-face-5 t)
 (copy-face 'gnus-default 'gnus-mouse-face-5)
@@ -295,7 +295,7 @@
       "\[ Snip %n lines (%l Characters) \]\n")
 
 ; Couper les lignes trop longues
-(setq-default gnus-treat-fill-long-lines t)
+(setq-default gnus-treat-fill-long-lines nil)
 (setq gnus-article-strip-blank-lines t)
 
 ; Mise en couleur de la signature
