@@ -724,6 +724,7 @@ Suitable for use in `planner-annotation-functions'."
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
+ '(gnus-button ((t (:inherit link :underline nil :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
