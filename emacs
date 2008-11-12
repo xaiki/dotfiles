@@ -48,6 +48,8 @@
 (require 'git-blame nil t)
 (require 'vc-git nil t)
 
+(setq git-append-signed-off-by t)
+
 ;;(require 'ecb)
 
 (if (require 'font-lock nil t)
@@ -702,10 +704,13 @@ Suitable for use in `planner-annotation-functions'."
  '(display-time-mode t)
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
+ '(gnus-supercite-regexp "^\\(\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>|]\\)+\\)? *>>>>> +\"\\([^\"
+]+\\)\" +==")
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
  '(jabber-username "0xa1f00")
+ '(message-cite-prefix-regexp "\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>|]\\)+")
  '(mm-inline-text-html-with-images t)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -724,9 +729,10 @@ Suitable for use in `planner-annotation-functions'."
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
- '(gnus-button ((t (:inherit link :underline nil :weight bold))))
+ '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
+ '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
  '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
 
