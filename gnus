@@ -18,15 +18,19 @@
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
-(setq my-gnus-group-line-groupname-unread-face-1 t)
+(setq my-gnus-group-line-groupname-unread-face-1 nil)
 (copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-1)
 (set-face-foreground 'my-gnus-group-line-groupname-unread-face-1 "yellow")
 
-(setq my-gnus-group-line-groupname-unread-face-3 t)
+(setq my-gnus-group-line-groupname-read-face-3 nil)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-read-face-3)
+(set-face-foreground 'my-gnus-group-line-groupname-read-face-3 "green")
+
+(setq my-gnus-group-line-groupname-unread-face-3 nil)
 (copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-3)
 (set-face-foreground 'my-gnus-group-line-groupname-unread-face-3 "red")
 
-(setq gnus-mouse-face-5 t)
+(setq gnus-mouse-face-5 nil)
 (copy-face 'gnus-default 'gnus-mouse-face-5)
 (set-face-foreground 'gnus-mouse-face-5 "yellow")
 
@@ -276,6 +280,15 @@
 (setq gnus-default-article-saver
       'gnus-summary-save-in-mail)
 
+(diff-mode)
+(setq gnus-emphasis-alist
+      '(
+	("^\>?\\([+-][+-][+-] \\)" 0 1 diff-header)
+	("^\>?[+-][+-][+-] \\(.*\\)$" 1 1 diff-file-header)
+	("^\>?\\(@@ .* @@.*\\)$" 0 1 diff-header)
+	("^\>?\\([+][^+].*\\)" 0 1 diff-added)
+	("^\>?\\([-][^-].*\\)" 0 1 diff-removed)
+	))
 ; Je suis un peu mégalomane, donc je veux voir mon pseudo s'afficher en
 ; gras-souligné
 ;; (setq gnus-emphasis-alist
@@ -381,7 +394,7 @@
 (setq mm-text-html-renderer 'w3m);'w3m
 
 ; Répertoire par défaut des attachements
-(setq gnus-summary-save-parts-last-directory "~/unread/")
+(setq gnus-summary-save-parts-last-directory "~/Wrk/")
 (setq mm-default-directory gnus-summary-save-parts-last-directory)
 
 ; Il y a des fonctions appellées en doubles, mais c'est pas grave
@@ -713,11 +726,19 @@
 	 (subj (aref hdr 1)))
     (gnus-summary-score-entry "Subject" subj 'S' -1000
 			      (current-time-string))
-    ;    (gnus-summary-limit-to-unread)
-    ;    (gnus-summary-scroll-up 0)
+    (recenter scroll-conservatively)
     ))
 
 (define-key gnus-summary-mode-map  "i" 'cg-gnus-summary-ignore-thread)
+
+(defun xa1-gnus-summary-next-article ()
+  (interactive)
+  (progn
+    (gnus-summary-next-unread-article)
+    (recenter scroll-conservatively)
+    ))
+
+(define-key gnus-summary-mode-map  "n" 'xa1-gnus-summary-next-article)
 
 ;;  -*-*-*-*-*-{   trivial cite   }-*-*-*-*-*-*-
 ;;  ( http://shasta.cs.uiuc.edu/~lrclause/tc.html )
@@ -1014,19 +1035,19 @@ more then one article."
 (setq gnus-group-line-format "%1(%1{%6i %}%)%{ %}%2(%2{%7U %}%)%{ %}%3(%3{%7y %}%)%{%* %}%4(%B%-45G%)\n" )
 ; Faces to use for the group-names ("%-45G") ...
 ; More about that: (gnus)Group Highlighting
-(setq gnus-group-highlight
-      ;; ... if the group has no unread articles, depending on the level
-      '(((and (= level 1) (= unread 0)). my-gnus-group-line-groupname-read-face-1)
-	((and (= level 2) (= unread 0)). my-gnus-group-line-groupname-read-face-2)
-	((and (= level 3) (= unread 0)). my-gnus-group-line-groupname-read-face-3)
-	((and (= level 4) (= unread 0)). my-gnus-group-line-groupname-read-face-4)
-	;; ... if the group has unread articles, depending on the level too
-	((and (= level 1) (> unread 0)). my-gnus-group-line-groupname-unread-face-1)
-	((and (= level 2) (> unread 0)). my-gnus-group-line-groupname-unread-face-2)
-	((and (= level 3) (> unread 0)). my-gnus-group-line-groupname-unread-face-3)
-	((and (= level 4) (> unread 0)). my-gnus-group-line-groupname-unread-face-4)
-	;; If the group doesn't match the rules above
-	(t . my-gnus-group-line-groupname-face)))
+(setq gnus-group-highlight nil)
+;;;       ;; ... if the group has no unread articles, depending on the level
+;;;       '(((and (= level 1) (= unread 0)). my-gnus-group-line-groupname-read-face-1)
+;;; 	((and (= level 2) (= unread 0)). my-gnus-group-line-groupname-read-face-2)
+;;; 	((and (= level 3) (= unread 0)). my-gnus-group-line-groupname-read-face-3)
+;;; 	((and (= level 4) (= unread 0)). my-gnus-group-line-groupname-read-face-4)
+;;; 	;; ... if the group has unread articles, depending on the level too
+;;; 	((and (= level 1) (> unread 0)). my-gnus-group-line-groupname-unread-face-1)
+;;; 	((and (= level 2) (> unread 0)). my-gnus-group-line-groupname-unread-face-2)
+;;; 	((and (= level 3) (> unread 0)). my-gnus-group-line-groupname-unread-face-3)
+;;; 	((and (= level 4) (> unread 0)). my-gnus-group-line-groupname-unread-face-4)
+;;; 	;; If the group doesn't match the rules above
+;;; 	(t . my-gnus-group-line-groupname-face)))
 ; Header-line
 (if (require 'highlight-current-line)
     (progn
@@ -1319,15 +1340,15 @@ more then one article."
 ;; (spam-process-destination . "nnimap+lifelogs.com:INBOX.train"))
 
 ;;probláme du font-lock de message
-(setq gnus-emphasis-alist '(("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold-italic)
- ("\\(\\s-\\|^\\)\\(-\\(\\(\\w\\|-[^-]\\)+\\)-\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-strikethru)
- ("\\(\\s-\\|^\\)\\(_\\(\\(\\w\\|_[^_]\\)+\\)_\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-underline)))
+;; (setq gnus-emphasis-alist '(("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold-italic)
+;;  ("\\(\\s-\\|^\\)\\(-\\(\\(\\w\\|-[^-]\\)+\\)-\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-strikethru)
+;;  ("\\(\\s-\\|^\\)\\(_\\(\\(\\w\\|_[^_]\\)+\\)_\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-underline)))
 
 
 ;;;========== configuration GPG / PGG ==============================
