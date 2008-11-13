@@ -170,6 +170,14 @@
 ;; (defun my-verify-sign ()
 ;;   ( mc-verify ))
 
+(require 'erc)
+(defun xa1-scroll-to-bottom (&optional arg)
+  (interactive)
+  (progn
+    (recenter (1- (- scroll-conservatively)))
+    ))
+(add-hook 'erc-send-completed-hook 'xa1-scroll-to-bottom)
+
 (defun recode-buffer ()
   "Recodes buffer in UTF-8"
   (interactive)
