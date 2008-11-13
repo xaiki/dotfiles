@@ -768,10 +768,14 @@
 ;;      )))
 ;(setq mail-extr-ignore-single-names nil) ;permet de considérer un real-name d'un seul mot
 ;;(remove-hook 'mail-citation-hook 'trivial-cite) ;aussi pour le mail
+
+(setq gnus-supercite-regexp "^\\(\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>]\\)+\\)? *>>>>> +\"\\([^\")
+]+\\)\" +==")
+(setq message-cite-prefix-regexp "\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>]\\)+")
 (setq tc-debug-level 1
       mail-extr-ignore-single-names nil
       mail-extr-ignore-realname-equals-mailbox-name nil
-      tc-normal-citemarks  ">|:"
+      tc-normal-citemarks  ">:"
       tc-fill-long-lines   't
       ;;tc-time-format "%e %B %Y à %H:%m"
       ;;tc-make-attribution 'sk-tc-attribution

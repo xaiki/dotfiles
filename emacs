@@ -712,13 +712,10 @@ Suitable for use in `planner-annotation-functions'."
  '(display-time-mode t)
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
- '(gnus-supercite-regexp "^\\(\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>|]\\)+\\)? *>>>>> +\"\\([^\"
-]+\\)\" +==")
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
  '(jabber-username "0xa1f00")
- '(message-cite-prefix-regexp "\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>|]\\)+")
  '(mm-inline-text-html-with-images t)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
