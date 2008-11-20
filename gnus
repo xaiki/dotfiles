@@ -13,12 +13,24 @@
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
 (copy-face 'default 'gnus-default)
-(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
+;;(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
 
 (copy-face 'gnus-default 'mysubject)
 (setq gnus-face-1 'mysubject)
 
-(setq gnus-mouse-face-5 t)
+(setq my-gnus-group-line-groupname-unread-face-1 nil)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-1)
+(set-face-foreground 'my-gnus-group-line-groupname-unread-face-1 "yellow")
+
+(setq my-gnus-group-line-groupname-read-face-3 nil)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-read-face-3)
+(set-face-foreground 'my-gnus-group-line-groupname-read-face-3 "green")
+
+(setq my-gnus-group-line-groupname-unread-face-3 nil)
+(copy-face 'gnus-default 'my-gnus-group-line-groupname-unread-face-3)
+(set-face-foreground 'my-gnus-group-line-groupname-unread-face-3 "red")
+
+(setq gnus-mouse-face-5 nil)
 (copy-face 'gnus-default 'gnus-mouse-face-5)
 (set-face-foreground 'gnus-mouse-face-5 "yellow")
 
@@ -45,45 +57,45 @@
 ;; ====== Réglages validés =================================
 
 ;; dossiers
-;(setq gnus-home-directory  "~/.gnus.d")
-;(setq message-directory    "~/.gnus.d/Mail")
-;(setq gnus-directory       "~/.gnus.d/News")
-;(setq gnus-agent-directory "~/.gnus.d/agent")
+(setq gnus-home-directory  "~/.gnus.d")
+(setq message-directory    "~/.gnus.d/Mail")
+(setq gnus-directory       "~/.gnus.d/News")
+(setq gnus-agent-directory "~/.gnus.d/agent")
 
 ;;----- identité --------------------------------------------
 (setq user-full-name "Niv Sardi")
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "xaiki@cxhome.ath.cx")
+(if (string-match "itchy" system-name)
+    (setq user-mail-address "xaiki@sgi.com")
+  (setq user-mail-address "xaiki@cxhome.ath.cx"))
 
-;; mes autre adresses : en répondant à un message permet de réutiliser l'adresse du To:/From:/CC: de ce message
+;; mes autre adresses : en répondant à un message permet de réutiliser
+;; l'adresse du To:/From:/CC: de ce message
 (setq message-alternative-emails
       (regexp-opt (cons user-mail-address
-                        '("xaiki@debian.org"
-                          "xaiki@sgi.com"
-                          "xaiki@openwide.fr"
-                          "xaiki+.*@cxhome.ath.cx"
-                          ))))
+			'("xaiki@cxhome.ath.cx"
+			  "xaiki@debian.org"
+			  "xaiki@sgi.com"
+			  "xaiki@openwide.fr"
+			  "xaiki+.*@cxhome.ath.cx"
+			  ))))
 
 ;; mes addresses sont à supprimer dans les wide-reply
 (setq message-dont-reply-to-names message-alternative-emails)
 
-;; afficher les noms des destinataires à la place du mien pour les messages que j'ai envoyés
-(setq gnus-ignored-from-addresses "Niv Sardi") ;; 8e9 = é latin-1 / f69 = é latin-9
+;; afficher les noms des destinataires à la place du mien pour les
+;; messages que j'ai envoyés
+(setq gnus-ignored-from-addresses "Niv Sardi") ;; 8e9 = é latin-1 /
+					       ;; f69 = é latin-9
 
-;; si on veut bidouiller l'adresse pour le MAIL, utiliser la ligne suivante
-;;(setq smtpmail-mail-address "sebastien.kirche.no@spam.free.fr.invalid")
-;; pour bidouiller l'adresse pour les NEWS, voir le champ From: dans les posting styles
+;; si on veut bidouiller l'adresse pour le MAIL, utiliser la ligne
+;;suivante (setq smtpmail-mail-address
+;;"sebastien.kirche.no@spam.free.fr.invalid") pour bidouiller
+;;l'adresse pour les NEWS, voir le champ From: dans les posting styles
 (setq message-user-organization "GZi")
 
-;; ma x-face
-;;(defvar sk:x-face
-;;   (concat " ;T}O6aj2o*d:|9po%NCuYvExN3]<#cHr0\"FaWCh[}WVn6&@L)YWO'&6AO5Ex:MX=H;.^e}o"
-;;           " Td*OaFQEBc_xu%+ChwRl!KK`I'[\"$^aO1gIN{4OyBdO@1HHD5YO#[kiVCk|/-|mmYnU8yTp+eOv.\"d"
-;;           " 1.G3;ro0Q/`,UY+vY/#5b/{OYxE+X\\)tc~p~1vbmZ!o4sciW+e8MW|Pz|nl`l*}]8[#1zQO\"]d2*{d"
-;;           " wrTKu]5t<lBGxO->*Gy_pm3e8o=:(c_ju'zlQ<[oJ|\\XjgQQmWZC7S]-Fmp\\eBHnBO']/te~/;\\@l\""
-;;           " D#:h)8Q") ":^)")
 
 ;;----- réglages des sources (select methods) et des envois ---------------
 ;; Mode par défaut : gnus-agent
@@ -91,35 +103,35 @@
 ;;(setq gnus-agent nil
 ;;          gnus-agent-cache nil)
 
+(setq gnus-asynchronous t)
+
 ;; setup imap
-(setq imap-log t)
-(setq imap-debug t)
+(setq imap-log nil)
+(setq imap-debug nil)
 (setq imap-store-password t)
 (setq nnimap-request-list-method 'imap-mailbox-list)
 
 ;;serveur news principal
 (setq gnus-select-method
-      '(nnnil ""
-              ;;nntp "news.free.fr"
-              ;;(nntp-authinfo-user "sebastien.kirche")
-              ;;(nntp-authinfo-password "xxxxxx")
-              ))
-(setq gnus-secondary-select-methods '(
-				      (nnimap "cxhome.ath.cx"
-					      (nnimap-address "imap.cxhome.ath.cx")
-					      (nnimap-authenticator login)
-					      (nnimap-stream tls)
-					      (remove-prefix "INBOX.")
-					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo"))
-				      (nnimap "sgi.com"
-					      (nnimap-address "mail-asg.melbourne.sgi.com")
-					      (nnimap-authenticator login)
-					      ;;(nnimap-stream tls)
-					      (remove-prefix "INBOX.")
-					      (nnimap-authinfo-file
-					       "/home/xaiki/.imap-authinfo")))
-      )
+      '(nnnil ""))
+(defun turn-off-backup ()
+  (set (make-local-variable 'backup-inhibited) t))
+
+(setq gnus-secondary-select-methods
+      '(
+	(nnimap "sgi.com"
+		(nnimap-address "mail-asg.melbourne.sgi.com")
+		(nnimap-authenticator login)
+		;;(nnimap-stream tls)
+		(remove-prefix "INBOX.")
+		(nnimap-authinfo-file
+		 "/home/xaiki/.imap-authinfo"))
+	(nnfolder "patches"
+		  (nnfolder-directory "~/Wrk/pending-patches/")
+		  (nnfolder-active-file "~/Wrk/pending-patches/active")
+;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
+		  (nnfolder-get-new-mail t))
+	))
 
 ;; on peut créer un .authinfo sur le modále :
 ;;machine foo.bar.com login your_username password your_pass
@@ -154,14 +166,17 @@
 ; Ne pas créér de fichier IncomingXXXX
 ;(setq mail-source-delete-incoming t)
 
-(setq gnus-read-active-file 'some)           ;relit la liste des groupes depuis l'active-file
-(setq gnus-check-new-newsgroups 'ask-server) ;demande les nouveaux groupes au serveur
+;relit la liste des groupes depuis l'active-file
+(setq gnus-read-active-file 'some)
+
+;demande les nouveaux groupes au serveur
+(setq gnus-check-new-newsgroups 'ask-server)
 
 ;; corrige les problámes de mixed latin-1 / latin-9
 (setq message-default-charset 'utf-8
       ;; ??? gnus-default-posting-charset (quote iso-8859-15)
       mm-body-charset-encoding-alist '((iso-8859-1 . 8bit)
-                                       (iso-8859-15 . 8bit)))
+				       (iso-8859-15 . 8bit)))
 (add-to-list 'mm-charset-synonym-alist '(iso8859-15 . iso-8859-15))
 (add-to-list 'mm-charset-synonym-alist '(iso885915 . iso-8859-15))
 
@@ -180,11 +195,11 @@
 
 ;; Scorage des groupes les plus lus
 (add-hook 'gnus-summary-exit-hook
-          'gnus-summary-bubble-group)
+	  'gnus-summary-bubble-group)
 
 ;; Classer les groupes en fonction de leur hits
 (setq gnus-group-sort-function '(gnus-group-sort-by-unread
-                                 gnus-group-sort-by-rank))
+				 gnus-group-sort-by-rank))
 
 ;; Mise en place des 'Topics' pour un affichage structuré des groupes
 ;; Introduction rapide : T n - create new topic
@@ -200,7 +215,8 @@
 ;; Format d'affichage des topics
 ;; Format disponible dans le chapitre 2.16.1 du manuel Gnus
 ;;(setq gnus-topic-line-format "%i[ %n -- %A/%g]\n")
-(setq gnus-topic-line-format "%6v            %5(%5{%7A %}%)%* %5(%5{ ==> %-31n%)%}\n" )
+(setq gnus-topic-line-format
+      "%6v            %5(%5{%7A %}%)%* %5(%5{ ==> %-31n%)%}\n" )
 
 ;;========== SUMMARY ===================================
 ;;présentation des messages alignés avec indication des fils
@@ -226,12 +242,12 @@
 
 ;; affichage de la date en relatif
 (setq gnus-user-date-format-alist
-      '(((gnus-seconds-today) . "     %k:%M")           ;dans la journée =      14:39
-        ((+ 86400 (gnus-seconds-today)) . "Yest %k:%M") ;hier            = hier 14:39
-        ((+ 604800 (gnus-seconds-today)) . "%a  %k:%M") ;dans la semaine = sam  14:39
-        ((gnus-seconds-month) . "%a  %d")               ;ce mois         = sam  28
-        ((gnus-seconds-year) . "%b  %d")                 ;durant l'année  = mai  28
-        (t . "%b %d '%y")))                             ;le reste        = mai  28 '05
+      '(((gnus-seconds-today) . "     %k:%M")		;dans la journée =      14:39
+	((+ 86400 (gnus-seconds-today)) . "Yest %k:%M")	;hier            = hier 14:39
+	((+ 604800 (gnus-seconds-today)) . "%a  %k:%M") ;dans la semaine = sam  14:39
+	((gnus-seconds-month) . "%a  %d")		;ce mois         = sam  28
+	((gnus-seconds-year) . "%b  %d")		;durant l'année  = mai  28
+	(t . "%b %d '%y")))				;le reste        = mai  28 '05
 
 ; Indentation des threads
 (setq gnus-thread-indent-level 2)
@@ -250,8 +266,9 @@
 
 ; Trier les threads en fonctions du score, puis par date
 (setq gnus-thread-sort-functions
-      '(gnus-thread-sort-by-date
-        gnus-thread-sort-by-total-score))
+      '(gnus-thread-sort-by-total-score
+	gnus-thread-sort-by-date
+	))
 
 ; Ne mettre en cache que les articles définis comme persistants
 ;(setq gnus-use-cache 'passive)
@@ -263,6 +280,15 @@
 (setq gnus-default-article-saver
       'gnus-summary-save-in-mail)
 
+(diff-mode)
+(setq gnus-emphasis-alist
+      '(
+	("^\>?\\([+-][+-][+-] \\)" 0 1 diff-header)
+	("^\>?[+-][+-][+-] \\(.*\\)$" 1 1 diff-file-header)
+	("^\>?\\(@@ .* @@.*\\)$" 0 1 diff-header)
+	("^\>?\\([+][^+].*\\)" 0 1 diff-added)
+	("^\>?\\([-][^-].*\\)" 0 1 diff-removed)
+	))
 ; Je suis un peu mégalomane, donc je veux voir mon pseudo s'afficher en
 ; gras-souligné
 ;; (setq gnus-emphasis-alist
@@ -282,11 +308,15 @@
       "\[ Snip %n lines (%l Characters) \]\n")
 
 ; Couper les lignes trop longues
-; (setq-default gnus-treat-fill-long-lines t)
+(setq-default gnus-treat-fill-long-lines nil)
 (setq gnus-article-strip-blank-lines t)
 
 ; Mise en couleur de la signature
 (setq gnus-treat-highlight-signature 'last)
+
+(setq gnus-treat-unsplit-urls t)
+(setq gnus-treat-hide-citation t)
+(setq gnus-treat-x-pgp-sig 'head)
 
 ; Veut pas des gorets !
 ;(add-hook 'gnus-part-display-hook 'gnus-article-hide-citation-maybe)
@@ -307,16 +337,14 @@
 
 ; Provient du manuel Gnus (Node 3.16.7)
 (setq gnus-signature-separator
-      '("^-- $"         ; The standard
-        "^-- *$"        ; A common mangling
-        "^-------*$"    ; Many people just use a looong
-                        ; line of dashes.  Shame!
-        "^ *--------*$" ; Double-shame!
-        "^________*$"   ; Underscores are also popular
-        "^========*$"
-        "^----- Original Message -----$"
-
-        )) ; Pervert!
+      '("^-- $"		; The standard
+	"^-- *$"	; A common mangling
+	"^-------*$"    ; Many people just use a looong
+	; line of dashes.  Shame!
+	"^ *--------*$" ; Double-shame!
+	"^________*$"   ; Underscores are also popular
+	"^----- Original Message -----$"
+	)) ; Pervert!
 
 ; Ne pas inclure la signature lors d'une réponse
 (setq message-cite-function 'message-cite-original-without-signature)
@@ -347,7 +375,7 @@
   (flyspell-mode)
   (setq default-justification 'left)
   (setq footnote-spaced-footnotes nil
-        footnote-section-tag "")
+	footnote-section-tag "")
   (footnote-mode)
   )
 (add-hook 'message-mode-hook 'sk-gnus-message-hook)
@@ -366,7 +394,7 @@
 (setq mm-text-html-renderer 'w3m);'w3m
 
 ; Répertoire par défaut des attachements
-(setq gnus-summary-save-parts-last-directory "~/unread/")
+(setq gnus-summary-save-parts-last-directory "~/Wrk/")
 (setq mm-default-directory gnus-summary-save-parts-last-directory)
 
 ; Il y a des fonctions appellées en doubles, mais c'est pas grave
@@ -389,8 +417,8 @@
 ;; Pour ne pas afficher les tags débiles des ML...
 (setq gnus-list-identifiers
       '("\\[spam\\]"
-        "\\[exces\\]"
-        "\\[ppm\\]"))
+	"\\[exces\\]"
+	"\\[ppm\\]"))
 
 ;; ne pas scroller le message si le reste n'est que quote+signature
 (setq gnus-article-skip-boring t)
@@ -398,7 +426,8 @@
 ;; Je veux mes smileys :)
 ;;(setq gnus-treat-display-smileys t) TODO : rajouter pour le mac
 (setq gnus-treat-display-smileys t)
-;;(setq smiley-data-directory "/Applications/Emacs.app/Contents/Resources/etc/smilies")
+;;(setq smiley-data-directory
+;;"/Applications/Emacs.app/Contents/Resources/etc/smilies")
 
 (add-hook 'gnus-article-display-hook 'gnus-smiley-display t)
 
@@ -418,8 +447,9 @@
 ;;(remove-hook 'gnus-summary-mode-hook
 ;;         (global-set-key [w] 'gnus-article-hide-citation))
 (add-hook 'gnus-summary-mode-hook
-          ( lambda ()
-            (setq header-line-format "Flags   Date               From           Score   Size          Subject " )))
+	  (lambda ()
+	    (setq header-line-format "Flags   Date               From           Score   Size          Subject " )
+	    (highlight-current-line-minor-mode)))
 
 ;; décodage des parties mml
 ;; auteur : drkm de fr.comp.applications.emacs
@@ -427,7 +457,7 @@
   ;;(autoload 'drkm-mml:decode-parts "drkm-mml")
   (add-hook 'gnus-part-display-hook 'drkm-mml:decode-parts)
   (push '("nntp+news.cuq.org:fr.comp.applications.emacs" . emacs-lisp-mode)
-        drkm-mml:group-alist)
+	drkm-mml:group-alist)
   )
 
 ;; ===== Rédaction de message ===================================
@@ -439,12 +469,12 @@
 
 ; Pour tout le monde
 ;;(setq gnus-posting-styles nil)
-(setq gnus-posting-styles 
+(setq gnus-posting-styles
        '((".*"
-          (eval (ispell-change-dictionary "english"))
-          (signature "Niv Sardi")
-          (eval (setq tc-time-format "%H:%M on %b %e %Y" ;; FIXME : format-time-string & localized names
-;;                      ;;         fonction de LC_TIME
+	  (eval (ispell-change-dictionary "english"))
+	  (signature "Niv Sardi")
+	  (eval (setq tc-time-format "%H:%M on %b %e %Y" ;; FIXME : format-time-string & localized names
+		      ;;                      ;;         fonction de LC_TIME
 ;;                      ;;         voir pour définir une fonction de mapping
 ;;                      tc-make-attribution 'sk-tc-attribution-en)))
 		      )))))
@@ -640,16 +670,15 @@
 ;;archivage de mes messages / posts
 (setq gnus-gcc-mark-as-read t)
 (setq gnus-message-archive-method
-      '(nnml "archives"
-             (nnml-directory "~/.gnus.d/archives")
-             (nnml-active-file "~/.gnus.d/archives/active")
-             (nnml-inhibit-expiry t)
-             (nnml-get-new-mail nil)))
+      '(nnfolder "archives"
+		 (nnfolder-directory "~/.gnus.d/archives")
+		 (nnfolder-active-file "~/.gnus.d/archives/active")
+		 (nnfolder-get-new-mail nil)))
 (setq gnus-message-archive-group
       '((if (message-news-p)
-            (concat "nnml+archives:News-sent." (format-time-string "%Y-%m"))
-          (concat "nnml+archives:Mail-sent." (format-time-string "%Y-%m"))
-          )))
+	    (concat "nnfolder+archives:News-sent." (format-time-string "%Y-%m"))
+	  (concat "nnfolder+archives:Mail-sent." (format-time-string "%Y-%m"))
+	  )))
 
 ;; Lorsqu'un article n'est plus disponible dans le serveur NNTP, on utilise
 ;; google.com
@@ -657,30 +686,30 @@
 ;; This snippet comes from the info docs Gnus->Finding the Parent.
 (setq gnus-refer-article-method
       '(current
-        (nntp "news.gmane.org")
-        (nnweb "google" (nnweb-type google))))
+	(nntp "news.gmane.org")
+	(nnweb "google" (nnweb-type google))))
 (when
     (cond
      ((executable-find "curl")
       (setq
        mm-url-arguments
        `("--silent"
-         ;;               ,(concat "-A\" Mozilla/5.0 (Windows; U; Windows NT 5.0; "
-         ;;                               "en-US; rv:1.3a) Gecko/20021207 Phoenix/0.5\" ")
-         ;;              "-e http://groups.google.com/advanced_search"
-         "-A mm-url"
-         "-L"
-         )
+	 ;;               ,(concat "-A\" Mozilla/5.0 (Windows; U; Windows NT 5.0; "
+	 ;;                               "en-US; rv:1.3a) Gecko/20021207 Phoenix/0.5\" ")
+	 ;;              "-e http://groups.google.com/advanced_search"
+	 "-A mm-url"
+	 "-L"
+	 )
        mm-url-program "curl"))
 
      ((executable-find "wget")
       (setq
        mm-url-arguments
        `("--quiet"
-         ;;                      ,(concat "-U=\"Mozilla/5.0 (Windows; U; Windows NT 5.0; "
-         ;;                                       "en-US; rv:1.3a) Gecko/20021207 Phoenix/0.5\"")
-         "-U mm-url"
-         )
+	 ;;                      ,(concat "-U=\"Mozilla/5.0 (Windows; U; Windows NT 5.0; "
+	 ;;                                       "en-US; rv:1.3a) Gecko/20021207 Phoenix/0.5\"")
+	 "-U mm-url"
+	 )
        mm-url-program "wget"))
      )
   (setq mm-url-use-external t))
@@ -694,14 +723,22 @@
 (defun cg-gnus-summary-ignore-thread ()
   (interactive)
   (let* ((hdr (gnus-summary-article-header))
-         (subj (aref hdr 1)))
+	 (subj (aref hdr 1)))
     (gnus-summary-score-entry "Subject" subj 'S' -1000
-                              (current-time-string))
-                                        ;    (gnus-summary-limit-to-unread)
-                                        ;    (gnus-summary-scroll-up 0)
+			      (current-time-string))
+    (recenter scroll-conservatively)
     ))
 
 (define-key gnus-summary-mode-map  "i" 'cg-gnus-summary-ignore-thread)
+
+(defun xa1-gnus-summary-next-article ()
+  (interactive)
+  (progn
+    (gnus-summary-next-unread-article)
+    (recenter scroll-conservatively)
+    ))
+
+(define-key gnus-summary-mode-map  "n" 'xa1-gnus-summary-next-article)
 
 ;;  -*-*-*-*-*-{   trivial cite   }-*-*-*-*-*-*-
 ;;  ( http://shasta.cs.uiuc.edu/~lrclause/tc.html )
@@ -731,10 +768,14 @@
 ;;      )))
 ;(setq mail-extr-ignore-single-names nil) ;permet de considérer un real-name d'un seul mot
 ;;(remove-hook 'mail-citation-hook 'trivial-cite) ;aussi pour le mail
+
+(setq gnus-supercite-regexp "^\\(\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>]\\)+\\)? *>>>>> +\"\\([^\")
+]+\\)\" +==")
+(setq message-cite-prefix-regexp "\\([ 	]*[_.[:word:]]+>+\\|[ 	]*[]>]\\)+")
 (setq tc-debug-level 1
       mail-extr-ignore-single-names nil
       mail-extr-ignore-realname-equals-mailbox-name nil
-      tc-normal-citemarks  ">|:"
+      tc-normal-citemarks  ">:"
       tc-fill-long-lines   't
       ;;tc-time-format "%e %B %Y à %H:%m"
       ;;tc-make-attribution 'sk-tc-attribution
@@ -745,39 +786,42 @@
 (defun sk-tc-attribution-fr ()
   "Générer l'attribution."
   (let ((style (random 4))
-        (date (cdr (assoc "date" tc-strings-list)))
-        (email (cdr (assoc "email-addr" tc-strings-list)))
-        (name (cdr (assoc "real-name" tc-strings-list))))
+	(date (cdr (assoc "date" tc-strings-list)))
+	(email (cdr (assoc "email-addr" tc-strings-list)))
+	(name (cdr (assoc "real-name" tc-strings-list))))
     (cond ((= style 0)
-           (concat "Le " date ", " (or name email) " a dit :\n\n"))
-          ((= style 1)
-           (concat "Le " date ", " (or name email) " s'est exprimé ainsi :\n\n"))
-          ((= style 2)
-           (concat "Le " date ", " (or name email) " vraute :\n\n"))
-          ((= style 3)
-           (concat "Le " date ", " (or name email) " a formulé :\n\n"))
-          (t
-           (concat "Le " date ", " (or name email) " écrivit :\n\n")))))
+	   (concat "Le " date ", " (or name email) " a dit :\n\n"))
+	  ((= style 1)
+	   (concat "Le " date ", " (or name email) " s'est exprimé ainsi :\n\n"))
+	  ((= style 2)
+	   (concat "Le " date ", " (or name email) " vraute :\n\n"))
+	  ((= style 3)
+	   (concat "Le " date ", " (or name email) " a formulé :\n\n"))
+	  (t
+	   (concat "Le " date ", " (or name email) " écrivit :\n\n")))))
 
 (defun sk-tc-attribution-en ()
   "Générer l'attribution."
   (let ((style (random 1))
-        (date (cdr (assoc "date" tc-strings-list)))
-        (email (cdr (assoc "email-addr" tc-strings-list)))
-        (name (cdr (assoc "real-name" tc-strings-list))))
+	(date (cdr (assoc "date" tc-strings-list)))
+	(email (cdr (assoc "email-addr" tc-strings-list)))
+	(name (cdr (assoc "real-name" tc-strings-list))))
     (cond ((= style 0)
-           (concat "At " date ", " (or name email) " said :\n\n"))
-          (t
-           (concat "At " date ", " (or name email) " wrote :\n\n")))))
+	   (concat "At " date ", " (or name email) " said :\n\n"))
+	  (t
+	   (concat "At " date ", " (or name email) " wrote :\n\n")))))
 
 ;; ====== Zone expérimentale ================================
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "mail.sceen.net")
+(if (string-match "itchy" system-name)
+    (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
+  (setq smtpmail-smtp-server "localhost")
+  )
 (setq smtpmail-starttls-credentials
-      '(("mail.sceen.net" 25)))
-(setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
+      '(("imap.sceen.net" 25)))
+(setq smtpmail-auth-credentials '(("imap.sceen.net" 25 "xaiki" nil)))
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-send-mail-function 'smtpmail-send-it)
 
@@ -831,7 +875,9 @@
 ;(setq gnus-select-method (quote (nntp "news.free.fr")))
 
 ;affichage des anciens message lus (assez pour afficher les threads)
-(setq gnus-fetch-old-headers nil) ;'some)
+(setq gnus-fetch-old-headers t) ;'some)
+(setq gnus-build-sparse-threads 'more) ;'some)
+
 ;; On garde les threads en un seul morceau meme si le sujet change
 ;(setq gnus-gather-loose-threads t) ;???
 (setq gnus-summary-thread-gathering-function
@@ -847,11 +893,11 @@ Use process marks or mark a region in the summary buffer to archive
 more then one article."
   (interactive "P")
   (let ((archive-name
-         (format
-          "nnml:1.%s"
-          (if (featurep 'xemacs)
-              (replace-in-string gnus-newsgroup-name "^.*:" "")
-            (replace-regexp-in-string "^.*:" "" gnus-newsgroup-name)))))
+	 (format
+	  "nnml:1.%s"
+	  (if (featurep 'xemacs)
+	      (replace-in-string gnus-newsgroup-name "^.*:" "")
+	    (replace-regexp-in-string "^.*:" "" gnus-newsgroup-name)))))
     (gnus-summary-copy-article n archive-name)))
 
 
@@ -859,8 +905,8 @@ more then one article."
  '(article
    ;;(horizontal 1.0 (vertical 25 (group 1.0))
    (vertical 1.0 (summary 13 point)
-             (article 1.0) )
-   ))                                   ;)
+	     (article 1.0) )
+   )) ;)
 ;; (setq gnus-use-trees t
 ;;       gnus-generate-tree-function 'gnus-generate-horizontal-tree
 ;;       gnus-tree-minimize-window nil)
@@ -884,16 +930,16 @@ more then one article."
 (gnus-add-configuration
  '(article
    (horizontal 1.0
-               (vertical 50 (group 1.0))
-               (vertical 1.0
-                         (summary 0.30 point)
-                         (article 1.0)))))
+	       (vertical 50 (group 1.0))
+	       (vertical 1.0
+			 (summary 0.30 point)
+			 (article 1.0)))))
 
 (gnus-add-configuration
  '(summary
    (horizontal 1.0
-               (vertical 50 (group 1.0))
-               (vertical 1.0 (summary 1.0 point)))))e
+	       (vertical 50 (group 1.0))
+	       (vertical 1.0 (summary 1.0 point)))))e
 
 
 ;; permet la saisie d'un message dans une nouvelle frame
@@ -957,7 +1003,7 @@ more then one article."
      (string-match "\\`petisuix" system-name)
      (string-match "\\`goudurix" system-name)
      (string-match "\\`zebigbos" system-name))
-    (when window-system                               ;obelix
+    (when window-system;obelix
       (setq gnus-sum-thread-tree-root "\x490b3 ")     ; "> "
       ;;(setq gnus-sum-thread-tree-root "\x4912f ")                          ; "> "
       ;;(setq gnus-sum-thread-tree-false-root "\x490f8 ")                    ; "> "
@@ -993,23 +1039,31 @@ more then one article."
 (setq gnus-group-line-format "%1(%1{%6i %}%)%{ %}%2(%2{%7U %}%)%{ %}%3(%3{%7y %}%)%{%* %}%4(%B%-45G%)\n" )
 ; Faces to use for the group-names ("%-45G") ...
 ; More about that: (gnus)Group Highlighting
-(setq gnus-group-highlight
-      ;; ... if the group has no unread articles, depending on the level
-      '(((and (= level 1) (= unread 0)). my-gnus-group-line-groupname-read-face-1)
-        ((and (= level 2) (= unread 0)). my-gnus-group-line-groupname-read-face-2)
-        ((and (= level 3) (= unread 0)). my-gnus-group-line-groupname-read-face-3)
-        ((and (= level 4) (= unread 0)). my-gnus-group-line-groupname-read-face-4)
-        ;; ... if the group has unread articles, depending on the level too
-        ((and (= level 1) (> unread 0)). my-gnus-group-line-groupname-unread-face-1)
-        ((and (= level 2) (> unread 0)). my-gnus-group-line-groupname-unread-face-2)
-        ((and (= level 3) (> unread 0)). my-gnus-group-line-groupname-unread-face-3)
-        ((and (= level 4) (> unread 0)). my-gnus-group-line-groupname-unread-face-4)
-        ;; If the group doesn't match the rules above
-        (t . my-gnus-group-line-groupname-face)))
+(setq gnus-group-highlight nil)
+;;;       ;; ... if the group has no unread articles, depending on the level
+;;;       '(((and (= level 1) (= unread 0)). my-gnus-group-line-groupname-read-face-1)
+;;; 	((and (= level 2) (= unread 0)). my-gnus-group-line-groupname-read-face-2)
+;;; 	((and (= level 3) (= unread 0)). my-gnus-group-line-groupname-read-face-3)
+;;; 	((and (= level 4) (= unread 0)). my-gnus-group-line-groupname-read-face-4)
+;;; 	;; ... if the group has unread articles, depending on the level too
+;;; 	((and (= level 1) (> unread 0)). my-gnus-group-line-groupname-unread-face-1)
+;;; 	((and (= level 2) (> unread 0)). my-gnus-group-line-groupname-unread-face-2)
+;;; 	((and (= level 3) (> unread 0)). my-gnus-group-line-groupname-unread-face-3)
+;;; 	((and (= level 4) (> unread 0)). my-gnus-group-line-groupname-unread-face-4)
+;;; 	;; If the group doesn't match the rules above
+;;; 	(t . my-gnus-group-line-groupname-face)))
 ; Header-line
+(if (require 'highlight-current-line)
+    (progn
+      (highlight-current-line nil)
+      (set-face-background 'highlight-current-line-face "purple4")
+      (add-hook 'gnus-group-mode-hook
+		(lambda ()
+		  (highlight-current-line-minor-mode)))))
+
 (add-hook 'gnus-group-mode-hook
-          ( lambda ()
-            (setq header-line-format "    Ticked    New     Unread   Group" )))
+	  (lambda ()
+	    (setq header-line-format "    Ticked    New     Unread   Group" )))
 
 ;; change les citations.
 ;(add-hook 'gnus-part-display-hook 'sk-change-cite-mark)
@@ -1023,10 +1077,10 @@ more then one article."
   (interactive)
   (save-excursion
     (let ((inhibit-point-motion-hooks t)
-          buffer-read-only)
+	  buffer-read-only)
       (article-goto-body)
       (while (re-search-forward (concat "^"  message-cite-prefix-regexp) nil t)
-        (replace-match (make-string (length (match-string 0)) 124)))
+	(replace-match (make-string (length (match-string 0)) 124)))
       (message ""))))
 
 
@@ -1109,7 +1163,7 @@ more then one article."
 
 ;;modification de message-expand-name pour chercher dans eudc si défini
 ;;puis dans bbdb
-(setq message-expand-name-databases '(eudc));'(eudc bbdb))
+(setq message-expand-name-databases '(eudc bbdb));'(eudc bbdb))
 ;; (defun message-expand-name ()
 ;;   (let ((res nil) (dbs message-expand-name-databases))
 ;;      (while (and dbs (null res))
@@ -1132,33 +1186,33 @@ more then one article."
 (defun sk-demon-notify-message ()
   (if (> number-of-unread last-time-number-of-unread)
       (progn
-        (if (> number-of-unread 0)
-            (beep))
-        (message (let ((number-of-new (- number-of-unread last-time-number-of-unread)))
-                   (concat
-                    "***** "
-                    (int-to-string number-of-new)
-                    " new mail"
-                    (if (> number-of-new 1)
-                        "s" "")
-                    " received *****"
-                    (if (> number-of-unread last-time-number-of-unread)
-                        (concat " ("
-                                (int-to-string (- number-of-unread number-of-new))
-                                " old)"))
-                    )
-                   )
-                 )
-        )
+	(if (> number-of-unread 0)
+	    (beep))
+	(message (let ((number-of-new (- number-of-unread last-time-number-of-unread)))
+		   (concat
+		    "***** "
+		    (int-to-string number-of-new)
+		    " new mail"
+		    (if (> number-of-new 1)
+			"s" "")
+		    " received *****"
+		    (if (> number-of-unread last-time-number-of-unread)
+			(concat " ("
+				(int-to-string (- number-of-unread number-of-new))
+				" old)"))
+		    )
+		   )
+		 )
+	)
     (if (= number-of-unread 0)
-        (message "No mail")
+	(message "No mail")
       (message
        (concat
-        (int-to-string number-of-unread)
-        " old unread mail"
-        (if (> number-of-unread 1)
-            "s" "")
-        ))
+	(int-to-string number-of-unread)
+	" old unread mail"
+	(if (> number-of-unread 1)
+	    "s" "")
+	))
       )
     )
   )
@@ -1168,8 +1222,8 @@ more then one article."
   (save-window-excursion
     (save-excursion
       (when (gnus-alive-p)
-        (set-buffer gnus-group-buffer)
-        (gnus-group-get-new-news level))))
+	(set-buffer gnus-group-buffer)
+	(gnus-group-get-new-news level))))
   (setq last-time-number-of-unread number-of-unread)
   (setq number-of-unread (gnus-group-number-of-unread-mail level))
   (sk-demon-notify-message)
@@ -1198,45 +1252,45 @@ more then one article."
 ;; méthodes de détection
 (setq gnus-spam-autodetect-methods
       '(
-        (".*" . (spam-use-blacklist
-                 ;;spam-use-BBDB
-                 ;;spam-use-bogofilter
-                 spam-use-gmane-xref))
-        ))                              ;default
+	(".*" . (spam-use-blacklist
+		 ;;spam-use-BBDB
+		 ;;spam-use-bogofilter
+		 spam-use-gmane-xref))
+	))
 (setq gnus-spam-autodetect '(("^nntp\\+news\\.cuq\\.org:[^f].*" . t))) ;ou t ?
 
 ;; Declare spam and ham groups.
 (setq spam-junk-mailgroups nil)
 (setq gnus-spam-newsgroup-contents
       '(("^nnfolder:spam" gnus-group-spam-classification-spam)
-        ("^nntp.*" gnus-group-spam-classification-ham)))
+	("^nntp.*" gnus-group-spam-classification-ham)))
 
 ;; Train spam detection tools.
 (setq spam-process-ham-in-spam-groups t)
 (setq gnus-spam-process-newsgroups
       '(
-        ("^nntp\\+news\\.gmane\\.org:"
-         ((spam spam-use-gmane)
-          ;;(spam spam-use-bogofilter)
-          ))
-        ("^nntp\\+news\\.cuq\\.org:"
-         (
-          ;;(spam spam-use-bogofilter)
-          ;;(ham spam-use-bogofilter)
-          ))
-        ;;("^nnfolder:.*"
-        ;; ((spam spam-use-bogofilter)
-        ;;  (ham spam-use-bogofilter)))))
-        ))
+	("^nntp\\+news\\.gmane\\.org:"
+	 ((spam spam-use-gmane)
+	  ;;(spam spam-use-bogofilter)
+	  ))
+	("^nntp\\+news\\.cuq\\.org:"
+	 (
+	  ;;(spam spam-use-bogofilter)
+	  ;;(ham spam-use-bogofilter)
+	  ))
+	;;("^nnfolder:.*"
+	;; ((spam spam-use-bogofilter)
+	;;  (ham spam-use-bogofilter)))))
+	))
 ;; Move processed spam.
 (setq spam-move-spam-nonspam-groups-only t)
 (setq spam-mark-only-unseen-as-spam t)
 (setq gnus-spam-process-destinations
       '(
-        ("^nntp\\+news\\.gmane\\.org:" "nnfolder:spam")
-        ("^nntp\\+news\\.cuq\\.org:" "nnfolder:spam")
-        ;;("^nnfolder:.*" "nnfolder:spam")
-        ))
+	("^nntp\\+news\\.gmane\\.org:" "nnfolder:spam")
+	("^nntp\\+news\\.cuq\\.org:" "nnfolder:spam")
+	;;("^nnfolder:.*" "nnfolder:spam")
+	))
 
 ;; Move processed ham.
 (setq spam-mark-ham-unread-before-move-from-spam-group t)
@@ -1273,15 +1327,15 @@ more then one article."
 
 (setq gnus-parameters
       '(("^gmane\\..*"                  ;"^nntp\\+.*:gmane\\..*"
-         (spam-autodetect-methods spam-use-gmane-xref spam-use-BBDB)
-         (spam-autodetect . t)
-         (spam-process '(spam spame-use-gmane))
-         (gnus-agent-consider-all-articles . t)
-         (gnus-agent-enable-expiration . (quote (DISABLE)))
-         (spam-contents gnus-group-spam-classification-ham)
-         (agent-predicate . true) ;; and (not spam) (not old))
-         )
-        )
+	 (spam-autodetect-methods spam-use-gmane-xref spam-use-BBDB)
+	 (spam-autodetect . t)
+	 (spam-process '(spam spame-use-gmane))
+	 (gnus-agent-consider-all-articles . t)
+	 (gnus-agent-enable-expiration . (quote (DISABLE)))
+	 (spam-contents gnus-group-spam-classification-ham)
+	 (agent-predicate . true) ;; and (not spam) (not old))
+	 )
+	)
       )
 ;;paramátres Ted Zlatanov
 ;;((spam-autodetect-methods spam-use-blacklist spam-use-BBDB spam-use-bogofilter
@@ -1290,15 +1344,15 @@ more then one article."
 ;; (spam-process-destination . "nnimap+lifelogs.com:INBOX.train"))
 
 ;;probláme du font-lock de message
-(setq gnus-emphasis-alist '(("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold-italic)
- ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold-italic)
- ("\\(\\s-\\|^\\)\\(-\\(\\(\\w\\|-[^-]\\)+\\)-\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-strikethru)
- ("\\(\\s-\\|^\\)\\(_\\(\\(\\w\\|_[^_]\\)+\\)_\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-underline)))
+;; (setq gnus-emphasis-alist '(("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-bold-italic)
+;;  ("\\(\\s-\\|^\\|\\=\\|[-\"]\\|\\s(\\)\\(_\\*/\\(\\w+\\(\\s-+\\w+\\)*[.,]?\\)/\\*_\\)\\(\\([-,.;:!?\"]\\|\\s)\\)+\\s-\\|[?!.]\\s-\\|\\s)\\|\\s-\\)" 2 3 gnus-emphasis-underline-bold-italic)
+;;  ("\\(\\s-\\|^\\)\\(-\\(\\(\\w\\|-[^-]\\)+\\)-\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-strikethru)
+;;  ("\\(\\s-\\|^\\)\\(_\\(\\(\\w\\|_[^_]\\)+\\)_\\)\\(\\s-\\|[?!.,;]\\)" 2 3 gnus-emphasis-underline)))
 
 
 ;;;========== configuration GPG / PGG ==============================
@@ -1323,7 +1377,7 @@ more then one article."
 ;; Tells Gnus how to display the part when it is requested
 (eval-after-load "mm-decode"
   '(add-to-list 'mm-inline-media-tests '("application/pgp$"
-                                         mm-inline-text identity)))
+					 mm-inline-text identity)))
 ;; Tell Gnus not to wait for a request, just display the thing
 ;; straight away.
 (eval-after-load "mm-decode"
@@ -1331,7 +1385,7 @@ more then one article."
 ;; But don't display the signatures, please.
 (eval-after-load "mm-decode"
   (quote (setq mm-automatic-display (remove "application/pgp-signature"
-                                            mm-automatic-display))))
+					    mm-automatic-display))))
 
 ;; verify GnuPG signature on incoming mail
 (setq mm-verify-option 'always)
@@ -1346,28 +1400,28 @@ more then one article."
 ;; receveur à une clé publique
 (defun sk-securise-messages ()
   (cond ((message-mail-p)
-         (let ((toheader (message-fetch-field "To")))
-           (let ((recipient (nth 1 (mail-extract-address-components toheader nil))))
-             (message recipient)
-             (cond ((and (not (null recipient))
-                         (or
-                          (pgg-lookup-key recipient)
-                          (and
-                           (pgg-fetch-key pgg-default-keyserver-address recipient)
-                           (pgg-lookup-key recipient)) ;; we might have added some keys but not the right one !
-                          )
-                         )
-                    (mml-secure-message-encrypt-pgpmime))
-                   ;; Active ces 2 lignes si tu veux que tout tes mails soient signés !
-                   ;; Cela permet au receveur de vérifier si le mail vient bien de toi et
-                   ;; qu'il n'a pas été modifié ... Le mail n'est toutefois pas encrypté car
-                   ;; ton interlocuteur n'a pas de clé publique connue
-                   ;;(t
-                   ;; (mml-secure-message-sign-pgpmime))
-                   ))))
-        ;;((message-news-p)
-        ;; (mml-secure-message-sign-pgpmime))
-        ))
+	 (let ((toheader (message-fetch-field "To")))
+	   (let ((recipient (nth 1 (mail-extract-address-components toheader nil))))
+	     (message recipient)
+	     (cond ((and (not (null recipient))
+			 (or
+			  (pgg-lookup-key recipient)
+			  (and
+			   (pgg-fetch-key pgg-default-keyserver-address recipient)
+			   (pgg-lookup-key recipient)) ;; we might have added some keys but not the right one !
+			  )
+			 )
+		    (mml-secure-message-encrypt-pgpmime))
+		   ;; Active ces 2 lignes si tu veux que tout tes mails soient signés !
+		   ;; Cela permet au receveur de vérifier si le mail vient bien de toi et
+		   ;; qu'il n'a pas été modifié ... Le mail n'est toutefois pas encrypté car
+		   ;; ton interlocuteur n'a pas de clé publique connue
+		   ;;(t
+		   ;; (mml-secure-message-sign-pgpmime))
+		   ))))
+	;;((message-news-p)
+	;; (mml-secure-message-sign-pgpmime))
+	))
 ;; desactivé à cause du proxy (add-hook 'message-send-hook 'sk-securise-messages)
 ;;;========== configuration GPG / PGG ==============================
 

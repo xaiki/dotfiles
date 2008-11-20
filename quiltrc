@@ -1,0 +1,7 @@
+QUILT_DIFF_ARGS="--diff meld"
+QUILT_REFRESH_ARGS="--no-timestamps"
+#QUILT_REFRESH_ARGS="--no-timestamps --sort --diffstat"
+QUILT_DIFF_OPTS="-p"
+QUILT_PATCH_OPTS="--unified-reject-files"
+#The location of patch files, defaulting to "patches".
+#QUILT_PATCHES=

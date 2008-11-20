@@ -1,4 +1,21 @@
 screen "0" {
+       styles {
+       	      normal {
+       	          font = "ProfontWindows 9"
+		  fg = "#eeeeee"
+            	  bg = "#111111"
+            	  border = "#111111"
+        	  }
+               focus {
+               	  fg = "ffffff"
+	          bg = "#6666ff"
+		  border = "#6666ff"
+		  }
+               urgent {
+	          fg = "#fffffe"
+            	  bg = "#ff0000"
+	          }
+	}
   general {
     border = 1
     snap = 8
@@ -7,8 +24,7 @@ screen "0" {
     sloppy_focus_raise = false
     new_become_master = true
     new_get_focus = true
-    font = "ProfontWindows-9"
-    opacity_unfocused = -1
+    opacity_unfocused = 0.8
     floating_placement = "smart"
   }
   statusbar "mystatusbar" {
@@ -172,17 +188,6 @@ screen "0" {
       ncol = 1
     }
   }
-  colors {
-    normal_border = "#111111"
-    normal_bg = "#111111"
-    normal_fg = "#eeeeee"
-    focus_border = "#6666ff"
-    focus_bg = "#6666ff"
-    focus_fg = "#ffffff"
-    urgent_bg = "#ff0000"
-    urgent_fg = "#ffffff"
-    tab_border = "#ff0000"
-  }
   layouts {
     layout "tile" {
       image = "/usr/share/awesome/icons/layouts/tilew.png"
@@ -225,8 +230,8 @@ rules {
     # icon = ""
     float = "true"
     master = "auto"
-    screen = -1
-    opacity = -1.000000
+    
+
   }
   rule {
     name = "awn"
@@ -249,8 +254,8 @@ rules {
     # icon = ""
     float = "true"
     master = "auto"
-    screen = -1
-    opacity = -1.000000
+    
+
   }
   rule {
     # xproperty_name = ""
@@ -260,8 +265,8 @@ rules {
     # icon = ""
     float = "true"
     master = "auto"
-    screen = -1
-    opacity = -1.000000
+    
+
   }
   rule {
     # xproperty_name = ""
@@ -271,8 +276,8 @@ rules {
     # icon = ""
     float = "true"
     master = "auto"
-    screen = -1
-    opacity = -1.000000
+    
+
   }
 }
 keys {
@@ -412,18 +417,6 @@ keys {
     modkey = {"Mod1", "Control"}
     key = "space"
     command = "client_togglefloating"
-    # arg = ""
-  }
-  key {
-    modkey = {"Mod1"}
-    key = "s"
-    command = "client_togglescratch"
-    # arg = ""
-  }
-  key {
-    modkey = {"Mod1", "Control"}
-    key = "s"
-    command = "client_setscratch"
     # arg = ""
   }
   key {
