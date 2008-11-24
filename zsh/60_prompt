@@ -29,6 +29,8 @@ function preexec() {
 precmd() {
     local git_dir branch
 
+    title "%n@%m(%35<...<%~)"
+
     psvar=()
     git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
     if test -d "$git_dir/../.dotest"; then
