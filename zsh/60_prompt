@@ -27,16 +27,41 @@ function preexec() {
 }
 
 precmd() {
-    local git_dir ref
+    local git_dir branch
 
-    title "zsh" "%n@%m(%35<...<%~)"
-    
     psvar=()
-#    git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-#    psvar[1]=${$(readlink -f ${git_dir:h})/$HOME/'~'}
-    psvar[1]=${ref#refs/heads/}
-    (( psvar[2]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
+    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
+    if test -d "$git_dir/../.dotest"; then
+        branch="$(git-symbolic-ref HEAD 2>/dev/null)"
+        if test -f "$git_dir/../.dotest/rebasing"; then
+            psvar[2]="rebase"
+        elif test -f "$git_dir/../.dotest/applying"; then
+            psvar[2]="am "
+	    branch="$(cat $git_dir/../.dotest/msg-clean | head -1)"
+        else
+            psvar[2]="am/rebase"
+        fi
+    elif test -f "$git_dir/.dotest-merge/interactive"; then
+        psvar[2]="rebase -i"
+        branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif test -d "$git_dir/.dotest-merge"; then
+        psvar[2]="rebase -m"
+        branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif test -f "$git_dir/MERGE_HEAD"; then
+        psvar[2]="merge"
+        branch="$(git symbolic-ref HEAD 2>/dev/null)"
+    else
+        test -f "$git_dir/BISECT_LOG" && psvar[2]="bisect$(test -f $git_dir/BISECT_NAMES && cut -c1-8 $git_dir/BISECT_NAMES) "
+        branch="$(git symbolic-ref HEAD 2>/dev/null)" || \
+            branch="$(git describe --exact-match HEAD 2>/dev/null)" || \
+            branch="$(cut -c1-7 "$git_dir/HEAD")"
+	    if test -f $git_dir/BISECT_START; then
+		branch="$branch..$(cut -c1-7 "$git_dir/BISECT_START")"
+ 	    fi
+    fi
+
+    psvar[1]="${branch#refs/heads/}"
+    (( psvar[3]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
 }
 
 _mad_prompt_setup() {
@@ -51,7 +76,7 @@ _mad_prompt_setup() {
 #%{$'\e[s\e[A\e[4Dasd┐\e[u'$rst%}
 #%{$'\e[400C\e[20D'%}"────────────────────
     PROMPT="\
-$pcc[1]┌[%{$fg_bold[magenta]%}%\$(print -P %2v)<...<%~%<<%(1v.%{$fg_bold[yellow]%}:%{$fg_bold[cyan]%}%1v.)%{$fg_bold[red]%}$pcc[1]]
+$pcc[1]┌[%{$fg_bold[magenta]%}%\$(print -P %3v)<...<%~%<<%(0v.%{$fg_bold[yellow]%}:%{$fg_bold[red]%}%2v%{$fg_bold[cyan]%}%1v.)%{$fg_bold[red]%}$pcc[1]]
 $pcc[1]└[$pcc[2]%m%s$pcc[1]] $rst"
     RPROMPT="%(?..%{$fg_bold[red]%}%? )$pcc[1]($pcc[2]%T$pcc[1])$rst"%{$'\e[s\e[A\e[${#TZ}D\e[2D$ppc[1][$ppc[2]${TZ}$ppc[1]]┐\e[u'$rst%}
     SPROMPT="zsh: correct %{$fg_bold[blue]%} '%R' $rst to %{$fg_bold[magenta]%} '%r' $rst? [%BN%byae] "
