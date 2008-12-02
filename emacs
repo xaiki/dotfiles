@@ -679,7 +679,7 @@ Suitable for use in `planner-annotation-functions'."
       ;; Remember
       (if (require 'remember nil t)
 	  (progn
-	    (org-remember-insinuate)
+	    ;;(org-remember-insinuate)
 	    (setq org-directory "~/org/")
 	    (setq org-default-notes-file (concat org-directory "/notes.org"))
 	    (define-key global-map "\C-cr" 'org-remember)
