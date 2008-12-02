@@ -201,25 +201,19 @@ cpuwidget = {}
 cpugraphwidget = {}
 
 function get_cpu_speed(n)
-   local f = io.popen('cpufreq-info -f')
-   local l = f:lines()
-   local v = ''
-
-   for line in l do
-      p = line:match('(.*)000', 0)
-   end
-
-   f:close()
+   local s = execute_command("cpufreq-info -f || echo NA000")
+   p = s:match('(.*)000', 0)
 
    return p
 end
 
 function get_cpu_gov_short(n)
-   local s = execute_command('cat /sys/devices/system/cpu/cpu'..n..'/cpufreq/scaling_governor')
+   local g = '/sys/devices/system/cpu/cpu'..n..'/cpufreq/scaling_governor'
+   local s = execute_command('(test -f ' .. g .. ' && cat ' .. g .. ')|| echo 0')
 
+   if s == "0" then return 'NA' end
    if s == "powersave" then return 'PS' end
    if s == "ondemand" then return  'OD' end
-
    if s == "conservative" then return  'CO' end
    if s == "userspace"    then return  'US' end
    if s == "performance"  then return  'PE' end
@@ -540,7 +534,7 @@ end)
 awful.hooks.arrange.register(function (screen)
     local layout = awful.layout.get(screen)
     if layout then
-        mylayoutbox[screen].image = image("/usr/local/share/awesome/icons//layouts/" .. layout .. "w.png")
+       mylayoutbox[screen].image = image(beautiful["layout_" .. layout])
     else
         mylayoutbox[screen].image = nil
     end
