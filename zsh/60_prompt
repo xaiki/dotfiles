@@ -32,7 +32,7 @@ precmd() {
     title "%n@%m(%35<...<%~)"
 
     psvar=()
-    git_dir=$(git-rev-parse --git-dir 2> /dev/null) || return
+    git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
     if test -d "$git_dir/../.dotest"; then
         branch="$(git-symbolic-ref HEAD 2>/dev/null)"
         if test -f "$git_dir/../.dotest/rebasing"; then
@@ -43,12 +43,12 @@ precmd() {
         else
             psvar[2]="am/rebase"
         fi
-    elif test -f "$git_dir/.dotest-merge/interactive"; then
-        psvar[2]="rebase -i"
-        branch="$(cat "$git_dir/.dotest-merge/head-name")"
-    elif test -d "$git_dir/.dotest-merge"; then
-        psvar[2]="rebase -m"
-        branch="$(cat "$git_dir/.dotest-merge/head-name")"
+    elif test -f "$git_dir/rebase-merge/interactive"; then
+        psvar[2]="rebase -i "
+        branch="$(cat "$git_dir/rebase-merge/head-name")"
+    elif test -d "$git_dir/rebase-merge"; then
+        psvar[2]="rebase -m "
+        branch="$(cat "$git_dir/rebase-merge/head-name")"
     elif test -f "$git_dir/MERGE_HEAD"; then
         psvar[2]="merge"
         branch="$(git symbolic-ref HEAD 2>/dev/null)"
