@@ -37,6 +37,11 @@
 
 (require 'cl)
 
+(add-to-list 'load-path "~/.elisp/bongo")
+(autoload 'bongo "bongo"
+  "Start Bongo by switching to a Bongo buffer.")
+(require 'bongo)
+
 (setq-default scroll-step 1)  ; turn off jumpy scroll
 (setq-default visible-bell t) ; no beeps, flash on errors
 ;; Syntaxe highlighting pour tout
@@ -731,7 +736,9 @@ Suitable for use in `planner-annotation-functions'."
   ;; If there is more than one, they won't work right.
  '(calendar-today ((t (:inverse-video t :underline t))))
  '(custom-button-unraised ((t (:inherit underline :background "white" :foreground "black" :inverse-video t))))
+ '(custom-group-tag ((t (:inherit custom-variable-tag-face :foreground "blue" :underline t))))
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
+ '(custom-variable-tag ((t (:foreground "magenta" :underline t :weight bold :height 1.6))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
