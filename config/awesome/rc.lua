@@ -378,7 +378,7 @@ keybinding({ modkey, "Control" }, "space", awful.client.togglefloating):add()
 keybinding({ modkey, "Control" }, "Return", function () client.focus:swap(awful.client.master()) end):add()
 keybinding({ modkey }, "o", awful.client.movetoscreen):add()
 keybinding({ modkey }, "Tab", awful.client.focus.history.previous):add()
-keybinding({ modkey }, "u", awful.client.urgent.jumpto):add()
+-- keybinding({ modkey }, "u", awful.client.urgent.jumpto):add()
 keybinding({ modkey, "Shift" }, "r", function () client.focus:redraw() end):add()
 
 -- Layout manipulation
