@@ -591,7 +591,6 @@
 (setq default-buffer-file-coding-system 'utf-8)
 (setq file-name-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
-(setq locale-preferred-coding-systems 'utf-8)
 
 ;; Calendar
 (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
