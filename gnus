@@ -817,11 +817,11 @@
 ;comment envoyer les msg
 (if (string-match "itchy" system-name)
     (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
-  (setq smtpmail-smtp-server "localhost")
+  (setq smtpmail-smtp-server "mail.sceen.net")
   )
 (setq smtpmail-starttls-credentials
-      '(("imap.sceen.net" 25)))
-(setq smtpmail-auth-credentials '(("imap.sceen.net" 25 "xaiki" nil)))
+      '(("mail.sceen.net" 25)))
+(setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
 (setq send-mail-function 'smtpmail-send-it)
 (setq message-send-mail-function 'smtpmail-send-it)
 
