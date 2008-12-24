@@ -67,9 +67,7 @@
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(if (string-match "itchy" system-name)
-    (setq user-mail-address "xaiki@sgi.com")
-  (setq user-mail-address "xaiki@cxhome.ath.cx"))
+(setq user-mail-address "xaiki@cxhome.ath.cx"))
 
 ;; mes autre adresses : en répondant à un message permet de réutiliser
 ;; l'adresse du To:/From:/CC: de ce message
@@ -77,8 +75,8 @@
       (regexp-opt (cons user-mail-address
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
-			  "xaiki@sgi.com"
-			  "xaiki@openwide.fr"
+;;			  "xaiki@sgi.com"
+;;			  "xaiki@openwide.fr"
 			  "xaiki+.*@cxhome.ath.cx"
 			  ))))
 
@@ -119,13 +117,6 @@
 
 (setq gnus-secondary-select-methods
       '(
-	(nnimap "sgi.com"
-		(nnimap-address "mail-asg.melbourne.sgi.com")
-		(nnimap-authenticator login)
-		;;(nnimap-stream tls)
-		(remove-prefix "INBOX.")
-		(nnimap-authinfo-file
-		 "/home/xaiki/.imap-authinfo"))
 	(nnfolder "patches"
 		  (nnfolder-directory "~/Wrk/pending-patches/")
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
@@ -815,10 +806,8 @@
 
 
 ;comment envoyer les msg
-(if (string-match "itchy" system-name)
-    (setq smtpmail-smtp-server "relay.melbourne.sgi.com")
-  (setq smtpmail-smtp-server "mail.sceen.net")
-  )
+(setq smtpmail-smtp-server "mail.sceen.net")
+
 (setq smtpmail-starttls-credentials
       '(("mail.sceen.net" 25)))
 (setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
