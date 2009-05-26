@@ -502,7 +502,7 @@
 		    ;; Pour avoir les thèmes
 		    ;; Fixer la taille de la police employée sous X
 		    (ignore-errors 
-		      (set-face-attribute 'default nil :font "-xos4-terminus-medium-r-normal-*-*-120-*-*-c-*-paratype-pt154"))
+		      (set-face-attribute 'default nil :font "Terminus-6"))
 		    (ignore-errors
 		      (set-face-attribute 'default nil :font "ProFontWindows-9"))
 
