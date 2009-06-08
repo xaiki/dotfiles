@@ -19,6 +19,7 @@
 ;; remember-el	remember text within Emacs
 ;; speedbar	Everything browser, or Dired on steroids
 ;; w3m-el	simple Emacs interface of w3m
+;; planner-el	personal information manager for Emacs
 
 ;; Planed to be used:
 ;; namazu2	Full text search engine (namazu binary and cgi)v
@@ -41,6 +42,12 @@
 (autoload 'bongo "bongo"
   "Start Bongo by switching to a Bongo buffer.")
 (require 'bongo)
+
+(add-to-list 'load-path "~/.elisp/emms/lisp")
+(require 'emms-setup)
+(emms-devel)
+(emms-default-players)
+
 
 (setq-default scroll-step 1)  ; turn off jumpy scroll
 (setq-default visible-bell t) ; no beeps, flash on errors
@@ -348,6 +355,53 @@
 (global-set-key [?\M-\C-,] 'tool-bar-mode)
 (global-set-key [?\C-:]    'goto-line)
 
+;; IRC buffers are constantly growing.  If you want to see as much as
+;; possible at all times, you would want the prompt at the bottom of the
+;; window when possible.  The following snippet uses a local value for
+;; `scroll-conservatively' to achieve this:
+(rcirc-track-minor-mode 1)
+(add-hook 'rcirc-mode-hook
+	  (lambda ()
+	    (set (make-local-variable 'scroll-conservatively)
+		 8192)))
+;; The following code activates Fly Spell Mode for `rcirc' buffers:
+     (add-hook 'rcirc-mode-hook (lambda ()
+                                  (flyspell-mode 1)))
+
+
+;; If you're chatting from a laptop, then you might be familiar with
+;; this problem: When your laptop falls asleep and wakes up later,
+;; your IRC client doesn't realize that it has been disconnected.  It
+;; takes several minutes until the client decides that the connection
+;; has in fact been lost.  The simple solution is to use `M-x rcirc'.
+;; The problem is that this opens an _additional_ connection, so
+;; you'll have two copies of every channel buffer -- one dead and one
+;; live.
+;;   The real answer, therefore, is a `/reconnect' command:
+(eval-after-load 'rcirc
+  '(defun-rcirc-command reconnect (arg)
+     "Reconnect the server process."
+     (interactive "i")
+     (unless process
+       (error "There's no process for this target"))
+     (let* ((server (car (process-contact process)))
+	    (port (process-contact process :service))
+	    (nick (rcirc-nick process))
+	    channels query-buffers)
+       (dolist (buf (buffer-list))
+	 (with-current-buffer buf
+	   (when (eq process (rcirc-buffer-process))
+	     (remove-hook 'change-major-mode-hook
+			  'rcirc-change-major-mode-hook)
+	     (if (rcirc-channel-p rcirc-target)
+		 (setq channels (cons rcirc-target channels))
+	       (setq query-buffers (cons buf query-buffers))))))
+       (delete-process process)
+       (rcirc-connect server port nick
+		      rcirc-default-user-name
+		      rcirc-default-user-full-name
+		      channels))))
+
 ;; Zenirc
 ;;(setq zenirc-server-alist
 ;;      '(("irc.freenode.net" nil nil "xaiki-emacs" nil)))
@@ -374,6 +428,7 @@
 
 
 (require 'xcscope nil t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
@@ -427,20 +482,22 @@
 	     (setq fill-column 70)))
 
 ;; shell-mode
-;; (remove-hook 'comint-output-filter-functions
+;;(remove-hook 'comint-output-filter-functions
 ;;           'ansi-color-apply)
 (setq shell-file-name "/bin/sh")
 (setq ansi-color-for-comint-mode t)
+(setq comint-prompt-read-only t)
+(setq comint-move-point-for-output 'all)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 (defun xa1-prompt-in-shell (&optional ignore)
   (backward-char 2)
   (while (search-forward "$" nil t) (replace-match (concat list-buffers-directory "$")nil t))
   )
 
-;;(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
-;;(remove-hook 'comint-output-filter-functions
-;;	     'comint-strip-ctrl-m)
-
+(add-hook 'comint-output-filter-functions 'xa1-prompt-in-shell)
+(add-hook 'comint-output-filter-functions
+	     'comint-strip-ctrl-m)
 
 
 ;; ;; Eshell
@@ -497,25 +554,19 @@
 ;;(color-theme-whateveryouwant)
 ;;(color-theme-word-perfect)
 
-(if window-system (progn
-		    ;;	(set-default-font "-*-terminus-*-r-*-*-*-*-*-*-*-*-*-*")
-		    ;; Pour avoir les thèmes
-		    ;; Fixer la taille de la police employée sous X
-		    (ignore-errors 
-		      (set-face-attribute 'default nil :font "Monospace-6"))
-		    (ignore-errors
-		      (set-face-attribute 'default nil :font "ProFontWindows-9"))
-
-		    (if (require 'color-theme)
-			(progn
-			  (color-theme-blue-mood)))
-		    ))
-
+(setq window-system-default-frame-alist
+      '((x
+	 (alpha . 90)
+	 (font . "Monospace-6")
+	 (background-color . "gray20")
+	 (foreground-color . "gray85")
+	 )))
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
 
 ;; Surligne les parenthèses
 (show-paren-mode 1)
+(blink-cursor-mode -1)
 
 ;; On zone quand emacs est inactif depuis t en secondes.
 ;;(require 'zone)
@@ -740,9 +791,11 @@ Suitable for use in `planner-annotation-functions'."
  '(custom-variable-tag ((t (:foreground "magenta" :underline t :weight bold :height 1.6))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
+ '(erc-input-face ((t (:foreground "brown1"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
+ '(mode-line ((t (:background "blue4" :foreground "#d4d4d4" :box (:line-width -1 :style released-button)))))
  '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
  '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
