@@ -24,7 +24,9 @@
 	requireForce = false
 [giggle]
 	compact-mode = false
-	main-window-geometry = 778x610+133+0
+	main-window-geometry = 778x546+133+24
+	main-window-maximized = false
+	main-window-view = HistoryView
 
 
 
