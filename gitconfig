@@ -1,5 +1,5 @@
 [user]
-	name  = Niv Sardi
+	name = Niv Sardi
 	email = xaiki@debian.org
 [alias]
 	cat=-p cat-file -p
@@ -13,6 +13,11 @@
 	p=!git push origin `git-symbolic-ref HEAD`
 	debtag=!git tag -f -a -s -m `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'` `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'`
 	authors=shortlog -n -s -e
+[sendemail]
+	smtpencryption=tls
+	smtpuser=0xa1f00@gmail.com
+	smtpserver=smtp.gmail.com
+	smtpport=465
 [color]
 	branch=auto
 	diff=auto

@@ -183,12 +183,16 @@
 ;;   ( mc-verify ))
 
 (require 'erc)
-(defun xa1-scroll-to-bottom (&optional arg)
-  (interactive)
-  (progn
-    (recenter (1- (- scroll-conservatively)))
-    ))
-(add-hook 'erc-send-completed-hook 'xa1-scroll-to-bottom)
+(setq erc-input-line-position -2)
+(setq erc-timestamp-format "[%H:%M] ")
+
+
+;; (defun xa1-scroll-to-bottom (&optional arg)
+;;   (interactive)
+;;   (progn
+;;     (recenter (1- (- scroll-conservatively)))
+;;     ))
+;; (remove-hook 'erc-send-completed-hook 'xa1-scroll-to-bottom)
 
 (defun recode-buffer ()
   "Recodes buffer in UTF-8"
@@ -367,6 +371,9 @@
 ;; The following code activates Fly Spell Mode for `rcirc' buffers:
      (add-hook 'rcirc-mode-hook (lambda ()
                                   (flyspell-mode 1)))
+
+(setq rcirc-default-user-name "xaiki")
+(setq rcirc-default-user-full-name "Niv Sardi")
 
 
 ;; If you're chatting from a laptop, then you might be familiar with
@@ -762,15 +769,23 @@ Suitable for use in `planner-annotation-functions'."
   ;; If there is more than one, they won't work right.
  '(calendar-today-marker (quote calendar-today))
  '(column-number-mode t)
+ '(cscope-display-cscope-buffer nil)
  '(debian-changelog-full-name "Niv Sardi")
  '(debian-changelog-mailing-address "xaiki@debian.org")
  '(display-time-mode t)
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
+ '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
  '(gnuserv-frame t)
+ '(iswitchb-default-method (quote maybe-frame))
+ '(iswitchb-newbuffer nil)
+ '(iswitchb-regexp t)
+ '(iswitchb-use-virtual-buffers t nil (recentf))
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
  '(jabber-username "0xa1f00")
+ '(lcomp-enable t nil (lcomp))
+ '(minibuffer-complete-cycle (quote auto) nil (minibuffer-complete-cycle))
  '(mm-inline-text-html-with-images t)
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
@@ -785,6 +800,7 @@ Suitable for use in `planner-annotation-functions'."
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  '(calendar-today ((t (:inverse-video t :underline t))))
+ '(completions-common-part ((t (:inherit default :weight bold))))
  '(custom-button-unraised ((t (:inherit underline :background "white" :foreground "black" :inverse-video t))))
  '(custom-group-tag ((t (:inherit custom-variable-tag-face :foreground "blue" :underline t))))
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
