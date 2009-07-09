@@ -1,10 +1,16 @@
 #!/bin/sh
 
 d=$PWD
+c=~/
+if echo $PWD | egrep 'dotfiles\/?$'; then
+	c=`echo $PWD | sed s/dotfiles//`
+fi
 cd ~/
 
-for i in `ls ~/dotfiles`; do
+for i in `ls $c/dotfiles | grep -ve '#'`; do
+    echo -n "$i "
     rm -rf .$i
-    ln -sf ~/dotfiles/$i .$i
+    ln -sf $c/dotfiles/$i .$i
 done
 cd $d
+echo "done."
