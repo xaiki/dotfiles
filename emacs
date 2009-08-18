@@ -481,6 +481,17 @@
 ;;	  (lambda () (define-key c-mode-base-map "\:-m" 'goto-line))
 ;;	  )
 
+;; Python
+;; (require 'pycomplete)
+;; (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
+;; (autoload 'python-mode "python-mode" "Python editing mode." t)
+;; (autoload 'pymacs-load "pymacs" nil t)
+;; (autoload 'pymacs-eval "pymacs" nil t)
+;; (autoload 'pymacs-apply "pymacs")
+;; (autoload 'pymacs-call "pymacs")
+;; (setq interpreter-mode-alist(cons '("python" . python-mode)
+;; 				  interpreter-mode-alist))
+
 ;; Hooks pour le texte
 (add-hook 'text-mode-hook
 	  '(lambda()
@@ -787,6 +798,7 @@ Suitable for use in `planner-annotation-functions'."
  '(lcomp-enable t nil (lcomp))
  '(minibuffer-complete-cycle (quote auto) nil (minibuffer-complete-cycle))
  '(mm-inline-text-html-with-images t)
+ '(org-agenda-files (quote ("~/.org/TODO")))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(smime-keys (quote (("xaiki@cxhome.ath.cx" "/dev/null" ("")))))
@@ -807,6 +819,7 @@ Suitable for use in `planner-annotation-functions'."
  '(custom-variable-tag ((t (:foreground "magenta" :underline t :weight bold :height 1.6))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
+ '(erc-button ((t (:inherit link :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
