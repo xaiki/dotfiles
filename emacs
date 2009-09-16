@@ -31,9 +31,9 @@
 ;;(require 'gnuserv-compat)
 ;;(gnuserv-start)
 
-(require 'tramp nil t)
+;;(require 'tramp nil t)
 
-(require 'mule)
+;;(require 'mule)
 ;;(require 'un-define)
 
 (require 'cl)
@@ -43,10 +43,10 @@
   "Start Bongo by switching to a Bongo buffer.")
 (require 'bongo)
 
-(add-to-list 'load-path "~/.elisp/emms/lisp")
-(require 'emms-setup)
-(emms-devel)
-(emms-default-players)
+;;(add-to-list 'load-path "~/.elisp/emms/lisp")
+;;(require 'emms-setup)
+;;(emms-devel)
+;;(emms-default-players)
 
 
 (setq-default scroll-step 1)  ; turn off jumpy scroll
@@ -56,7 +56,7 @@
 (setq cssm-indent-function #'cssm-c-style-indenter)
 (setq cssm-indent-level 8)
 
-(require 'git nil t)
+(require 'magit nil t)
 (require 'git-blame nil t)
 (require 'vc-git nil t)
 
@@ -96,12 +96,39 @@
 (auto-compression-mode t)               ; permet d'ouvrir les gz a la volee
 (transient-mark-mode t)
 
-;; completion du nom du buffer a selectionner en tapant une partie du nom
-;; seulement et pas uniquement un prefixe
-(if (require 'iswitchb nil t)
-    (progn
-      (iswitchb-default-keybindings)
-      ))
+;; this replaces iswitchb
+(require 'ido)
+(ido-mode t)
+
+(setq ido-execute-command-cache nil)
+ (defun ido-execute-command ()
+   (interactive)
+   (call-interactively
+    (intern
+     (ido-completing-read
+      "M-x "
+      (progn
+        (unless ido-execute-command-cache
+          (mapatoms (lambda (s)
+                      (when (commandp s)
+                        (setq ido-execute-command-cache
+                              (cons (format "%S" s) ido-execute-command-cache))))))
+        ido-execute-command-cache)))))
+
+ (add-hook 'ido-setup-hook
+           (lambda ()
+             (setq ido-enable-flex-matching t)
+             (global-set-key "\M-x" 'ido-execute-command)))
+  (defun my-ido-find-tag ()
+    "Find a tag using ido"
+    (interactive)
+    (tags-completion-table)
+    (let (tag-names)
+      (mapc (lambda (x)
+              (unless (integerp x)
+                (push (prin1-to-string x t) tag-names)))
+            tags-completion-table)
+      (find-tag (ido-completing-read "Tag: " tag-names))))
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
@@ -788,10 +815,6 @@ Suitable for use in `planner-annotation-functions'."
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
  '(gnuserv-frame t)
- '(iswitchb-default-method (quote maybe-frame))
- '(iswitchb-newbuffer nil)
- '(iswitchb-regexp t)
- '(iswitchb-use-virtual-buffers t nil (recentf))
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
  '(jabber-username "0xa1f00")
