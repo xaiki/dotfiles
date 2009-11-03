@@ -277,90 +277,46 @@
 (global-set-key [(meta n)] 'gnus)
 (global-set-key [(control \;)] 'comment-region)
 
-;; screw GNUS let's use MEW
-;; (global-set-key [(meta m)] 'mew)
-;; (require 'mew)
+;; EUDC
+(require 'ldap)
+;;(require 'eudc nil)
+;; (setq ldap-host-parameters-alist
+;;       (quote (("auth.dmz-int.fr.lan:636" base "ou=users,dc=smartjog,dc=lan"
+;;                binddn "cn=Prenom NOM,ou=users,dc=smartjog,dc=lan"
+;;                passwd "NO"))))
 
-;; (autoload 'mew "mew" nil t)
-;; (autoload 'mew-send "mew" nil t)
+;; (setq eudc-default-return-attributes nil
+;;       eudc-strict-return-matches nil)
 
-;; ;; (setq mew-icon-directory "/usr/local/share/emacs/site-lisp/mew/etc")
+;; (setq ldap-ldapsearch-args (quote ("-tt" "-LLL" "-x")))
+;; (setq eudc-inline-query-format '((name)
+;;                                  (firstname)
+;;                                  (firstname name)
+;;                                  (email)
+;;                                  ))
 
-;; ;; Optional setup (Read Mail menu for Emacs 21):
-;; (if (boundp 'read-mail-command)
-;;     (setq read-mail-command 'mew))
+;; (eudc-set-server "auth.dmz-int.fr.lan:636" 'ldap t)
+;; (setq eudc-server-hotlist '(("auth.dmz-int.fr.lan:636" . ldap)))
+;; (setq eudc-inline-expansion-servers 'hotlist)
 
-;; ;; Optional setup (e.g. C-xm for sending a message):
-;; (autoload 'mew-user-agent-compose "mew" nil t)
-;; (if (boundp 'mail-user-agent)
-;;     (setq mail-user-agent 'mew-user-agent))
-;; (if (fboundp 'define-mail-user-agent)
-;;     (define-mail-user-agent
-;;       'mew-user-agent
-;;       'mew-user-agent-compose
-;;       'mew-draft-send-message
-;;       'mew-draft-kill
-;;       'mew-send-hook))
+;; (defun enz-eudc-expand-inline()
+;;   (interactive)
+;;   (move-end-of-line 1)
+;;   (insert "*")
+;;   (unless (condition-case nil
+;;               (eudc-expand-inline)
+;;             (error nil))
+;;     (backward-delete-char-untabify 1))
+;;   )
 
-;;   bbdb
-;;  (require 'bbdb)
+;; ;; Adds some hooks
 
-;;  (setq bbdb-north-american-phone-numbers-p nil)
-;;  (setq bbdb-check-zip-codes-p nil)
-;;  (autoload 'bbdb-insinuate-mew      "bbdb-mew"   "Hook BBDB into Mew")
-;;  (add-hook 'mew-init-hook 'bbdb-insinuate-mew)
-(setq bbdb-send-mail-style 'gnus)
-
-;;  (setq
-;;   bbdb-offer-save 'auto
-;;   bbdb/news-auto-create-p nil
-;;   bbdb/mail-auto-create-p nil
-;;   bbdb-north-american-phone-numbers-p nil
-;;   bbdb-default-area-code nil
-;;   bbdb-complete-name-allow-cycling t
-;;   bbdb-complete-name-full-completion t
-;;   bbdb-notice-auto-save-file t
-;;   bbdb-completion-type 'primary-or-name
-;;  )
-
-;; Insane Big brother DataBase (Adressbook)
-(if (require 'bbdb nil t)
-    (progn
-      ;; (setq load-path (cons (concat "/usr/share/emacs21/site-lisp/bbdb") load-path))
-      ;; (setq load-path (cons (concat "/usr/share/emacs/site-lisp/bbdb/lisp") load-path))
-      ;; (provide 'bbdb/load-path)
-      ;; (load-library "bbdb")
-      ;; (provide 'bbdb-autoloads)
-      ;; (load-library "bbdb-com")
-      (load-library "bbdb-gnus")
-      ;;(bbdb-initialize)
-      (bbdb-initialize 'gnus 'message)
-      (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-      (add-hook 'mail-setup-hook 'bbdb-define-all-aliases)
-      (setq
-       bbdb-offer-save 'auto
-       bbdb/news-auto-create-p nil
-       bbdb/mail-auto-create-p nil
-       bbdb/gnus-summary-known-poster-mark "+"
-       bbdb/gnus-summary-mark-known-posters t
-       bbdb/gnus-summary-show-bbdb-names t
-       bbdb/gnus-summary-prefer-bbdb-data t
-       bbdb/gnus-summary-prefer-real-names 'bbdb
-       bbdb-north-american-phone-numbers-p nil
-       bbdb-default-area-code nil
-       bbdb-complete-name-allow-cycling t
-       bbdb-complete-name-full-completion t
-       bbdb-notice-auto-save-file t
-       bbdb-completion-type 'primary-or-name
-       )
-      (setq bbdb-display-layout nil)
-      (setq bbdb-use-pop-up '(quote horiz))
-      (setq bbdb-use-pop-up nil)
-      (setq bbdb-pop-up-target-lines 5)
-      (setq bbdb-pop-up-display-layout nil)
-      (setq bbdb-pop-up-elided-display nil)
-      (message "BBDB initialized")
-      ))
+;; (eval-after-load "message"
+;;   '(define-key message-mode-map (kbd "TAB") 'enz-eudc-expand-inline))
+;; (eval-after-load "sendmail"
+;;   '(define-key mail-mode-map (kbd "TAB") 'enz-eudc-expand-inline))
+;; (eval-after-load "post"
+;;   '(define-key post-mode-map (kbd "TAB") 'enz-eudc-expand-inline))
 
 ;; Handy little redo function.
 (global-set-key [(control x)(control r)] 'redo)
@@ -814,6 +770,7 @@ Suitable for use in `planner-annotation-functions'."
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
+ '(gnus-carpal t)
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
@@ -846,10 +803,10 @@ Suitable for use in `planner-annotation-functions'."
  '(erc-input-face ((t (:foreground "brown1"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
+ '(message-header-cc ((t (:foreground "LightBlue5"))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
+ '(message-header-to ((t (:foreground "cyan" :weight bold))))
  '(mode-line ((t (:background "blue4" :foreground "#d4d4d4" :box (:line-width -1 :style released-button)))))
  '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
  '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
-
-

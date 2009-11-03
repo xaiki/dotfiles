@@ -67,7 +67,7 @@
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "xaiki@cxhome.ath.cx"))
+(setq user-mail-address "niv.sardi@smartjog.com")
 
 ;; mes autre adresses : en répondant à un message permet de réutiliser
 ;; l'adresse du To:/From:/CC: de ce message
@@ -75,6 +75,8 @@
       (regexp-opt (cons user-mail-address
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
+			  "nsardi@smartjog.com"
+			  "niv.sardi@smartjog.com"
 ;;			  "xaiki@sgi.com"
 ;;			  "xaiki@openwide.fr"
 			  "xaiki+.*@cxhome.ath.cx"
@@ -115,9 +117,9 @@
 (defun turn-off-backup ()
   (set (make-local-variable 'backup-inhibited) t))
 
+;; Set in GNUS with B blah ...
 (setq gnus-secondary-select-methods
-      '(
-	(nnfolder "patches"
+      '((nnfolder "patches"
 		  (nnfolder-directory "~/Wrk/pending-patches/")
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
 ;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
@@ -677,6 +679,7 @@
 ;; This snippet comes from the info docs Gnus->Finding the Parent.
 (setq gnus-refer-article-method
       '(current
+	(nnimap "imap-eu.smartjog.net")
 	(nntp "news.gmane.org")
 	(nnweb "google" (nnweb-type google))))
 (when
@@ -806,13 +809,10 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "mail.sceen.net")
+(setq smtpmail-smtp-server "smtp-eu.smartjog.net")
 
-(setq smtpmail-starttls-credentials
-      '(("mail.sceen.net" 25)))
-(setq smtpmail-auth-credentials '(("mail.sceen.net" 25 "xaiki" nil)))
-(setq send-mail-function 'smtpmail-send-it)
-(setq message-send-mail-function 'smtpmail-send-it)
+(setq send-mail-function 'sendmail-send-it)
+(setq message-send-mail-function 'sendmail-send-it)
 
 ;(setq smtp-default-server smtpmail-default-smtp-server)
 ;(setq smtp-server smtpmail-default-smtp-server)
@@ -889,7 +889,6 @@ more then one article."
 	    (replace-regexp-in-string "^.*:" "" gnus-newsgroup-name)))))
     (gnus-summary-copy-article n archive-name)))
 
-
 (gnus-add-configuration
  '(article
    ;;(horizontal 1.0 (vertical 25 (group 1.0))
@@ -928,7 +927,7 @@ more then one article."
  '(summary
    (horizontal 1.0
 	       (vertical 50 (group 1.0))
-	       (vertical 1.0 (summary 1.0 point)))))e
+	       (vertical 1.0 (summary 1.0 point)))))
 
 
 ;; permet la saisie d'un message dans une nouvelle frame

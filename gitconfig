@@ -1,6 +1,6 @@
 [user]
 	name = Niv Sardi
-	email = xaiki@debian.org
+	email = nsardi@smartjog.com
 [alias]
 	cat=-p cat-file -p
 	co=checkout -m
@@ -29,9 +29,10 @@
 	requireForce = false
 [giggle]
 	compact-mode = false
-	main-window-geometry = 778x546+133+24
+	main-window-geometry = 958x1179+960+19
 	main-window-maximized = false
 	main-window-view = HistoryView
+	history-view-vpane-position = 617
 
 
 

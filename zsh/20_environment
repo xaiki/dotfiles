@@ -13,7 +13,7 @@ export DEBFULLNAME=$FULLNAME
 
 export CVS_RSH="ssh"
 export MANWIDTH=80
-export EDITOR='emacsclient'
+export EDITOR='emacsclient -n'
 export VISUAL='emacsclient'
 export CCACHE_DIR=$HOME/.ccache
 
