@@ -129,6 +129,8 @@
                 (push (prin1-to-string x t) tag-names)))
             tags-completion-table)
       (find-tag (ido-completing-read "Tag: " tag-names))))
+(setq ido-default-buffer-method 'maybe-frame)
+(setq ido-default-file-method 'maybe-frame)
 
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
@@ -558,7 +560,7 @@
 (setq window-system-default-frame-alist
       '((x
 	 (alpha . 90)
-	 (font . "Monospace-6")
+	 (font . "Monospace-10")
 	 (background-color . "gray20")
 	 (foreground-color . "gray85")
 	 )))
@@ -761,6 +763,11 @@ Suitable for use in `planner-annotation-functions'."
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(bongo-display-inline-playback-progress t)
+ '(bongo-display-playback-mode-indicator nil)
+ '(bongo-header-line-mode nil)
+ '(bongo-mark-played-tracks t)
+ '(bongo-mode-line-indicator-mode nil)
  '(calendar-today-marker (quote calendar-today))
  '(column-number-mode t)
  '(cscope-display-cscope-buffer nil)
@@ -770,13 +777,10 @@ Suitable for use in `planner-annotation-functions'."
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
- '(gnus-carpal t)
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com")
  '(jabber-username "0xa1f00")
- '(lcomp-enable t nil (lcomp))
- '(minibuffer-complete-cycle (quote auto) nil (minibuffer-complete-cycle))
  '(mm-inline-text-html-with-images t)
  '(org-agenda-files (quote ("~/.org/TODO")))
  '(save-place t nil (saveplace))
@@ -793,6 +797,8 @@ Suitable for use in `planner-annotation-functions'."
   ;; If there is more than one, they won't work right.
  '(calendar-today ((t (:inverse-video t :underline t))))
  '(completions-common-part ((t (:inherit default :weight bold))))
+ '(cscope-file-face ((t (:foreground "cyan"))))
+ '(cscope-line-face ((t (:foreground "grey"))))
  '(custom-button-unraised ((t (:inherit underline :background "white" :foreground "black" :inverse-video t))))
  '(custom-group-tag ((t (:inherit custom-variable-tag-face :foreground "blue" :underline t))))
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
@@ -802,6 +808,7 @@ Suitable for use in `planner-annotation-functions'."
  '(erc-button ((t (:inherit link :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
+ '(gnus-cite-1 ((t (:foreground "LightBlue"))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
  '(message-header-cc ((t (:foreground "LightBlue5"))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))

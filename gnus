@@ -276,11 +276,11 @@
 (diff-mode)
 (setq gnus-emphasis-alist
       '(
-	("^\>?\\([+-][+-][+-] \\)" 0 1 diff-header)
-	("^\>?[+-][+-][+-] \\(.*\\)$" 1 1 diff-file-header)
-	("^\>?\\(@@ .* @@.*\\)$" 0 1 diff-header)
-	("^\>?\\([+][^+].*\\)" 0 1 diff-added)
-	("^\>?\\([-][^-].*\\)" 0 1 diff-removed)
+	("^\>?\s?\\([+-][+-][+-] \\)" 0 1 diff-header)
+	("^\>?\s?[+-][+-][+-] \\(.*\\)$" 1 1 diff-file-header)
+	("^\>?\s?\\(@@ .* @@.*\\)$" 0 1 diff-header)
+	("^\>?\s?\\([+][^+].*\\)" 0 1 diff-added)
+	("^\>?\s?\\([-][^-].*\\)" 0 1 diff-removed)
 	))
 ; Je suis un peu mégalomane, donc je veux voir mon pseudo s'afficher en
 ; gras-souligné
@@ -384,7 +384,7 @@
 
 ; Je ne veux pas de HTML, ni de richText, non mais oh !
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-(setq mm-text-html-renderer 'w3m);'w3m
+(setq mm-text-html-renderer 'w3m-standalone);'w3m
 
 ; Répertoire par défaut des attachements
 (setq gnus-summary-save-parts-last-directory "~/Wrk/")
@@ -439,10 +439,11 @@
 
 ;;(remove-hook 'gnus-summary-mode-hook
 ;;         (global-set-key [w] 'gnus-article-hide-citation))
+(setq gnus-summary-mode-hook nil)
 (add-hook 'gnus-summary-mode-hook
 	  (lambda ()
 	    (setq header-line-format "Flags   Date               From           Score   Size          Subject " )
-	    (highlight-current-line-minor-mode)))
+	    ))
 
 ;; décodage des parties mml
 ;; auteur : drkm de fr.comp.applications.emacs
@@ -917,16 +918,15 @@ more then one article."
 
 (gnus-add-configuration
  '(article
-   (horizontal 1.0
-	       (vertical 50 (group 1.0))
-	       (vertical 1.0
-			 (summary 0.30 point)
-			 (article 1.0)))))
+   (vertical 1.0
+	     (horizontal 0.25
+			 (summary 1.0))
+	     (article 1.0))))
 
 (gnus-add-configuration
  '(summary
    (horizontal 1.0
-	       (vertical 50 (group 1.0))
+	       (vertical 0.2 (group 1.0))
 	       (vertical 1.0 (summary 1.0 point)))))
 
 
@@ -1041,13 +1041,16 @@ more then one article."
 ;;; 	;; If the group doesn't match the rules above
 ;;; 	(t . my-gnus-group-line-groupname-face)))
 ; Header-line
-(if (require 'highlight-current-line)
+(if (require 'hl-line)
     (progn
-      (highlight-current-line nil)
-      (set-face-background 'highlight-current-line-face "purple4")
+      (set-face-background 'hl-line "purple4")
       (add-hook 'gnus-group-mode-hook
 		(lambda ()
-		  (highlight-current-line-minor-mode)))))
+		  (hl-line-mode)))
+      (add-hook 'gnus-summary-mode-hook
+		(lambda ()
+		  (hl-line-mode)))
+))
 
 (add-hook 'gnus-group-mode-hook
 	  (lambda ()
