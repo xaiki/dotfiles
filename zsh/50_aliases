@@ -31,7 +31,8 @@ alias md='mkdir'
 alias rd='rmdir'
 alias rm='rm -i'
 
-alias e=$EDITOR
+alias e="emacsclient -n -a nano"
+alias t="emacsclient -t -a nano"
 alias v=$VISUAL
 
 #alias v="/usr/share/vim/vim63/macros/less.sh -u NONE -U NONE -c 'set ft=man mouse=a'"

@@ -14,7 +14,7 @@ zstyle ':completion:*' group 1
 zstyle ':completion:*' format '%B---- %d%b'
 zstyle ':completion:*:corrections' format '%B---- %d (errors %e)%b'
 zstyle ':completion:*:descriptions' format "%B---- %d%b"
-zstyle ':completion:*:messages' format '%B%U---- %d%u%b' 
+zstyle ':completion:*:messages' format '%B%U---- %d%u%b'
 zstyle ':completion:*:warnings' format "%B$fg[red]%}---- no match for: $fg[white]%d%b"
 zstyle ':completion:*' group-name ''
 
@@ -25,7 +25,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)[ 0-9:]#([
 #[ hosts and users ]############################################################
 zstyle ':completion:*:hosts' list-colors '=(#b)(*)(.madism.org)=01;30=01;31' '=[^.]#=01;31'
 
-users=(root xaiki)
+users=(root xaiki nsardi)
 zstyle ':completion:*' users $users
 
 zstyle ':completion:*:*:[ak]dvi:*' file-patterns \
