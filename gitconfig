@@ -27,12 +27,8 @@
 	verbosity = 1
 [clean]
 	requireForce = false
-[giggle]
-	compact-mode = false
-	main-window-geometry = 958x1179+960+19
-	main-window-maximized = false
-	main-window-view = HistoryView
-	history-view-vpane-position = 617
+[apply]
+	whitespace = fix
 
 
 
