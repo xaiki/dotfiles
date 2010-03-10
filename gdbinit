@@ -22,7 +22,7 @@ define underfence
         echo Enabled Electric Fence for undeflow detection\n
 end
 document underfence
-Enable memory allocation debugging for underflows through Electric Fence 
+Enable memory allocation debugging for underflows through Electric Fence
 (efence(3)).
         See also nofence and efence.
 end
@@ -37,4 +37,6 @@ Disable memory allocation debugging through Electric Fence (efence(3)).
 end
 
 # needed for allowing XFS to mount filesystems without dropping into gdb
-handle SIGSEGV nostop noprint pass
+define xfshack
+       handle SIGSEGV nostop noprint pass
+end
