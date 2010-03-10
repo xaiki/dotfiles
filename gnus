@@ -890,12 +890,6 @@ more then one article."
 	    (replace-regexp-in-string "^.*:" "" gnus-newsgroup-name)))))
     (gnus-summary-copy-article n archive-name)))
 
-(gnus-add-configuration
- '(article
-   ;;(horizontal 1.0 (vertical 25 (group 1.0))
-   (vertical 1.0 (summary 13 point)
-	     (article 1.0) )
-   )) ;)
 ;; (setq gnus-use-trees t
 ;;       gnus-generate-tree-function 'gnus-generate-horizontal-tree
 ;;       gnus-tree-minimize-window nil)
