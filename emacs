@@ -132,6 +132,45 @@
 (setq ido-default-buffer-method 'maybe-frame)
 (setq ido-default-file-method 'maybe-frame)
 
+(require 'ibuffer)
+(setq ibuffer-saved-filter-groups
+  (quote (("default"
+            ("Org" ;; all org-related buffers
+              (mode . org-mode))
+            ("Mail"
+              (or  ;; mail-related buffers
+               (mode . message-mode)
+               (mode . mail-mode)
+	       (mode . gnus)
+	       (mode . gnus-article-mode)
+	       (mode . gnus-summary-mode)
+	       (mode . gnus-group-mode)
+               ;; etc.; all your mail related modes
+               ))
+            ("FFMPEG"
+              (filename . "Wrk/FFMPEG"))
+            ("Icecast"
+              (filename . "Wrk/FF-Replace"))
+            ("Wrk"
+              (filename . "Wrk"))
+	    ("Programming" ;; prog stuff not already in MyProjectX
+              (or
+                (mode . c-mode)
+                (mode . perl-mode)
+                (mode . python-mode)
+                (mode . emacs-lisp-mode)
+		(mode . cscope-mode)
+		(mode . cpp-mode)
+                ;; etc
+                ))
+            ("ERC"   (mode . erc-mode))))))
+
+(add-hook 'ibuffer-mode-hook
+  (lambda ()
+    (ibuffer-switch-to-saved-filter-groups "default")))
+
+(global-set-key (kbd "C-x x") 'ibuffer)
+
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
 
@@ -768,6 +807,7 @@ Suitable for use in `planner-annotation-functions'."
  '(bongo-header-line-mode nil)
  '(bongo-mark-played-tracks t)
  '(bongo-mode-line-indicator-mode nil)
+ '(bongo-next-action (quote bongo-play-next-or-stop))
  '(calendar-today-marker (quote calendar-today))
  '(column-number-mode t)
  '(cscope-display-cscope-buffer nil)
@@ -806,9 +846,11 @@ Suitable for use in `planner-annotation-functions'."
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
  '(erc-button ((t (:inherit link :weight bold))))
+ '(erc-current-nick-face ((t (:foreground "Red" :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-cite-1 ((t (:foreground "LightBlue"))))
+ '(gnus-header-subject ((t (:foreground "white" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
  '(message-header-cc ((t (:foreground "LightBlue5"))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
