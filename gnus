@@ -202,7 +202,7 @@
 ;;                     T C-h - Overview about the commands
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 
-(setq  gnus-topic-display-empty-topics t      ;nil = cacher les topics vides
+(setq  gnus-topic-display-empty-topics nil      ;nil = cacher les topics vides
        gnus-topic-indent-level 2)
 
 ;; Format d'affichage des topics
@@ -273,7 +273,6 @@
 (setq gnus-default-article-saver
       'gnus-summary-save-in-mail)
 
-(diff-mode)
 (setq gnus-emphasis-alist
       '(
 	("^\>?\s?\\([+-][+-][+-] \\)" 0 1 diff-header)
@@ -297,6 +296,7 @@
 ;;===== Quotage (de goret)===================================
 ; [Format] Snip des messages (W-W-c)
 ; Format disponible dans le chapitre 3.16.3 du manuel Gnus
+(setq gnus-cited-lines-visible '(0 . 4))
 (setq gnus-cited-closed-text-button-line-format
       "\[ Snip %n lines (%l Characters) \]\n")
 
@@ -425,7 +425,7 @@
 (add-hook 'gnus-article-display-hook 'gnus-smiley-display t)
 
 ;; Nécessite le package compface
-(setq gnus-treat-display-x-face 'head)
+(setq gnus-treat-display-x-face 'nil)
 
 ;; Afficher les liens avec lynx si on est en mode console
 (require 'browse-url)
@@ -890,6 +890,116 @@ more then one article."
 	    (replace-regexp-in-string "^.*:" "" gnus-newsgroup-name)))))
     (gnus-summary-copy-article n archive-name)))
 
+(setq gnus-buffer-configuration
+  '((group
+     (vertical 1.0
+	       (group 1.0 point)
+	       (if gnus-carpal '(group-carpal 4))))
+    (summary
+     (vertical 1.0
+	       (summary 1.0 point)
+	       (if gnus-carpal '(summary-carpal 4))))
+    (article
+     (cond
+      (gnus-use-trees
+       '(vertical 1.0
+		  (summary 0.25 point)
+		  (tree 0.25)
+		  (article 1.0)))
+      (t
+       '(vertical 1.0
+		  (summary 0.25 point)
+		  (if gnus-carpal '(summary-carpal 4))
+		  (article 1.0)))))
+    (server
+     (vertical 1.0
+	       (server 1.0 point)
+	       (if gnus-carpal '(server-carpal 2))))
+    (browse
+     (vertical 1.0
+	       (browse 1.0 point)
+	       (if gnus-carpal '(browse-carpal 2))))
+    (message
+     (vertical 1.0
+	       (message 1.0 point)))
+    (pick
+     (vertical 1.0
+	       (article 1.0 point)))
+    (info
+     (vertical 1.0
+	       (info 1.0 point)))
+    (summary-faq
+     (vertical 1.0
+	       (summary 0.25)
+	       (faq 1.0 point)))
+    (edit-article
+     (vertical 1.0
+	       (article 1.0 point)))
+    (edit-form
+     (vertical 1.0
+	       (group 0.5)
+	       (edit-form 1.0 point)))
+    (edit-score
+     (vertical 1.0
+	       (summary 0.25)
+	       (edit-score 1.0 point)))
+    (edit-server
+     (vertical 1.0
+	       (server 0.5)
+	       (edit-form 1.0 point)))
+    (post
+     (vertical 1.0
+	       (post 1.0 point)))
+    (reply
+     (vertical 1.0
+	       (article 0.5)
+	       (message 1.0 point)))
+    (forward
+     (vertical 1.0
+	       (message 1.0 point)))
+    (reply-yank
+     (vertical 1.0
+	       (message 1.0 point)))
+    (mail-bounce
+     (vertical 1.0
+	       (article 0.5)
+	       (message 1.0 point)))
+    (pipe
+     (vertical 1.0
+	       (summary 0.25 point)
+	       (if gnus-carpal '(summary-carpal 4))
+	       ("*Shell Command Output*" 1.0)))
+    (bug
+     (vertical 1.0
+	       (if gnus-bug-create-help-buffer '("*Gnus Help Bug*" 0.5))
+	       ("*Gnus Bug*" 1.0 point)))
+    (score-trace
+     (vertical 1.0
+	       (summary 0.5 point)
+	       ("*Score Trace*" 1.0)))
+    (score-words
+     (vertical 1.0
+	       (summary 0.5 point)
+	       ("*Score Words*" 1.0)))
+    (split-trace
+     (vertical 1.0
+	       (summary 0.5 point)
+	       ("*Split Trace*" 1.0)))
+    (category
+     (vertical 1.0
+	       (category 1.0)))
+    (compose-bounce
+     (vertical 1.0
+	       (article 0.5)
+	       (message 1.0 point)))
+    (display-term
+     (vertical 1.0
+	       ("*display*" 1.0)))
+    (mml-preview
+     (vertical 1.0
+	       (message 0.5)
+	       (mml-preview 1.0 point)))))
+
 ;; (setq gnus-use-trees t
 ;;       gnus-generate-tree-function 'gnus-generate-horizontal-tree
 ;;       gnus-tree-minimize-window nil)
@@ -910,19 +1020,18 @@ more then one article."
 ;;                         (summary 0.3)
 ;;                         (article 1.0)))))
 
-(gnus-add-configuration
- '(article
-   (vertical 1.0
-	     (horizontal 0.25
-			 (summary 1.0))
-	     (article 1.0))))
+;; (gnus-add-configuration
+;;  '(article
+;;    (vertical 1.0
+;; 	     (horizontal 0.25
+;; 			 (summary 1.0))
+;; 	     (article 1.0))))
 
-(gnus-add-configuration
- '(summary
-   (horizontal 1.0
-	       (vertical 0.2 (group 1.0))
-	       (vertical 1.0 (summary 1.0 point)))))
-
+;; (gnus-add-configuration
+;;  '(summary
+;;    (horizontal 1.0
+;; 	       (vertical 0.2 (group 1.0))
+;; 	       (vertical 1.0 (summary 1.0 point)))))
 
 ;; permet la saisie d'un message dans une nouvelle frame
 ;; (gnus-add-configuration

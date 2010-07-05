@@ -1,3 +1,4 @@
+# -*- conf-space -*-
 [user]
 	name = Niv Sardi
 	email = nsardi@smartjog.com
@@ -5,6 +6,7 @@
 	cat=-p cat-file -p
 	co=checkout -m
 	ci=commit -s
+	co=commit -s --cleanup=strip
 	st=status
 	pop=reset HEAD~1
 	unstash=stash apply
@@ -13,6 +15,8 @@
 	p=!git push origin `git-symbolic-ref HEAD`
 	debtag=!git tag -f -a -s -m `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'` `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'`
 	authors=shortlog -n -s -e
+	lol = log --graph --decorate --pretty=oneline --abbrev-commit
+	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [sendemail]
 	smtpencryption=tls
 	smtpuser=0xa1f00@gmail.com

@@ -36,6 +36,8 @@
 ;;(require 'mule)
 ;;(require 'un-define)
 
+(require 'multi-term)
+
 (require 'cl)
 
 (add-to-list 'load-path "~/.elisp/bongo")
@@ -78,9 +80,17 @@
       (global-font-lock-mode t)
       ))
 
-;;(condition-case nil
-;;    (require 'w3m)
-;;  (file-error nil))
+(condition-case nil
+    (require 'w3m)
+  (file-error nil))
+(define-key w3m-mode-map [up] 'previous-line)
+(define-key w3m-mode-map [down] 'next-line)
+(define-key w3m-mode-map [left] 'backward-char)
+(define-key w3m-mode-map [right] 'forward-char)
+(setq w3m-key-binding 'info)
+(setq browse-url-browser-function 'w3m-browse-url)
+(global-set-key "\C-xm" 'browse-url-at-point)
+
 
 
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
@@ -95,6 +105,15 @@
 (setq scroll-preserve-screen-position t); pour pouvoir scroller normalement
 (auto-compression-mode t)               ; permet d'ouvrir les gz a la volee
 (transient-mark-mode t)
+
+(require 'iedit)
+
+(when (require 'browse-kill-ring nil 'noerror)
+  (browse-kill-ring-default-keybindings))
+
+(global-set-key "\C-cy" '(lambda ()
+   (interactive)
+   (popup-menu 'yank-menu)))
 
 ;; this replaces iswitchb
 (require 'ido)
@@ -150,7 +169,8 @@
             ("FFMPEG"
               (filename . "Wrk/FFMPEG"))
             ("Icecast"
-              (filename . "Wrk/FF-Replace"))
+	     (filename . "Wrk/FF-Replace")
+	     (filename . "Wrk/Icecast"))
             ("Wrk"
               (filename . "Wrk"))
 	    ("Programming" ;; prog stuff not already in MyProjectX
@@ -478,8 +498,16 @@
 (setq sh-basic-offset 8)
 
 (require 'pabbrev)
-(setq auto-mode-alist (cons '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode)
-			    auto-mode-alist))
+(add-to-list 'auto-mode-alist '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode))
+
+(defun ffmpeg-c-mode ()
+  "C mode with adjusted values for videolan."
+  (interactive)
+  (c-mode)
+  (c-set-style "K&R")
+  (setq tab-width 4)
+  (setq indent-tabs-mode nil)
+  (setq c-basic-offset 4))
 
 (defun vlc-c-mode ()
   "C mode with adjusted values for videolan."
@@ -490,9 +518,8 @@
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4))
 
-(setq auto-mode-alist (cons '("~/src/.*vlc.*/.*\\.[ch]$" . vlc-c-mode)
-			    auto-mode-alist))
-
+(add-to-list 'auto-mode-alist '("~/src/.*vlc.*/.*\\.[ch]$" . vlc-c-mode))
+(add-to-list 'auto-mode-alist '("~/Wrk/.*[Ii]cecast.*/.*\\.[ch]$" . vlc-c-mode))
 
 ;; C-Mode par défaut
 ;;(add-hook 'c-mode-common-hook
@@ -844,6 +871,7 @@ Suitable for use in `planner-annotation-functions'."
  '(custom-variable-button ((t (:background "black" :foreground "white" :underline t :weight bold))))
  '(custom-variable-tag ((t (:foreground "magenta" :underline t :weight bold :height 1.6))))
  '(diff-added ((t (:inherit diff-changed :foreground "green3"))))
+ '(diff-refine-change ((((class color) (min-colors 88) (background dark)) (:background "grey10"))))
  '(diff-removed ((t (:inherit diff-changed :foreground "red3"))))
  '(erc-button ((t (:inherit link :weight bold))))
  '(erc-current-nick-face ((t (:foreground "Red" :weight bold))))
