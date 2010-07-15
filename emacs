@@ -36,14 +36,14 @@
 ;;(require 'mule)
 ;;(require 'un-define)
 
-(require 'multi-term)
+(require 'multi-term nil t)
 
-(require 'cl)
+(require 'cl nil t)
 
 (add-to-list 'load-path "~/.elisp/bongo")
 (autoload 'bongo "bongo"
   "Start Bongo by switching to a Bongo buffer.")
-(require 'bongo)
+(require 'bongo nil t)
 
 ;;(add-to-list 'load-path "~/.elisp/emms/lisp")
 ;;(require 'emms-setup)
@@ -66,31 +66,28 @@
 
 ;;(require 'ecb)
 
-(if (require 'font-lock nil t)
-    (progn
-      (setq initial-major-mode
-	    (lambda ()
-	      (text-mode)
-	      (font-lock-mode)))
-      (setq font-lock-mode-maximum-decoration t
-	    font-lock-use-default-fonts t
-	    font-lock-use-default-colors t)
+(when (require 'font-lock nil t)
+  (setq initial-major-mode
+	(lambda ()
+	  (text-mode)
+	  (font-lock-mode)))
+  (setq font-lock-mode-maximum-decoration t
+	font-lock-use-default-fonts t
+	font-lock-use-default-colors t)
 
-      (setq font-lock-maximum-size nil)	; trun off limit on font lock mode
-      (global-font-lock-mode t)
-      ))
+  (setq font-lock-maximum-size nil)	; trun off limit on font lock mode
+  (global-font-lock-mode t)
+  )
 
-(condition-case nil
-    (require 'w3m)
-  (file-error nil))
-(define-key w3m-mode-map [up] 'previous-line)
-(define-key w3m-mode-map [down] 'next-line)
-(define-key w3m-mode-map [left] 'backward-char)
-(define-key w3m-mode-map [right] 'forward-char)
-(setq w3m-key-binding 'info)
-(setq browse-url-browser-function 'w3m-browse-url)
-(global-set-key "\C-xm" 'browse-url-at-point)
-
+(when (require 'w3m nil t)
+  (define-key w3m-mode-map [up] 'previous-line)
+  (define-key w3m-mode-map [down] 'next-line)
+  (define-key w3m-mode-map [left] 'backward-char)
+  (define-key w3m-mode-map [right] 'forward-char)
+  (setq w3m-key-binding 'info)
+  (setq browse-url-browser-function 'w3m-browse-url)
+  (global-set-key "\C-xm" 'browse-url-at-point)
+  )
 
 
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
@@ -106,7 +103,7 @@
 (auto-compression-mode t)               ; permet d'ouvrir les gz a la volee
 (transient-mark-mode t)
 
-(require 'iedit)
+(require 'iedit nil t)
 
 (when (require 'browse-kill-ring nil 'noerror)
   (browse-kill-ring-default-keybindings))
@@ -116,28 +113,28 @@
    (popup-menu 'yank-menu)))
 
 ;; this replaces iswitchb
-(require 'ido)
-(ido-mode t)
+(when (require 'ido nil t)
+  (ido-mode t)
 
-(setq ido-execute-command-cache nil)
- (defun ido-execute-command ()
-   (interactive)
-   (call-interactively
-    (intern
-     (ido-completing-read
-      "M-x "
-      (progn
-        (unless ido-execute-command-cache
-          (mapatoms (lambda (s)
-                      (when (commandp s)
-                        (setq ido-execute-command-cache
-                              (cons (format "%S" s) ido-execute-command-cache))))))
-        ido-execute-command-cache)))))
+  (setq ido-execute-command-cache nil)
+  (defun ido-execute-command ()
+    (interactive)
+    (call-interactively
+     (intern
+      (ido-completing-read
+       "M-x "
+       (progn
+	 (unless ido-execute-command-cache
+	   (mapatoms (lambda (s)
+		       (when (commandp s)
+			 (setq ido-execute-command-cache
+			       (cons (format "%S" s) ido-execute-command-cache))))))
+	 ido-execute-command-cache)))))
 
- (add-hook 'ido-setup-hook
-           (lambda ()
-             (setq ido-enable-flex-matching t)
-             (global-set-key "\M-x" 'ido-execute-command)))
+  (add-hook 'ido-setup-hook
+	    (lambda ()
+	      (setq ido-enable-flex-matching t)
+	      (global-set-key "\M-x" 'ido-execute-command)))
   (defun my-ido-find-tag ()
     "Find a tag using ido"
     (interactive)
@@ -148,16 +145,16 @@
                 (push (prin1-to-string x t) tag-names)))
             tags-completion-table)
       (find-tag (ido-completing-read "Tag: " tag-names))))
-(setq ido-default-buffer-method 'maybe-frame)
-(setq ido-default-file-method 'maybe-frame)
-
-(require 'ibuffer)
-(setq ibuffer-saved-filter-groups
-  (quote (("default"
-            ("Org" ;; all org-related buffers
-              (mode . org-mode))
-            ("Mail"
-              (or  ;; mail-related buffers
+  (setq ido-default-buffer-method 'maybe-frame)
+  (setq ido-default-file-method 'maybe-frame)
+  )
+(when (require 'ibuffer nil t)
+  (setq ibuffer-saved-filter-groups
+	(quote (("default"
+		 ("Org" ;; all org-related buffers
+		  (mode . org-mode))
+		 ("Mail"
+		  (or  ;; mail-related buffers
                (mode . message-mode)
                (mode . mail-mode)
 	       (mode . gnus)
@@ -166,31 +163,31 @@
 	       (mode . gnus-group-mode)
                ;; etc.; all your mail related modes
                ))
-            ("FFMPEG"
-              (filename . "Wrk/FFMPEG"))
-            ("Icecast"
-	     (filename . "Wrk/FF-Replace")
-	     (filename . "Wrk/Icecast"))
-            ("Wrk"
-              (filename . "Wrk"))
-	    ("Programming" ;; prog stuff not already in MyProjectX
-              (or
-                (mode . c-mode)
-                (mode . perl-mode)
-                (mode . python-mode)
-                (mode . emacs-lisp-mode)
-		(mode . cscope-mode)
-		(mode . cpp-mode)
-                ;; etc
-                ))
-            ("ERC"   (mode . erc-mode))))))
+		 ("FFMPEG"
+		  (filename . "Wrk/FFMPEG"))
+		 ("Icecast"
+		  (filename . "Wrk/FF-Replace")
+		  (filename . "Wrk/Icecast"))
+		 ("Wrk"
+		  (filename . "Wrk"))
+		 ("Programming" ;; prog stuff not already in MyProjectX
+		  (or
+		   (mode . c-mode)
+		   (mode . perl-mode)
+		   (mode . python-mode)
+		   (mode . emacs-lisp-mode)
+		   (mode . cscope-mode)
+		   (mode . cpp-mode)
+		   ;; etc
+		   ))
+		 ("ERC"   (mode . erc-mode))))))
 
-(add-hook 'ibuffer-mode-hook
-  (lambda ()
-    (ibuffer-switch-to-saved-filter-groups "default")))
+  (add-hook 'ibuffer-mode-hook
+	    (lambda ()
+	      (ibuffer-switch-to-saved-filter-groups "default")))
 
-(global-set-key (kbd "C-x x") 'ibuffer)
-
+  (global-set-key (kbd "C-x x") 'ibuffer)
+  )
 ;; Pour avoir le module AucTeX
 ;;(require 'tex-site)
 
@@ -270,9 +267,10 @@
 ;; (defun my-verify-sign ()
 ;;   ( mc-verify ))
 
-(require 'erc)
-(setq erc-input-line-position -2)
-(setq erc-timestamp-format "[%H:%M] ")
+(when (require 'erc nil t)
+  (setq erc-input-line-position -2)
+  (setq erc-timestamp-format "[%H:%M] ")
+  )
 
 
 ;; (defun xa1-scroll-to-bottom (&optional arg)
@@ -478,8 +476,8 @@
            (font-lock-fontify-buffer)))
 
 
-(require 'xcscope nil t)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(when (require 'xcscope nil t)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace))
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
@@ -497,7 +495,7 @@
 (setq perl-indent-level 8)
 (setq sh-basic-offset 8)
 
-(require 'pabbrev)
+(require 'pabbrev nil t)
 (add-to-list 'auto-mode-alist '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode))
 
 (defun ffmpeg-c-mode ()
@@ -718,6 +716,9 @@
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+(setq org-directory "~/org/")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(global-set-key "\C-cr" 'org-remember)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-font-lock-mode 1)                     ; for all buffers
@@ -725,105 +726,21 @@
 (add-hook 'mail-mode-hook 'turn-on-orgstruct)
 (add-hook 'mail-mode-hook 'turn-on-orgtbl)
 
-;; Planner
-(if (require 'planner nil t)
-    (progn
-      (setq planner-project "MainPlanner")
+;; Remember
+(when (require 'remember nil t)
+  (org-remember-insinuate)  
+  
+  (setq remember-annotation-functions '(org-remember-annotation))
+  (setq remember-handler-functions '(org-remember-handler))
+  (add-hook 'remember-mode-hook 'org-remember-apply-template)
+  
+  (autoload 'remember "remember" nil t)
+  (autoload 'remember-region "remember" nil t)
+  
+  (define-key global-map "\M-R" 'remember-region)
+  )
 
-      (setq muse-project-alist
-	    '(("MainPlanner"
-	       ("~/Plans"           ;; where your Planner pages are located
-		:default "TaskPool" ;; use value of `planner-default-page'
-		:major-mode planner-mode
-		:visit-link planner-visit-link)
 
-	       ;; This next part is for specifying where Planner pages
-	       ;; should be published and what Muse publishing style to
-	       ;; use.  In this example, we will use the XHTML publishing
-	       ;; style.
-
-	      (:base "planner-xhtml"
-		     ;; where files are published to
-		     ;; (the value of `planner-publishing-directory', if
-		     ;;  you have a configuration for an older version
-		     ;;  of Planner)
-		     :path "~/public_html/Plans"))))
-
-      (if (require 'planner-gnus nil t)
-	  (progn (planner-gnus-insinuate)))
-
-      (defun planner-gnus-annotation-from-summary ()
-	"If called from a Gnus summary buffer, return an annotation.
-Suitable for use in `planner-annotation-functions'."
-	(when (equal major-mode 'gnus-summary-mode)
-	  (let ((articles (gnus-summary-work-articles nil)))
-	    (planner-make-link
-	     (concat "gnus://" gnus-newsgroup-name "/"
-		     (mapconcat (lambda (article-number)
-				  (planner-gnus-get-message-id article-number))
-				(gnus-summary-work-articles nil) "\\|"))
-	     (if (= 1 (length articles))
-		 (let ((headers (gnus-data-header (assq (car articles)
-							gnus-newsgroup-data))))
-		   (if (gnus-news-group-p gnus-newsgroup-name)
-		       (concat "Post "
-			       (if (and planner-ignored-from-addresses
-				       (string-match
-					planner-ignored-from-addresses
-					(mail-header-from headers)))
-				   ""
-				 (concat "from "
-					 (planner-get-name-from-address
-					  (mail-header-from headers))
-					 " "))
-			       "on "
-			      gnus-newsgroup-name)
-		     (concat "E-Mail "
-			     (if (and planner-ignored-from-addresses
-				     (mail-header-from headers)
-				     (string-match planner-ignored-from-addresses
-						   (mail-header-from headers))
-				     (assq 'To
-					   (mail-header-extra headers)))
-				 ;; Mail from me, so use the To: instead
-				 (concat "to " (planner-get-name-from-address
-						(cdr (assq 'To
-							   (mail-header-extra
-							    headers)))))
-			       ;; Mail to me, so use the From:
-			       (concat "from " (planner-get-name-from-address
-						(mail-header-from headers))))
-			     (concat " [" (mail-header-subject headers) "]"))))
-	      (concat (number-to-string (length articles))
-		      " E-Mails from folder " gnus-newsgroup-name))
-	     t))))
-
-      (require 'planner-log-edit nil t)
-
-      ;; Remember
-      (if (require 'remember nil t)
-	  (progn
-	    ;;(org-remember-insinuate)
-	    (setq org-directory "~/org/")
-	    (setq org-default-notes-file (concat org-directory "/notes.org"))
-	    (define-key global-map "\C-cr" 'org-remember)
-
-	    (setq remember-annotation-functions '(org-remember-annotation))
-	    (setq remember-handler-functions '(org-remember-handler))
-	    (add-hook 'remember-mode-hook 'org-remember-apply-template)
-
-	    (if (require 'remember-planner nil t)
-		(progn
-		  (setq remember-handler-functions '(remember-planner-append))
-		  (setq remember-annotation-functions planner-annotation-functions)))
-
-	    (autoload 'remember "remember" nil t)
-	    (autoload 'remember-region "remember" nil t)
-
-	    (define-key global-map "\C-R" 'remember)
-	    (define-key global-map "\M-R" 'remember-region)
-	    ))
-      ))
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
@@ -843,6 +760,7 @@ Suitable for use in `planner-annotation-functions'."
  '(display-time-mode t)
  '(ecb-options-version "2.32")
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
+ '(erc-mode-line-format "%t %a")
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
@@ -876,6 +794,7 @@ Suitable for use in `planner-annotation-functions'."
  '(erc-button ((t (:inherit link :weight bold))))
  '(erc-current-nick-face ((t (:foreground "Red" :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
+ '(font-lock-comment-face ((((class color) (min-colors 8) (background dark)) (:weight thin))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-cite-1 ((t (:foreground "LightBlue"))))
  '(gnus-header-subject ((t (:foreground "white" :weight bold))))
