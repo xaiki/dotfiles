@@ -1146,7 +1146,7 @@ more then one article."
 ; Header-line
 (if (require 'hl-line)
     (progn
-      (set-face-background 'hl-line "purple4")
+      (set-face-background 'hl-line "yellow4")
       (add-hook 'gnus-group-mode-hook
 		(lambda ()
 		  (hl-line-mode)))

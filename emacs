@@ -97,8 +97,10 @@
   (setq w3m-key-binding 'info)
   (setq browse-url-browser-function 'w3m-browse-url)
   (global-set-key "\C-xm" 'browse-url-at-point)
-  )
-
+  (global-set-key "\C-xw" 'w3m)
+  (setq w3m-use-cookies t)
+  (setq w3m-cookie-accept-bad-cookies t)
+)
 
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
 (setq display-time-string-forms
@@ -195,7 +197,9 @@
 
 (add-hook 'ibuffer-mode-hook
   (lambda ()
-    (ibuffer-switch-to-saved-filter-groups "default")))
+    (ibuffer-switch-to-saved-filter-groups "default")
+    (hl-line-mode)
+    ))
 
 (global-set-key (kbd "C-x x") 'ibuffer)
 
@@ -281,9 +285,22 @@
 ;;   ( mc-verify ))
 
 (when (require 'erc nil t)
-  (setq erc-input-line-position -2)
-  (setq erc-timestamp-format "[%H:%M] ")
-  )
+;;        This is actually a bug in Emacs redisplay code, rather than in ERC. A fix for it is to set
+;;        erc-input-line-position to a value other than nil or -1.
+;;        E.g. do:
+(setq erc-input-line-position -2)
+(setq erc-timestamp-format "[%H:%M] ")
+;;(require 'erc-tab)
+;;(erc-tab-mode 1)
+(setq erc-current-nick-highlight-type 'nick)
+(setq erc-keywords '("\\berc[-a-z]*\\b" "\\bemms[-a-z]*\\b"))
+(defun erc-prepare-mode-line-format (arg) ())
+(setq erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE"))
+(setq erc-track-use-faces t)
+(setq erc-track-faces-priority-list
+      '(erc-current-nick-face erc-keyword-face))
+(setq erc-track-priority-faces-only 'all)
+)
 
 
 ;; (defun xa1-scroll-to-bottom (&optional arg)
@@ -338,13 +355,17 @@
       (setq empd-hostname "ayamaru.cxhome.ath.cx")
 ))
 
+(require 'autopair)
+(autopair-global-mode)
+(setq autopair-autowrap t)
+(setq autopair-blink t)
 
 (defun match-paren (arg)
   "Go to the matching parenthesis."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-               ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-               (t (self-insert-command (or arg 1)))))
+	((looking-at "\\s\)") (forward-char 1) (backward-list 1))
+	(t (self-insert-command (or arg 1)))))
 
 (global-set-key [(meta n)] 'gnus)
 (global-set-key [(control \;)] 'comment-region)
@@ -531,6 +552,7 @@
 
 (add-to-list 'auto-mode-alist '("~/src/.*vlc.*/.*\\.[ch]$" . vlc-c-mode))
 (add-to-list 'auto-mode-alist '("~/Wrk/.*[Ii]cecast.*/.*\\.[ch]$" . vlc-c-mode))
+(add-to-list 'auto-mode-alist '("~/Wrk/.*[Ff][Ff][Mm].*/.*\\.[ch]$" . vlc-c-mode))
 
 ;; C-Mode par défaut
 ;;(add-hook 'c-mode-common-hook
@@ -734,11 +756,28 @@
 (global-set-key "\C-cr" 'org-remember)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-font-lock-mode 1)                     ; for all buffers
-(add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
-(add-hook 'mail-mode-hook 'turn-on-orgstruct)
-(add-hook 'mail-mode-hook 'turn-on-orgtbl)
+(global-set-key "\C-cb" 'org-iswitchb)
+(setq org-link-abbrev-alist
+      '(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id="))
+      )
 
+
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(d)")
+	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+	(sequence "|" "CANCELED(c)")))
+(setq org-remember-templates
+      '(("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
+        ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
+        ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
+
+
+
+(add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
+(add-hook 'mail-mode-hook 'turn-on-orgstruct++)
+;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
+(add-hook 'mail-mode-hook 'turn-on-orgtbl)
+(setq org-agenda-include-diary t)
 ;; Remember
 (when (require 'remember nil t)
   (org-remember-insinuate)
@@ -777,10 +816,10 @@
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
- '(jabber-server "gmail.com")
- '(jabber-username "0xa1f00")
+ '(jabber-server "gmail.com" t)
+ '(jabber-username "0xa1f00" t)
  '(mm-inline-text-html-with-images t)
- '(org-agenda-files (quote ("~/.org/TODO")))
+ '(org-agenda-files (quote ("~/.org/gtd.org" "~/.org/TODO.org")))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(smime-keys (quote (("xaiki@cxhome.ath.cx" "/dev/null" ("")))))
@@ -807,11 +846,13 @@
  '(erc-button ((t (:inherit link :weight bold))))
  '(erc-current-nick-face ((t (:foreground "Red" :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
- '(font-lock-comment-face ((((class color) (min-colors 8) (background dark)) (:weight thin))))
+ '(font-lock-comment-delimiter-face ((default (:inherit font-lock-comment-face :foreground "red3" :weight bold)) (((class color) (min-colors 16)) nil)))
+ '(font-lock-comment-face ((((class color) (min-colors 8) (background dark)) (:inherit font-lock-comment-delimiter-face :weight light))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-cite-1 ((t (:foreground "LightBlue"))))
  '(gnus-header-subject ((t (:foreground "white" :weight bold))))
  '(gnus-signature ((t (:foreground "dark red" :slant italic))))
+ '(hl-line ((t (:inherit highlight :background "orange4"))))
  '(message-header-cc ((t (:foreground "LightBlue5"))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
  '(message-header-to ((t (:foreground "cyan" :weight bold))))
