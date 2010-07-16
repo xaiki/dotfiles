@@ -35,8 +35,18 @@
 
 ;;(require 'mule)
 ;;(require 'un-define)
-
-(require 'multi-term nil t)
+(when (require 'term-xaiki nil t)
+  (when (require 'multi-term nil t)
+    (setq term-term-name "eterm-color")
+    (global-set-key [?\M-\C-t] 'multi-term)
+    (defun term-send-up    () (interactive) (term-send-raw-string "\e[A"))
+    (defun term-send-down  () (interactive) (term-send-raw-string "\e[B"))
+    (defun term-send-right () (interactive) (term-send-raw-string "\e[C"))
+    (defun term-send-left  () (interactive) (term-send-raw-string "\e[D"))
+    (defun term-send-home  () (interactive) (term-send-raw-string "\e[F"))
+    (defun term-send-Cr  () (interactive) (term-send-raw-string ""))
+    (define-key term-raw-map "\C-xr" 'term-send-Cr)
+    ))
 
 (require 'cl nil t)
 
@@ -163,28 +173,31 @@
 	       (mode . gnus-group-mode)
                ;; etc.; all your mail related modes
                ))
-		 ("FFMPEG"
-		  (filename . "Wrk/FFMPEG"))
-		 ("Icecast"
-		  (filename . "Wrk/FF-Replace")
-		  (filename . "Wrk/Icecast"))
-		 ("Wrk"
-		  (filename . "Wrk"))
-		 ("Programming" ;; prog stuff not already in MyProjectX
-		  (or
-		   (mode . c-mode)
-		   (mode . perl-mode)
-		   (mode . python-mode)
-		   (mode . emacs-lisp-mode)
-		   (mode . cscope-mode)
-		   (mode . cpp-mode)
-		   ;; etc
-		   ))
-		 ("ERC"   (mode . erc-mode))))))
+            ("FFMPEG"
+              (filename . "Wrk/FFMPEG"))
+            ("Icecast"
+	     (filename . "Wrk/FF-Replace")
+	     (filename . "Wrk/Icecast"))
+            ("Wrk"
+              (filename . "Wrk"))
+	    ("Programming" ;; prog stuff not already in MyProjectX
+              (or
+                (mode . c-mode)
+                (mode . perl-mode)
+                (mode . python-mode)
+                (mode . emacs-lisp-mode)
+		(mode . cscope-mode)
+		(mode . cpp-mode)
+                ;; etc
+                ))
+	    ("Term" (mode . term-mode))
+            ("ERC"   (mode . erc-mode))))))
 
-  (add-hook 'ibuffer-mode-hook
-	    (lambda ()
-	      (ibuffer-switch-to-saved-filter-groups "default")))
+(add-hook 'ibuffer-mode-hook
+  (lambda ()
+    (ibuffer-switch-to-saved-filter-groups "default")))
+
+(global-set-key (kbd "C-x x") 'ibuffer)
 
   (global-set-key (kbd "C-x x") 'ibuffer)
   )
@@ -728,15 +741,15 @@
 
 ;; Remember
 (when (require 'remember nil t)
-  (org-remember-insinuate)  
-  
+  (org-remember-insinuate)
+
   (setq remember-annotation-functions '(org-remember-annotation))
   (setq remember-handler-functions '(org-remember-handler))
   (add-hook 'remember-mode-hook 'org-remember-apply-template)
-  
+
   (autoload 'remember "remember" nil t)
   (autoload 'remember-region "remember" nil t)
-  
+
   (define-key global-map "\M-R" 'remember-region)
   )
 

@@ -225,7 +225,7 @@
 ;;
 
 ;;; Require:
-(require 'term)
+(require 'term-xaiki)
 (require 'cl)
 (require 'advice)
 

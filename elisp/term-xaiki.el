@@ -457,6 +457,7 @@ state 3: seen ESC [ (or ESC [ ?)
 state 4: term-terminal-parameter contains pending output.")
 (defvar term-kill-echo-list nil
   "A queue of strings whose echo we want suppressed.")
+(defvar term-this-buffer-name)
 (defvar term-terminal-parameter)
 (defvar term-terminal-previous-parameter)
 (defvar term-current-face 'default)
@@ -2927,6 +2928,26 @@ See `term-prompt-regexp'."
 			  (setq term-terminal-previous-parameter-4 -1)
 			  (setq term-terminal-more-parameters 0)
 			  (setq term-terminal-state 3))
+			 ((eq char ?\135)	  ;; ?\135 = ?]
+			  (setq char (aref str (1+ i)))
+			  (setq i (+ i 2))
+;;			  (setq term-this-buffer-name (buffer-name (current-buffer)))
+;;			  (let ((end (string-match "*" term-this-buffer-name 2)))
+;;			    (if end
+;;				(setq term-this-buffer-name (substring term-this-buffer-name 0 (1+ end)))
+;;			      (setq term-this-buffer-name "*fail*"))
+;;			    )
+			  (let ((end (string-match "" str i)))
+			    (if end
+;;				(progn (rename-buffer (concat term-this-buffer-name (substring str (1+ i) end)))
+				(progn (rename-buffer (concat "*term*<" (substring str (1+ i) end) ">") t)
+				       (setq i (match-end 0)))))
+			  (setq term-terminal-state 0)
+			  )
+
+			 ;;			      (setq term-terminal-parameter (substring str i))
+			 ;;			      (setq term-terminal-state 4)
+			 ;;			      (setq i str-length))))
 			 ((eq char ?D) ;; scroll forward
 			  (term-handle-deferred-scroll)
 			  (term-down 1 t)
@@ -4533,7 +4554,7 @@ The return value may be nil for a special serial port."
 ;; You could use completion-in-region to do the bulk of the
 ;; completion job.
 
-(provide 'term)
+(provide 'term-xaiki)
 
 ;; arch-tag: eee16bc8-2cd7-4147-9534-a5694752f716
 ;;; term.el ends here
