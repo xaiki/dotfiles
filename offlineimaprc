@@ -1,0 +1,29 @@
+# -*- conf -*-
+[general]
+ui = Curses.Blinkenlights
+accounts = xaiki
+
+[Account xaiki]
+localrepository = xaikiLocal
+remoterepository = xaikiRemote
+autorefresh = 1
+
+presynchook = ~/.offlineimap/sync_nnmaildir -g
+postsynchook = ~/.offlineimap/sync_nnmaildir -m
+
+[Repository xaikiLocal]
+type = Maildir
+localfolders = ~/Mail/
+
+[Repository xaikiRemote]
+type = Gmail
+remoteuser = 0xa1f00@gmail.com
+# remotepass = super_secret_password
+holdconnectionopen = true
+keepalive = 60
+folderfilter = lambda foldername: foldername in ['INBOX', 'Sent']
+
+#Setting realdelete = yes will Really Delete email from the server.
+#Otherwise "deleting" a message will just remove any labels and 
+#retain the message in the All Mail folder.
+realdelete = no
