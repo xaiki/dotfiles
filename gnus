@@ -65,6 +65,9 @@
 ;;----- identité --------------------------------------------
 (setq user-full-name "Niv Sardi")
 
+;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
+(setq user-mail-address "xaiki@evilgiggle.com")
+
 ;; mes autre adresses : en répondant à un message permet de réutiliser
 ;; l'adresse du To:/From:/CC: de ce message
 (setq message-alternative-emails
@@ -809,7 +812,6 @@
 	   (concat "At " date ", " (or name email) " wrote :\n\n")))))
 
 ;; ====== Zone expérimentale ================================
-
 
 ;; To queue mail, set smtpmail-queue-mail to t and use
 ;; smtpmail-send-queued-mail to send.
