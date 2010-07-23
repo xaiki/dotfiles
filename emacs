@@ -859,6 +859,7 @@
  '(message-header-cc ((t (:foreground "LightBlue5"))))
  '(message-header-subject ((t (:foreground "light blue" :weight bold))))
  '(message-header-to ((t (:foreground "cyan" :weight bold))))
+ '(mmm-default-submode-face ((t (:background "gray10"))))
  '(mode-line ((t (:background "blue4" :foreground "#d4d4d4" :box (:line-width -1 :style released-button)))))
  '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
