@@ -9,7 +9,7 @@ remoterepository = xaikiRemote
 autorefresh = 1
 
 presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g
-postsynchook = ~/.offlineimap-scripts/post-sync.sh
+postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m
 
 
 [Repository xaikiLocal]

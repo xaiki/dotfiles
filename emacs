@@ -45,7 +45,7 @@
     (defun term-send-left  () (interactive) (term-send-raw-string "\e[D"))
     (defun term-send-home  () (interactive) (term-send-raw-string "\e[F"))
     (defun term-send-Cr  () (interactive) (term-send-raw-string ""))
-    (define-key term-raw-map "\C-xr" 'term-send-Cr)
+    (define-key term-raw-map "\C-r" 'term-send-Cr)
     ))
 
 (require 'cl nil t)
@@ -355,10 +355,12 @@
       (setq empd-hostname "ayamaru.cxhome.ath.cx")
 ))
 
-(require 'autopair)
-(autopair-global-mode)
-(setq autopair-autowrap t)
-(setq autopair-blink t)
+(if (require 'autopair nil t)
+    (progn
+      (autopair-global-mode)
+      (setq autopair-autowrap t)
+      (setq autopair-blink t))
+  (message "couldn't load autopair"))
 
 (defun match-paren (arg)
   "Go to the matching parenthesis."
@@ -818,6 +820,7 @@
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com" t)
  '(jabber-username "0xa1f00" t)
+ '(mairix-file-path "~/.gnus.d/")
  '(mm-inline-text-html-with-images t)
  '(org-agenda-files (quote ("~/.org/gtd.org" "~/.org/TODO.org")))
  '(save-place t nil (saveplace))

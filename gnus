@@ -99,7 +99,7 @@
 
 ;;----- réglages des sources (select methods) et des envois ---------------
 ;; Mode par défaut : gnus-agent
-;(setq gnus-agent t) ;plus nécessaire en 21.3.50 ?
+(setq gnus-agent t) ;plus nécessaire en 21.3.50 ?
 ;;(setq gnus-agent nil
 ;;          gnus-agent-cache nil)
 
@@ -113,7 +113,10 @@
 
 ;;serveur news principal
 (setq gnus-select-method
-      '(nnnil ""))
+      '(nnmaildir "GMail" 
+		  (directory "~/Mail/")
+		  (directory-files nnheader-directory-files-safe)
+		  (get-new-mail nil)))
 (defun turn-off-backup ()
   (set (make-local-variable 'backup-inhibited) t))
 
@@ -124,10 +127,7 @@
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
 ;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
 		  (nnfolder-get-new-mail t))	
-	(nnmaildir "GMail" 
-                   (directory "~/Mail/")
-                   (directory-files nnheader-directory-files-safe)
-                   (get-new-mail nil))))
+	))
 
 ;; on peut créer un .authinfo sur le modále :
 ;;machine foo.bar.com login your_username password your_pass
@@ -1521,14 +1521,6 @@ more then one article."
 	))
 ;; desactivé à cause du proxy (add-hook 'message-send-hook 'sk-securise-messages)
 ;;;========== configuration GPG / PGG ==============================
-(when (require 'gnus-namazu nil t)
-  (gnus-namazu-insinuate)
-  (add-hook 'gnus-startup-hook 'gnus-namazu-update-all-indices)
-  (setq gnus-namazu-index-update-interval nil)
-  (setq gnus-namazu-index-directories
-	(list (expand-file-name "~/News/namazu")))
-      
-)
 
 ;; speed-up !
 (gnus-compile)
