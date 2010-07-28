@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp; coding: utf-8; -*-
+1;2403;0c;; -*- mode: emacs-lisp; coding: utf-8; -*-
 ;; Time-stamp: <30/07/2006 16:22 seki@petisuix.seki.fr>
 ;;+----------------------------------------------------------+
 ;;|                                                          |
@@ -388,7 +388,7 @@
 
 ; Je ne veux pas de HTML, ni de richText, non mais oh !
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-(setq mm-text-html-renderer 'w3m-standalone);'w3m
+(setq mm-text-html-renderer 'w3m);'w3m
 
 ; Répertoire par défaut des attachements
 (setq gnus-summary-save-parts-last-directory "~/Wrk/")
@@ -815,7 +815,6 @@
 
 ;; To queue mail, set smtpmail-queue-mail to t and use
 ;; smtpmail-send-queued-mail to send.
-
 ;; ;(setq gnus-secondary-select-methods
 ;; (setq gnus-secondary-select-methods
 ;;       '((nnimap "metz-exchange"

@@ -1,4 +1,4 @@
-# -*- conf -*-
+# -*- conf-mode -*-
 [general]
 ui = Curses.Blinkenlights
 accounts = GMail, Smartjog
@@ -12,7 +12,6 @@ autorefresh = 1
 presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g -d ~/Mail/Gmail
 postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m -d ~/Mail/Gmail
 
-
 [Repository GMailLocal]
 type = Maildir
 localfolders = ~/Mail/Gmail
@@ -23,7 +22,7 @@ remoteuser = 0xa1f00@gmail.com
 # remotepass = super_secret_password
 holdconnectionopen = true
 keepalive = 60
-folderfilter = lambda foldername: foldername in ['INBOX', 'Sent']
+folderfilter = lambda foldername: re.search('INBOX|Wrk|Coloc', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
