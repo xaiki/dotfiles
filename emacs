@@ -355,12 +355,10 @@
       (setq empd-hostname "ayamaru.cxhome.ath.cx")
 ))
 
-(if (require 'autopair nil t)
-    (progn
-      (autopair-global-mode)
-      (setq autopair-autowrap t)
-      (setq autopair-blink t))
-  (message "couldn't load autopair"))
+(require 'autopair)
+(autopair-global-mode)
+(setq autopair-autowrap t)
+(setq autopair-blink t)
 
 (defun match-paren (arg)
   "Go to the matching parenthesis."
@@ -752,47 +750,48 @@
 
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(setq org-directory "~/org/")
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(global-set-key "\C-cr" 'org-remember)
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-(setq org-link-abbrev-alist
-      '(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id="))
-      )
+(when (require 'org nil t)
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+  (setq org-directory "~/org/")
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (global-set-key "\C-cr" 'org-remember)
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb)
+  (setq org-link-abbrev-alist
+	'(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id=")))
 
 
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)")
-	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
-	(sequence "|" "CANCELED(c)")))
-(setq org-remember-templates
-      '(("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
-        ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
-        ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "|" "DONE(d)")
+	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+	  (sequence "|" "CANCELED(c)")))
+  (setq org-remember-templates
+	'(("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
+	  ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
+	  ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
 
 
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
 
-(add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
-(add-hook 'mail-mode-hook 'turn-on-orgstruct++)
-;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
-(add-hook 'mail-mode-hook 'turn-on-orgtbl)
-(setq org-agenda-include-diary t)
-;; Remember
-(when (require 'remember nil t)
-  (org-remember-insinuate)
+  (add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
+  (add-hook 'mail-mode-hook 'turn-on-orgstruct++)
+  ;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
+  (add-hook 'mail-mode-hook 'turn-on-orgtbl++)
+  (setq org-agenda-include-diary t)
+  ;; Remember
+  (when (require 'remember nil t)
+    (org-remember-insinuate)
 
-  (setq remember-annotation-functions '(org-remember-annotation))
-  (setq remember-handler-functions '(org-remember-handler))
-  (add-hook 'remember-mode-hook 'org-remember-apply-template)
+    (setq remember-annotation-functions '(org-remember-annotation))
+    (setq remember-handler-functions '(org-remember-handler))
+    (add-hook 'remember-mode-hook 'org-remember-apply-template)
 
-  (autoload 'remember "remember" nil t)
-  (autoload 'remember-region "remember" nil t)
+    (autoload 'remember "remember" nil t)
+    (autoload 'remember-region "remember" nil t)
 
-  (define-key global-map "\M-R" 'remember-region)
-  )
+    (define-key global-map "\M-R" 'remember-region)))
 
 
 (custom-set-variables
@@ -820,7 +819,6 @@
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com" t)
  '(jabber-username "0xa1f00" t)
- '(mairix-file-path "~/.gnus.d/")
  '(mm-inline-text-html-with-images t)
  '(org-agenda-files (quote ("~/.org/gtd.org" "~/.org/TODO.org")))
  '(save-place t nil (saveplace))

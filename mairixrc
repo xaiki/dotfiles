@@ -15,7 +15,7 @@ base=~/Mail
 
 # Set this to a list of maildir folders within 'base'.  3 dots at the end means
 # there are sub-folders within this folder.
-maildir=INBOX...
+maildir=Gmail...:Smartjog...
 
 
 #######################################################################

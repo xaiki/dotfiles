@@ -1,22 +1,23 @@
 # -*- conf -*-
 [general]
 ui = Curses.Blinkenlights
-accounts = xaiki
+accounts = GMail, Smartjog
+maxsyncaccounts = 10
 
-[Account xaiki]
-localrepository = xaikiLocal
-remoterepository = xaikiRemote
+[Account GMail]
+localrepository = GMailLocal
+remoterepository = GMailRemote
 autorefresh = 1
 
-presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g
-postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m
+presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g -d ~/Mail/Gmail
+postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m -d ~/Mail/Gmail
 
 
-[Repository xaikiLocal]
+[Repository GMailLocal]
 type = Maildir
-localfolders = ~/Mail/
+localfolders = ~/Mail/Gmail
 
-[Repository xaikiRemote]
+[Repository GMailRemote]
 type = Gmail
 remoteuser = 0xa1f00@gmail.com
 # remotepass = super_secret_password
@@ -25,6 +26,33 @@ keepalive = 60
 folderfilter = lambda foldername: foldername in ['INBOX', 'Sent']
 
 #Setting realdelete = yes will Really Delete email from the server.
-#Otherwise "deleting" a message will just remove any labels and 
+#Otherwise "deleting" a message will just remove any labels and
+#retain the message in the All Mail folder.
+realdelete = no
+
+[Account Smartjog]
+localrepository = SmartjogLocal
+remoterepository = SmartjogRemote
+autorefresh = 1
+
+presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g -d ~/Mail/Smartjog
+postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m -d ~/Mail/Smartjog
+
+
+[Repository SmartjogLocal]
+type = Maildir
+localfolders = ~/Mail/Smartjog
+
+[Repository SmartjogRemote]
+type = IMAP
+remotehost = imap-eu.smartjog.net
+remoteuser = nsardi
+ssl = yes
+# remotepass = super_secret_password
+holdconnectionopen = true
+keepalive = 60
+
+#Setting realdelete = yes will Really Delete email from the server.
+#Otherwise "deleting" a message will just remove any labels and
 #retain the message in the All Mail folder.
 realdelete = no

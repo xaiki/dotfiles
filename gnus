@@ -75,6 +75,7 @@
       (regexp-opt (cons user-mail-address
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
+			  "xaiki@evilgiggle.com"
 			  "nsardi@smartjog.com"
 			  "niv.sardi@smartjog.com"
 ;;			  "xaiki@sgi.com"
@@ -113,7 +114,7 @@
 
 ;;serveur news principal
 (setq gnus-select-method
-      '(nnmaildir "GMail" 
+      '(nnmaildir "LocalMail"
 		  (directory "~/Mail/")
 		  (directory-files nnheader-directory-files-safe)
 		  (get-new-mail nil)))
@@ -126,7 +127,7 @@
 		  (nnfolder-directory "~/Wrk/pending-patches/")
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
 ;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
-		  (nnfolder-get-new-mail t))	
+		  (nnfolder-get-new-mail t))
 	))
 
 ;; on peut créer un .authinfo sur le modále :
@@ -1521,6 +1522,8 @@ more then one article."
 	))
 ;; desactivé à cause du proxy (add-hook 'message-send-hook 'sk-securise-messages)
 ;;;========== configuration GPG / PGG ==============================
+;; Index
+(require 'nnmairix)
 
 ;; speed-up !
 (gnus-compile)
