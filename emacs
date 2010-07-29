@@ -666,7 +666,7 @@
 
 (setq window-system-default-frame-alist
       '((x
-	 (alpha . 90)
+	 (alpha . 95)
 	 (font . "Monospace-10")
 	 (background-color . "gray20")
 	 (foreground-color . "gray85")

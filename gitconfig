@@ -3,6 +3,7 @@
 	name = Niv Sardi
 	email = xaiki@evilgiggle.com
 [alias]
+	trackall=!git branch -a | grep remotes | grep -v HEAD | awk '{print $1}' | xargs -n1 git checkout -t
 	cat=-p cat-file -p
 	co=checkout -m
 	ci=commit -s
