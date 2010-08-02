@@ -113,11 +113,7 @@
 (setq nnimap-request-list-method 'imap-mailbox-list)
 
 ;;serveur news principal
-(setq gnus-select-method
-      '(nnmaildir "LocalMail"
-		  (directory "~/Mail/")
-		  (directory-files nnheader-directory-files-safe)
-		  (get-new-mail nil)))
+(setq gnus-select-method '(nnnil ""))
 (defun turn-off-backup ()
   (set (make-local-variable 'backup-inhibited) t))
 
@@ -126,9 +122,14 @@
       '((nnfolder "patches"
 		  (nnfolder-directory "~/Wrk/pending-patches/")
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
-;;		  (nnfolder-save-buffer-hook 'turn-off-backup)
+		  (nnfolder-save-buffer-hook 'turn-off-backup)
 		  (nnfolder-get-new-mail t))
-	))
+	(nnmaildir "LocalMail"
+		   (directory "~/Mail/")
+		   (directory-files nnheader-directory-files-safe)
+		   (get-new-mail nil))
+	(nntp "gmane"
+	      (nntp-address "news.gmane.org"))))
 
 ;; on peut créer un .authinfo sur le modále :
 ;;machine foo.bar.com login your_username password your_pass
