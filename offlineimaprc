@@ -1,28 +1,32 @@
-# -*- conf-mode -*-
+# -*- conf -*-
 [general]
-ui = Curses.Blinkenlights
-accounts = GMail, Smartjog
+ui = Noninteractive.Basic
+accounts = GMail
+#, Smartjog
 maxsyncaccounts = 10
+pythonfile = ~/.offlineimap-scripts/offlineimap.py
 
 [Account GMail]
-localrepository = GMailLocal
+localrepository = LocalIMAP
 remoterepository = GMailRemote
 autorefresh = 1
 
-presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g -d ~/Mail/Gmail
-postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m -d ~/Mail/Gmail
-
-[Repository GMailLocal]
-type = Maildir
-localfolders = ~/Mail/Gmail
+[Repository LocalIMAP]
+type = IMAP
+remotehost = localhost
+port = 143
+preauthtunnel = /usr/sbin/dovecot --exec-mail imap
 
 [Repository GMailRemote]
 type = Gmail
-remoteuser = 0xa1f00@gmail.com
+#remoteuser = 0xa1f00@gmail.com
+remoteusereval = get_username("imap.gmail.com")
+remotepasseval = get_password("imap.gmail.com")
 # remotepass = super_secret_password
 holdconnectionopen = true
 keepalive = 60
-folderfilter = lambda foldername: re.search('INBOX|Wrk|Coloc', foldername)
+nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
+folderfilter = lambda foldername: re.search('INBOX', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
@@ -30,17 +34,9 @@ folderfilter = lambda foldername: re.search('INBOX|Wrk|Coloc', foldername)
 realdelete = no
 
 [Account Smartjog]
-localrepository = SmartjogLocal
+localrepository = LocalIMAP
 remoterepository = SmartjogRemote
 autorefresh = 1
-
-presynchook = ~/.offlineimap-scripts/sync_nnmaildir -g -d ~/Mail/Smartjog
-postsynchook = ~/.offlineimap-scripts/sync_nnmaildir -m -d ~/Mail/Smartjog
-
-
-[Repository SmartjogLocal]
-type = Maildir
-localfolders = ~/Mail/Smartjog
 
 [Repository SmartjogRemote]
 type = IMAP
@@ -50,7 +46,7 @@ ssl = yes
 # remotepass = super_secret_password
 holdconnectionopen = true
 keepalive = 60
-
+nametrans = lambda foldername: re.sub('^', 'SmartJog.', foldername)
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
 #retain the message in the All Mail folder.
