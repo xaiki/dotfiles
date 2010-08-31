@@ -26,15 +26,21 @@
   )
 
 ;; match host >$ commands -i subarg --args `sub-commands` # comments
-(setq sho-lock-keywords 
+;; match host ># commands -i subarg --args `sub-commands` # comments
+(setq sho-lock-keywords
       '(("\\( -?-[^ ]+\\)" 1 font-lock-variable-name-face)
-	(">\\$\\(.*\\)" 1 font-lock-function-name-face keep)
-	("sudo" 0 font-lock-string-face prepend)
+	(">[\\$\\|#]\\(.*\\)" 1 font-lock-function-name-face keep)
+	("\".*\"" 0 font-lock-string-face prepend)
+	("sudo" 0 font-lock-comment-face prepend)
 	("(gdb)\\(.*\\)" 1 font-lock-function-name-face keep)
 	("(gdb)" 0 font-lock-warning-face prepend)
-	(".*>\\$" 0 font-lock-warning-face prepend)
-	(">\\$.*\\(#.*\\)" 1 font-lock-doc-face prepend)
-	(">\\$.*\\(`.*`\\)" 1 font-lock-type-face prepend)
+	(".*>[\\$\\|#]" 0 font-lock-warning-face prepend)
+	(">#" 0 font-lock-comment-delimiter-face prepend)
+	(">\\$" 0 font-lock-type-face prepend)
+	("×" 0 font-lock-type-face prepend)
+	("\\[…\\]" 0 font-lock-type-face prepend)
+	(">[\\$\\|#].*\\(#.*\\)" 1 font-lock-doc-face prepend)
+	(">[\\$\\|#].*\\(`.*`\\)" 1 font-lock-type-face prepend)
 	))
 
 (defun sho-turn-on ()
@@ -46,9 +52,9 @@
   (font-lock-remove-keywords nil '(,@sho-lock-keywords)))
 
 ;;;###autoload
-(define-minor-mode sho-minor-mode 
+(define-minor-mode sho-minor-mode
   "Minor Mode for Coloring shell scripts"
-  :lighter " SHo"
+  :lighter " sho"
   (progn
     (if sho-minor-mode
 	(sho-turn-on)
