@@ -111,7 +111,6 @@
 ;;(emms-devel)
 ;;(emms-default-players)
 
-
 (setq-default scroll-step 1)  ; turn off jumpy scroll
 (setq-default visible-bell t) ; no beeps, flash on errors
 ;; Syntaxe highlighting pour tout
@@ -264,84 +263,12 @@
 
   (global-set-key (kbd "C-x x") 'ibuffer)
   )
-;; Pour avoir le module AucTeX
-;;(require 'tex-site)
 
-;; Pour avoir le hello world
-;; (require 'hello-world)
-
-;;(require 'gnuserv)
-;;(gnuserv-start)
-;; If you want you can specify the gnuserv binary so you
-;; don't use the XEmacs gnuserv binary by accident.
-;; (setq server-program "/usr/local/gnuserv-2.1alpha/gnuserv")
-;;(setq gnuserv-frame (selected-frame))
-
-
-;;**********
-;;
-;; Définition des locales
-;;
-;;********************
-
-;; On veut les accents
-;; Deprecated
-;; (standard-display-european 1)
 (require 'iso-transl nil t)
 ;;(require 'utf-8)
 (standard-display-8bit 160 255)
 (set-input-mode t nil 0 7)
 (set-language-environment 'UTF-8)
-
-;;
-;;
-;; mailcrypt
-;;
-
-;; (require 'mailcrypt-init)
-;; (load-library "mailcrypt")
-;; (mc-setversion "gpg")
-
-;; (autoload 'mc-install-write-mode "mailcrypt" nil t)
-;; (autoload 'mc-install-read-mode "mailcrypt" nil t)
-;; (add-hook 'mail-mode-hook 'mc-install-write-mode)
-;; (add-hook 'gnus-summary-mode-hook 'mc-install-read-mode)
-;; (add-hook 'message-mode-hook 'mc-install-write-mode)
-;; (add-hook 'news-reply-mode-hook 'mc-install-write-mode)
-
-;; (setq mc-encrypt-for-me t)
-;; (setq mc-always-replace t)
-;; (setq mc-passwd-timeout 600)
-;; ;; Key server at UPC (Barcelona, Spain)
-;; (setq mc-pgp-keyserver-address "goliat.upc.es")
-;; (setq mc-pgp-keyserver-port 80)
-;; (setq mc-pgp-keyserver-url-template
-;;       "/cgi-bin/pks-extract-key.pl?op=get&search=%s")
-;; (setq mc-pgp-comment nil)
-
-;; ;; ;; If you have more than one key, specify the one to use
-;; (setq mc-gpg-user-id "0xC24B9018")
-
-;; ;; fix rmsism.
-;; (if (not (fboundp 'comint-read-noecho)) (defalias 'comint-read-noecho 'read-passwd))
-
-;; ;; ;; Always sign encrypted messages
-;; (setq mc-pgp-always-sign t)
-;; ;; ;; How long should mailcrypt remember your passphrase
-
-;; (add-hook 'message-send-hook 'my-sign-message)
-;; (defun my-sign-message ()
-;; ;;  (if (yes-or-no-p "Sign message? ")
-;;   (if (not (string-match "BEGIN PGP MESSAGE" (buffer-string)))
-;;       (mc-sign-message)))
-;; ;;)
-
-;; (add-hook 'gnus-select-article-hook 'my-verify-sign)
-;; (add-hook 'mc-post-decryption-hook 'decode-buffer)
-;; (add-hook 'mc-pre-decryption-hook 'hello_world)
-
-;; (defun my-verify-sign ()
-;;   ( mc-verify ))
 
 (when (require 'erc nil t)
 ;;        This is actually a bug in Emacs redisplay code, rather than in ERC. A fix for it is to set
@@ -360,7 +287,6 @@
       '(erc-current-nick-face erc-keyword-face))
 (setq erc-track-priority-faces-only 'all)
 )
-
 
 ;; (defun xa1-scroll-to-bottom (&optional arg)
 ;;   (interactive)
