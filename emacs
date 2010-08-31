@@ -756,21 +756,42 @@
 (when (require 'org nil t)
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
   (setq org-directory "~/org/")
-  (setq org-default-notes-file (concat org-directory "/notes.org"))
+  (when (require 'org-latex nil t)
+    (add-to-list 'org-export-latex-packages-alist '("" "listings"))
+    (add-to-list 'org-export-latex-packages-alist '("" "color"))
+    (setq org-export-latex-listings t))
+
+  (setq org-export-html-style
+	"<style type=\"text/css\">
+ <!--/*--><![CDATA[/*><!--*/
+.src {
+        background-color: #3f3f3f !important;
+        color: #d8d8d8 !important;
+        border-color: #1E2320 !important;
+        }
+  /*]]>*/-->
+   </style>")
+
+  (setq org-default-notes-file (concat org-directory "/notes.org")
+	org-agenda-files '("~/.org/TODO.org" "~/.org/WORK.org" "~/.org/PERSONAL.org"))
   (global-set-key "\C-cr" 'org-remember)
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cb" 'org-iswitchb)
+  (setq org-completion-use-ido t)
   (setq org-link-abbrev-alist
 	'(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id=")))
 
 
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "|" "DONE(d)")
-	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
-	  (sequence "|" "CANCELED(c)")))
+	'((sequence "TODO(t)" "|" "DONE(d!)")
+	  (sequence "|" "MEETING(m)")
+	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f!)")
+	  (sequence "|" "CANCELED(c!)")))
+  (setq org-log-done 'time)
   (setq org-remember-templates
-	'(("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
+	'(("Meeting" ?m "* MEETING %^{Meeting Date and Time}T%? %:subject\n %i\n %a" "~/.org/WORK.org" "Meetings")
+	  ("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
 	  ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
 	  ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
 
@@ -783,6 +804,13 @@
   ;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
   (add-hook 'mail-mode-hook 'turn-on-orgtbl++)
   (setq org-agenda-include-diary t)
+  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
+
+
+  ;; google maps
+  (when (require 'org-location-google-maps)
+    (message "Org google maps"))
+
   ;; Remember
   (when (require 'remember nil t)
     (org-remember-insinuate)
@@ -794,7 +822,26 @@
     (autoload 'remember "remember" nil t)
     (autoload 'remember-region "remember" nil t)
 
-    (define-key global-map "\M-R" 'remember-region)))
+    (define-key global-map "\M-R" 'remember-region))
+
+  (when (require 'appt nil t) ;; from http://article.gmane.org/gmane.emacs.orgmode/5271
+    (add-hook 'diary-display-hook 'diary-fancy-display)
+    (setq appt-time-msg-list nil)
+    (setq appt-display-format 'echo)
+    (setq appt-display-mode-line t)
+    (setq appt-message-warning-time 120)
+    (org-agenda-to-appt)
+
+    (defadvice  org-agenda-redo (after org-agenda-redo-add-appts)
+      "Pressing `r' on the agenda will also add appointments."
+      (progn
+	(setq appt-time-msg-list nil)
+	(org-agenda-to-appt)))
+
+    (ad-activate 'org-agenda-redo)
+    (appt-activate 1)
+    )
+)
 
 
 (custom-set-variables
@@ -823,7 +870,6 @@
  '(jabber-server "gmail.com" t)
  '(jabber-username "0xa1f00" t)
  '(mm-inline-text-html-with-images t)
- '(org-agenda-files (quote ("~/.org/gtd.org" "~/.org/TODO.org")))
  '(save-place t nil (saveplace))
  '(show-paren-mode t)
  '(smime-keys (quote (("xaiki@cxhome.ath.cx" "/dev/null" ("")))))
