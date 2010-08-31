@@ -549,6 +549,9 @@
 (add-to-list 'auto-mode-alist '("~/Wrk/.*[Ii]cecast.*/.*\\.[ch]$" . vlc-c-mode))
 (add-to-list 'auto-mode-alist '("~/Wrk/.*[Ff][Ff][Mm].*/.*\\.[ch]$" . vlc-c-mode))
 
+(when (require 'kbuild-mode nil t)
+  (add-to-list 'auto-mode-alist '(".*Config\\.in.*" . kbuild-mode)))
+
 ;; C-Mode par défaut
 ;;(add-hook 'c-mode-common-hook
 	  ;; (lambda () (c-toggle-auto-hungry-state 1))
