@@ -746,6 +746,11 @@
 ;; Calendar
 (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
 
+;; google maps
+(add-to-list 'load-path "~/.elisp/google-maps")
+(when (require 'google-maps nil t)
+  (message "Google Maps"))
+
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (when (require 'org nil t)
