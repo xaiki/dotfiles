@@ -179,26 +179,35 @@
 (when (require 'ido nil t)
   (ido-mode t)
 
-  (setq ido-execute-command-cache nil)
-  (defun ido-execute-command ()
+  (setq ido-default-buffer-method 'maybe-frame
+	ido-default-file-method 'maybe-frame
+	ido-enable-flex-matching t)
+
+  (defun xa1/ido-reset-command-cache ()
+    "Reset the ido cache"
+    (interactive)
+    (setq xa1/ido-execute-command-cache nil))
+
+  (xa1/ido-reset-command-cache)
+  (defun xa1/ido-execute-command ()
     (interactive)
     (call-interactively
      (intern
       (ido-completing-read
        "M-x "
        (progn
-	 (unless ido-execute-command-cache
+	 (unless xa1/ido-execute-command-cache
 	   (mapatoms (lambda (s)
 		       (when (commandp s)
-			 (setq ido-execute-command-cache
-			       (cons (format "%S" s) ido-execute-command-cache))))))
-	 ido-execute-command-cache)))))
+			 (setq xa1/ido-execute-command-cache
+			       (cons (format "%S" s) xa1/ido-execute-command-cache))))))
+	 xa1/ido-execute-command-cache)))))
 
   (add-hook 'ido-setup-hook
 	    (lambda ()
-	      (setq ido-enable-flex-matching t)
-	      (global-set-key "\M-x" 'ido-execute-command)))
-  (defun my-ido-find-tag ()
+	      (global-set-key "\M-x" 'xa1/ido-execute-command)))
+
+  (defun xa1/ido-find-tag ()
     "Find a tag using ido"
     (interactive)
     (tags-completion-table)
@@ -208,9 +217,8 @@
                 (push (prin1-to-string x t) tag-names)))
             tags-completion-table)
       (find-tag (ido-completing-read "Tag: " tag-names))))
-  (setq ido-default-buffer-method 'maybe-frame)
-  (setq ido-default-file-method 'maybe-frame)
   )
+
 (when (require 'ibuffer nil t)
   (setq ibuffer-saved-filter-groups
 	(quote (("default"
