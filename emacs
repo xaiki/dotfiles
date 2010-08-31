@@ -896,7 +896,7 @@
  '(erc-button ((t (:inherit link :weight bold))))
  '(erc-current-nick-face ((t (:foreground "Red" :weight bold))))
  '(erc-input-face ((t (:foreground "brown1"))))
- '(font-lock-comment-delimiter-face ((default (:inherit font-lock-comment-face :foreground "red3" :weight bold)) (((class color) (min-colors 16)) nil)))
+ '(font-lock-comment-delimiter-face ((default (:foreground "red3" :weight bold)) (((class color) (min-colors 16)) nil)))
  '(font-lock-comment-face ((((class color) (min-colors 8) (background dark)) (:inherit font-lock-comment-delimiter-face :weight light))))
  '(gnus-button ((t (:foreground "violet" :weight bold))))
  '(gnus-cite-1 ((t (:foreground "LightBlue"))))
