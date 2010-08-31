@@ -516,6 +516,7 @@
 
 (require 'pabbrev nil t)
 (add-to-list 'auto-mode-alist '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode))
+(add-to-list 'auto-mode-alist '("*.make$" . makefile-gmake-mode))
 
 (defun ffmpeg-c-mode ()
   "C mode with adjusted values for videolan."
