@@ -65,10 +65,6 @@
 ;;----- identité --------------------------------------------
 (setq user-full-name "Niv Sardi")
 
-;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
-;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "niv.sardi@sagemcom.com")
-
 ;; mes autre adresses : en répondant à un message permet de réutiliser
 ;; l'adresse du To:/From:/CC: de ce message
 (setq message-alternative-emails
@@ -76,6 +72,7 @@
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
 			  "xaiki@evilgiggle.com"
+			  "niv.sardi@sagemcom.com"
 ;;			  "nsardi@smartjog.com"
 ;;			  "niv.sardi@smartjog.com"
 ;;			  "xaiki@sgi.com"
@@ -813,21 +810,6 @@
 
 ;; ====== Zone expérimentale ================================
 
-
-;comment envoyer les msg
-(setq smtpmail-smtp-server "vzy08031.vzy.sagem" 
-      smtpmail-local-domain "sagemcom.com")
-
-(setq send-mail-function 'smtpmail-send-it)
-(setq message-send-mail-function 'smtpmail-send-it)
-
-;(setq smtp-default-server smtpmail-default-smtp-server)
-;(setq smtp-server smtpmail-default-smtp-server)
-(setq smtp-service "smtp")
-;(setq smtp-local-domain "free.fr")
-;(setq smtp-debug-info t)
-(autoload 'smtpmail-send-it "smtpmail")
-;;(setq user-full-name "YOUR NAME HERE")
 
 ;; To queue mail, set smtpmail-queue-mail to t and use
 ;; smtpmail-send-queued-mail to send.

@@ -26,6 +26,39 @@
 
 ;; Répertoire des scripts
 (add-to-list 'load-path "~/.elisp")
+
+(if (string-match "ads.local" (system-name))
+    (progn
+      (message "we are @sagemcom")
+      (autoload 'smtpmail-send-it "smtpmail")
+      (setq user-mail-address "niv.sardi@sagemcom.com")
+      (setq smtpmail-smtp-server "vzy08031.vzy.sagem"
+	    smtpmail-local-domain "sagemcom.com")
+
+      (setq send-mail-function 'smtpmail-send-it)
+      (setq message-send-mail-function 'smtpmail-send-it)
+
+      (setq smtp-service "smtp")
+
+      (setq socks-override-functions 1)
+      (setq socks-noproxy '("localhost" "*.sagem" "*.local"))
+      (when (require 'socks nil nil)
+	(setq socks-server '("Default server" "localhost" 9999 5))
+	(setq erc-server-connect-function 'socks-open-network-stream)))
+  (progn
+    (message "default settings")
+    (setq send-mail-function 'smtpmail-send-it
+	  (setq starttls-use-gnutls t)
+	  message-send-mail-function 'smtpmail-send-it
+	  smtpmail-starttls-credentials
+	  '(("smtp.gmail.com" 587 nil nil))
+	  smtpmail-auth-credentials
+
+	  smtpmail-smtp-server "smtp.gmail.com"
+	  smtpmail-smtp-service 587
+	  smtpmail-debug-info t)
+    (require 'smtpmail)))
+
 ;(add-to-list 'load-path "~/.elisp/auto-complete")
 ;(require 'auto-complete)
 (add-to-list 'load-path "~/.emacs.d/")
