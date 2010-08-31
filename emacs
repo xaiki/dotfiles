@@ -75,6 +75,13 @@
     (setq ac-quick-help-delay 0.5)
     (ac-set-trigger-key "TAB")))
 
+(when (require 'doxymacs nil t) ;; this comes from README.Debian
+  (add-hook 'c-mode-common-hook 'doxymacs-mode)
+  (defun xa1/doxymacs-font-lock-hook ()
+    (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+        (doxymacs-font-lock)))
+  (add-hook 'font-lock-mode-hook 'xa1/doxymacs-font-lock-hook))e
+
 ;;(require 'tramp nil t)
 
 ;;(require 'mule)
