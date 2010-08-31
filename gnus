@@ -67,7 +67,7 @@
 
 ;; l'adresse mail DOIT être valide pour l'envoi SMTP (indiqué dans l'enveloppe)
 ;;(setq user-mail-address "sebastien.kirche@free.fr")
-(setq user-mail-address "niv.sardi@smartjog.com")
+(setq user-mail-address "niv.sardi@sagemcom.com")
 
 ;; mes autre adresses : en répondant à un message permet de réutiliser
 ;; l'adresse du To:/From:/CC: de ce message
@@ -76,8 +76,8 @@
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
 			  "xaiki@evilgiggle.com"
-			  "nsardi@smartjog.com"
-			  "niv.sardi@smartjog.com"
+;;			  "nsardi@smartjog.com"
+;;			  "niv.sardi@smartjog.com"
 ;;			  "xaiki@sgi.com"
 ;;			  "xaiki@openwide.fr"
 			  "xaiki+.*@cxhome.ath.cx"
@@ -684,7 +684,8 @@
 ;; This snippet comes from the info docs Gnus->Finding the Parent.
 (setq gnus-refer-article-method
       '(current
-	(nnimap "imap-eu.smartjog.net")
+	(nnimap "ruelm01sc.ads.local")
+;;	(nnimap "imap-eu.smartjog.net")
 	(nntp "news.gmane.org")
 	(nnweb "google" (nnweb-type google))))
 (when
@@ -814,10 +815,11 @@
 
 
 ;comment envoyer les msg
-(setq smtpmail-smtp-server "smtp-eu.smartjog.net")
+(setq smtpmail-smtp-server "vzy08031.vzy.sagem" 
+      smtpmail-local-domain "sagemcom.com")
 
-(setq send-mail-function 'sendmail-send-it)
-(setq message-send-mail-function 'sendmail-send-it)
+(setq send-mail-function 'smtpmail-send-it)
+(setq message-send-mail-function 'smtpmail-send-it)
 
 ;(setq smtp-default-server smtpmail-default-smtp-server)
 ;(setq smtp-server smtpmail-default-smtp-server)
@@ -1329,8 +1331,8 @@ more then one article."
 
 (setq gnus-demon-timestep 10)
 
-(gnus-demon-add-handler 'sk-gnus-demon-handler 30 30)
-(gnus-demon-add-handler 'gnus-group-get-new-news 30 30)
+;;(gnus-demon-remove-handler 'sk-gnus-demon-handler)
+(gnus-demon-add-handler 'gnus-group-get-new-news 30 1)
 ;(gnus-demon-add-handler 'gnus-demon-scan-news 5 10)
 (gnus-demon-init)
 

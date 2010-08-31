@@ -1,7 +1,7 @@
 # -*- conf-space -*-
 [user]
 	name = Niv Sardi
-	email = nsardi@smartjog.com
+	email = xaiki@evilgiggle.com
 [alias]
 	cat=-p cat-file -p
 	co=checkout -m
@@ -33,9 +33,5 @@
 	requireForce = false
 [apply]
 	whitespace = fix
-
-
-
-
-
-
+[core]
+	excludesfile = ~/.gitexcludes
