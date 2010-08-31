@@ -30,6 +30,21 @@
 (server-start)
 ;;(require 'gnuserv-compat)
 ;;(gnuserv-start)
+;(add-to-list 'load-path "~/.elisp/auto-complete")
+;(require 'auto-complete)
+(add-to-list 'load-path "~/.emacs.d/")
+(when (require 'auto-complete-config nil t)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
+  (when (require 'auto-complete-clang nil t)
+    (defun xa1/ac-cc-mode-setup ()
+      (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+
+    (add-hook 'c-mode-common-hook 'xa1/ac-cc-mode-setup)
+    (ac-config-default)
+
+    (setq ac-auto-start nil)
+    (setq ac-quick-help-delay 0.5)
+    (ac-set-trigger-key "TAB")))
 
 ;;(require 'tramp nil t)
 
