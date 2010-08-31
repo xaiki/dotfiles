@@ -26,10 +26,6 @@
 
 ;; Répertoire des scripts
 (add-to-list 'load-path "~/.elisp")
-
-(server-start)
-;;(require 'gnuserv-compat)
-;;(gnuserv-start)
 ;(add-to-list 'load-path "~/.elisp/auto-complete")
 ;(require 'auto-complete)
 (add-to-list 'load-path "~/.emacs.d/")
@@ -877,3 +873,7 @@
  '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
  '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
+
+(server-start)
+;;(require 'gnuserv-compat)
+;;(gnuserv-start)
