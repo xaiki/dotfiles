@@ -536,6 +536,15 @@
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4))
 
+(defun sagem-c-mode ()
+  "C mode with adjusted values for SAGEM."
+  (interactive)
+  (c-mode)
+  (c-set-style "bsd")
+  (setq tab-width 3)
+  (setq indent-tabs-mode nil)
+  (setq c-basic-offset 3))
+
 (add-to-list 'auto-mode-alist '("~/src/.*vlc.*/.*\\.[ch]$" . vlc-c-mode))
 (add-to-list 'auto-mode-alist '("~/Wrk/.*[Ii]cecast.*/.*\\.[ch]$" . vlc-c-mode))
 (add-to-list 'auto-mode-alist '("~/Wrk/.*[Ff][Ff][Mm].*/.*\\.[ch]$" . vlc-c-mode))
