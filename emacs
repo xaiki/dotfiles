@@ -340,10 +340,10 @@
       (setq empd-hostname "ayamaru.cxhome.ath.cx")
 ))
 
-(require 'autopair)
-(autopair-global-mode)
-(setq autopair-autowrap t)
-(setq autopair-blink t)
+(when (require 'autopair nil t)
+  (autopair-global-mode)
+  (setq autopair-autowrap t)
+  (setq autopair-blink t))
 
 (defun match-paren (arg)
   "Go to the matching parenthesis."
