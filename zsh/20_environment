@@ -1,6 +1,6 @@
 #! /bin/zsh
 
-export EMAIL="xaiki@cxhome.ath.cx"
+export EMAIL="xaiki@evilgiggle.com"
 export FULLNAME="Niv Sardi"
 
 export DEBEMAIL="xaiki@debian.org"
@@ -13,8 +13,8 @@ export DEBFULLNAME=$FULLNAME
 
 export CVS_RSH="ssh"
 export MANWIDTH=80
-export EDITOR='emacsclient -a nano'
-export VISUAL='emacsclient -a nano'
+export EDITOR='TMPDIR=/tmp emacsclient -a nano'
+export VISUAL='TMPDIR=/tmp emacsclient -a nano'
 export CCACHE_DIR=$HOME/.ccache
 
 export RLWRAP_HOME=~/.cache/rlwrap/

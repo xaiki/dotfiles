@@ -525,6 +525,7 @@
 (require 'pabbrev nil t)
 (add-to-list 'auto-mode-alist '("~/src/.*linux.*/.*\\.[ch]$" . linux-c-mode))
 (add-to-list 'auto-mode-alist '("*.make$" . makefile-gmake-mode))
+(add-to-list 'auto-mode-alist '("Makefile.*" . makefile-gmake-mode))
 
 (defun ffmpeg-c-mode ()
   "C mode with adjusted values for videolan."
@@ -797,6 +798,7 @@
 
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "|" "DONE(d!)")
+	  (sequence "AI(a)" "|" "CLOSED(t!)")
 	  (sequence "|" "MEETING(m)")
 	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f!)")
 	  (sequence "|" "CANCELED(c!)")))
