@@ -152,6 +152,12 @@
   (setq w3m-cookie-accept-bad-cookies t)
 )
 
+(when (require 'bbdb nil t)
+  (setq bbdb-north-american-phone-numbers-p nil
+	bbdb-check-zip-codes-p nil
+	bbdb/mail-auto-create-p t
+	bbdb-offer-save 'always-save
+	))
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
 (setq display-time-string-forms
       '((format "[%s:%s]-[%s/%s/%s]" 24-hours minutes day month year)))
