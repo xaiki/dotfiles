@@ -276,6 +276,8 @@
 (set-input-mode t nil 0 7)
 (set-language-environment 'UTF-8)
 
+(require 'tls)
+
 (when (require 'erc nil t)
 ;;        This is actually a bug in Emacs redisplay code, rather than in ERC. A fix for it is to set
 ;;        erc-input-line-position to a value other than nil or -1.
