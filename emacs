@@ -751,6 +751,10 @@
 (when (require 'google-maps nil t)
   (message "Google Maps"))
 
+(add-to-list 'load-path "~/.elisp/google-weather-el")
+(when (require 'google-weather nil t)
+  (message "Google Weather"))
+
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (when (require 'org nil t)
@@ -773,7 +777,7 @@
    </style>")
 
   (setq org-default-notes-file (concat org-directory "/notes.org")
-	org-agenda-files '("~/.org/TODO.org" "~/.org/WORK.org" "~/.org/PERSONAL.org"))
+	org-agenda-files '("~/.org/TODO.org" "~/.org/WORK.org" "~/.org/PERSONAL.org" "~/.org/w.org"))
   (global-set-key "\C-cr" 'org-remember)
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
@@ -810,6 +814,11 @@
   ;; google maps
   (when (require 'org-location-google-maps)
     (message "Org google maps"))
+
+  ;; google weather
+  (when (require 'org-google-weather)
+    (message "Org google weather")
+    (setq org-google-weather-format "%i %-15L, %-15c, %2l-%-2h %s"))
 
   ;; Remember
   (when (require 'remember nil t)
