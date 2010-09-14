@@ -483,6 +483,7 @@
 ;;      '(("irc.freenode.net" nil nil "xaiki-emacs" nil)))
 
 ;; On supprime les menus et la scroll bar (vim-like)
+(setq tool-bar-style 'image)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
@@ -864,10 +865,10 @@
 
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(bongo-display-inline-playback-progress t)
  '(bongo-display-playback-mode-indicator nil)
  '(bongo-header-line-mode nil)
@@ -884,6 +885,8 @@
  '(ecb-source-path (quote ("~/Wrk" "~/src")))
  '(erc-mode-line-format "%t %a")
  '(erc-modules (quote (autojoin button completion dcc fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom services stamp spelling track truncate)))
+ '(gnus-group-update-tool-bar nil)
+ '(gnus-summary-tool-bar (quote gnus-summary-tool-bar-gnome))
  '(gnuserv-frame t)
  '(jabber-nickname "xaiki")
  '(jabber-server "gmail.com" t)
@@ -897,10 +900,10 @@
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(use-file-dialog nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(calendar-today ((t (:inverse-video t :underline t))))
  '(completions-common-part ((t (:inherit default :weight bold))))
  '(cscope-file-face ((t (:foreground "cyan"))))
