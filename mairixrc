@@ -15,7 +15,8 @@ base=~/Mail
 
 # Set this to a list of maildir folders within 'base'.  3 dots at the end means
 # there are sub-folders within this folder.
-maildir=Gmail...:Smartjog...
+maildir=SmartJog*...:Gmail*...
+#maildir=[^mfolder]...
 
 
 #######################################################################
@@ -29,7 +30,7 @@ mfolder=mfolder
 # mformat=mh
 # mformat=mbox
 
-omit=zz_mairix-*
+omit=*zz_mairix-*:mfolder*
 
 #######################################################################
 # Set this to the path where the index database file will be kept
