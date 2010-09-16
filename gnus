@@ -117,6 +117,8 @@
 (defun turn-off-backup ()
   (set (make-local-variable 'backup-inhibited) t))
 
+(setq imap-shell-program "/usr/sbin/dovecot --exec-mail imap")
+
 ;; Set in GNUS with B blah ...
 (setq gnus-secondary-select-methods
       '((nnfolder "patches"
@@ -124,10 +126,10 @@
 		  (nnfolder-active-file "~/Wrk/pending-patches/active")
 		  (nnfolder-save-buffer-hook 'turn-off-backup)
 		  (nnfolder-get-new-mail t))
-	(nnmaildir "LocalMail"
-		   (directory "~/Mail/")
-		   (directory-files nnheader-directory-files-safe)
-		   (get-new-mail nil))
+	(nnimap "LocalMail"
+		(nnimap-address "localhost")
+		(nnimap-stream shell)
+		(nnimap-nov-is-evil t))
 	(nntp "gmane"
 	      (nntp-address "news.gmane.org"))))
 
