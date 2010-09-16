@@ -808,46 +808,6 @@
 
 ;; ====== Zone expérimentale ================================
 
-;; To queue mail, set smtpmail-queue-mail to t and use
-;; smtpmail-send-queued-mail to send.
-;; ;(setq gnus-secondary-select-methods
-;; (setq gnus-secondary-select-methods
-;;       '((nnimap "metz-exchange"
-;;                 (nnimap-server-port 143)
-;;                 (nnimap-address "metz-exchange")
-;;     (nnimap-expunge-on-close never))
-;;   (nnml "")))
-
-;; (setq mail-sources
-;;    '((file :path "~/gnusspool")))
-
-;; (setq nnmail-split-methods
-;;    '(("localhost" "")))
-
-;; (setq mm-discouraged-alternatives
-;;    '("text/html" "text/richtext"))
-
-;; (setq nnimap-split-predicate
-;;    '("UNDELETED"))
-
-;---------
-
-;; (setq gnus-secondary-select-methods
-;;       '((nnimap "metz-exchange")
-;;  )
-;;       imap-username "SAGE_METZ/seki"
-;; )
-;
-;(setq gnus-secondary-select-methods
-;      ;; slashdot
-;      '((nnslashdot "")
-;      ;; exchange server
-;      (nnimap "Exchange"
-;              (nnimap-address "metz-exchange")
-;              (imap-username "SAGE_METZ/seki/seki"))))
-;
-;(setq gnus-select-method (quote (nntp "news.free.fr")))
-
 ;affichage des anciens message lus (assez pour afficher les threads)
 (setq gnus-fetch-old-headers t) ;'some)
 (setq gnus-build-sparse-threads 'more) ;'some)
