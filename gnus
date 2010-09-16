@@ -389,14 +389,6 @@
 (setq gnus-boring-article-headers '(empty many-to newsgroup))
 (setq gnus-treat-hide-boring-header 'head)
 
-; Je ne veux pas de HTML, ni de richText, non mais oh !
-(setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-(setq mm-text-html-renderer 'w3m);'w3m
-
-; Répertoire par défaut des attachements
-(setq gnus-summary-save-parts-last-directory "~/Wrk/")
-(setq mm-default-directory gnus-summary-save-parts-last-directory)
-
 ; Il y a des fonctions appellées en doubles, mais c'est pas grave
 ; du moment que ca marche !  TODO : ben justement faudra faire du ménage...
 
@@ -1480,7 +1472,15 @@ more then one article."
 (setq mm-decrypt-option 'always)
 
 ;; add buttons
-(setq gnus-buttonized-mime-types '("multipart/encrypted" "multipart/signed"))
+(setq gnus-buttonized-mime-types '("multipart/encrypted" "multipart/signed" "text/html" "text/richtext"))
+
+; Je ne veux pas de HTML, ni de richText, non mais oh !
+(setq mm-discouraged-alternatives '("text/richtext"));'("text/html" "text/richtext"))
+(setq mm-text-html-renderer 'w3m);'w3m-standalone);'w3m
+
+; Répertoire par défaut des attachements
+(setq gnus-summary-save-parts-last-directory "~/Wrk/")
+(setq mm-default-directory gnus-summary-save-parts-last-directory)
 
 ;; Faire ensorte que tout les mails (pas news) soient encrypté si le
 ;; receveur à une clé publique
