@@ -1,7 +1,7 @@
 # -*- conf -*-
 [general]
 ui = Noninteractive.Basic
-accounts = GMail
+accounts = GMail, Sagem
 #, Smartjog
 maxsyncaccounts = 10
 pythonfile = ~/.offlineimap-scripts/offlineimap.py
@@ -27,6 +27,26 @@ holdconnectionopen = true
 keepalive = 60
 nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
 folderfilter = lambda foldername: re.search('INBOX', foldername)
+
+#Setting realdelete = yes will Really Delete email from the server.
+#Otherwise "deleting" a message will just remove any labels and
+#retain the message in the All Mail folder.
+realdelete = no
+
+[Account Sagem]
+localrepository = LocalIMAP
+remoterepository = SagemRemote
+autorefresh = 1
+
+[Repository SagemRemote]
+type = IMAP
+remotehost = ruelm01sc.ads.local
+remoteuser = niv.sardi@sagemcom.com
+ssl = yes
+# remotepass = super_secret_password
+holdconnectionopen = true
+keepalive = 60
+nametrans = lambda foldername: re.sub('^', 'Sagem.', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
