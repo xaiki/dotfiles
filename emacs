@@ -802,6 +802,28 @@
   (setq org-link-abbrev-alist
 	'(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id=")))
 
+  (add-hook 'org-remember-after-finalize-hook 'org-agenda-to-appt) ;; allows agenda items to be added after meeting remember.
+
+  (defun xa1/org-remember-finalize ()
+    "Finalize the remember process."
+    (interactive)
+    (unless org-remember-mode
+      (error "This does not seem to be a remember buffer for Org-mode"))
+    (run-hooks 'org-remember-before-finalize-hook)
+    (unless (fboundp 'remember-finalize)
+      (defalias 'remember-finalize 'remember-buffer))
+    (when (and org-clock-marker
+	       (equal (marker-buffer org-clock-marker) (current-buffer)))
+      ;; the clock is running in this buffer.
+      (when (and (equal (marker-buffer org-clock-marker) (current-buffer))
+		 (or (eq org-remember-clock-out-on-exit t)
+		   (and org-remember-clock-out-on-exit
+			(y-or-n-p "The clock is running in this buffer.  Clock out now? "))))
+	(let (org-log-note-clock-out) (org-clock-out))))
+    (when buffer-file-name
+      (do-auto-save))
+    (remember-finalize)
+    (run-hooks 'org-remember-after-finalize-hook))
 
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "|" "DONE(d!)")
