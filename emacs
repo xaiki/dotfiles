@@ -44,8 +44,10 @@
       (setq socks-noproxy '("localhost" "*.sagem" "*.local"))
       (when (require 'socks nil nil)
 	(setq socks-server '("Default server" "localhost" 9999 5))
-	(setq erc-server-connect-function 'socks-open-network-stream)))
-  (progn
+	(setq erc-server-connect-function 'socks-open-network-stream)
+	(defalias 'open-network-stream 'socks-open-network-stream)
+	))
+  (progn ;; else
     (message "default settings")
     (setq send-mail-function 'smtpmail-send-it
 	  (setq starttls-use-gnutls t)
@@ -509,7 +511,7 @@
 
 
 (when (require 'xcscope nil t)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+  (remove-hook 'before-save-hook 'delete-trailing-whitespace))
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
