@@ -40,10 +40,10 @@ autorefresh = 1
 
 [Repository SagemRemote]
 type = IMAP
-remotehost = ruelm01sc.ads.local
-remoteuser = niv.sardi@sagemcom.com
-ssl = yes
-# remotepass = super_secret_password
+remotehost = 10.67.1.6
+remoteusereval = get_username("ruelm01sc.ads.local")
+remotepasseval = get_password("ruelm01sc.ads.local")
+ssl = no
 holdconnectionopen = true
 keepalive = 60
 nametrans = lambda foldername: re.sub('^', 'Sagem.', foldername)
