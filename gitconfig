@@ -22,7 +22,7 @@
 	smtpencryption=tls
 	smtpuser=0xa1f00@gmail.com
 	smtpserver=smtp.gmail.com
-	smtpport=465
+	smtpport=587
 [color]
 	branch=auto
 	diff=auto
