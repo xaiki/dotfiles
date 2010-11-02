@@ -1,4 +1,4 @@
-1;2403;0c;; -*- mode: emacs-lisp; coding: utf-8; -*-
+;; -*- mode: emacs-lisp; coding: utf-8; -*-
 ;; Time-stamp: <30/07/2006 16:22 seki@petisuix.seki.fr>
 ;;+----------------------------------------------------------+
 ;;|                                                          |
@@ -1275,7 +1275,8 @@ more then one article."
 (gnus-demon-init)
 
 ;;fermeture auto de la fenêtre de composition
-(message-add-action 'delete-frame 'exit 'postpone 'kill)
+;;(message-add-action 'delete-frame 'exit 'postpone 'kill)
+(setq message-postpone-actions nil)
 
 ;; Anti spam ==================
 (require 'spam) ;;???
@@ -1435,9 +1436,10 @@ more then one article."
 (setq gnus-buttonized-mime-types '("multipart/encrypted" "multipart/signed" "text/html" "text/richtext"))
 
 ; Je ne veux pas de HTML, ni de richText, non mais oh !
-(setq mm-discouraged-alternatives '("text/richtext"));'("text/html" "text/richtext"))
-(setq mm-text-html-renderer 'w3m);'w3m-standalone);'w3m
-
+(setq mm-discouraged-alternatives '("text/html" "text/richtext"));'("text/html" "text/richtext"))
+(if (require 'w3m nil t)
+    (setq mm-text-html-renderer 'w3m);'w3m-standalone);'w3m
+  (setq mm-text-html-renderer 'w3m-standalone))
 ; Répertoire par défaut des attachements
 (setq gnus-summary-save-parts-last-directory "~/Wrk/")
 (setq mm-default-directory gnus-summary-save-parts-last-directory)
