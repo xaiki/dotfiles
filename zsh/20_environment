@@ -1,5 +1,7 @@
 #! /bin/zsh
 
+test -f ~/.env && . ~/.env
+
 export EMAIL="xaiki@evilgiggle.com"
 export FULLNAME="Niv Sardi"
 
