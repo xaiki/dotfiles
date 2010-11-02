@@ -977,7 +977,7 @@
  '(gnus-cite-1 ((t (:foreground "gray45"))))
  '(message-header-cc ((t (:inherit message-header-to :foreground "lightblue4" :weight normal))))
  '(message-header-subject ((t (:foreground "pink3" :weight bold))))
- '(message-header-to ((t (:foreground "LightBlue" :weight bold))))))
+ '(message-header-to ((t (:foreground "LightBlue" :weight bold)))))
 
 (server-start)
 ;;(require 'gnuserv-compat)
