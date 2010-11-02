@@ -840,17 +840,18 @@
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "|" "DONE(d!)")
 	  (sequence "AI(a)" "|" "CLOSED(t!)")
+	  (seqence  "TEST(T)" "KO(k!)" "|" "OK(o!)")
 	  (sequence "|" "MEETING(m)")
 	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f!)")
 	  (sequence "|" "CANCELED(c!)")))
   (setq org-log-done 'time)
   (setq org-remember-templates
-	'(("Meeting" ?m "* MEETING %^{Meeting Date and Time}T%? %:subject\n %i\n %a" "~/.org/WORK.org" "Meetings")
+	'(("Meeting" ?m "* MEETING %^{Meeting Date and Time}T%? %:subject\n:PROPERTIES:\n:LOCATION: %^{Location}\n:END:\n %i\n %a" "~/.org/WORK.org" "Meetings")
 	  ("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
 	  ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
 	  ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
 
-
+  (setq org-icalendar-store-UID t)
   (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
 
