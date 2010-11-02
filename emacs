@@ -40,22 +40,23 @@
 
       (setq smtp-service "smtp")
 
-      (setq socks-override-functions 1)
-      (setq socks-noproxy '("localhost" "*.sagem" "*.local"))
-      (when (require 'socks nil nil)
-	(setq socks-server '("Default server" "localhost" 9999 5))
-	(setq erc-server-connect-function 'socks-open-network-stream)
-	(defalias 'open-network-stream 'socks-open-network-stream)
-	))
+      ;;(setq socks-override-functions 1)
+      ;;(setq socks-noproxy '("localhost" "*.sagem" "*.local"))
+      ;;(when (require 'socks nil nil)
+;;	(setq socks-server '("Default server" "localhost" 9999 5))
+	;;(setq erc-server-connect-function 'socks-open-network-stream)
+	;;(defalias 'open-network-stream 'socks-open-network-stream)
+	;;(defalias 'open-network-stream 'socks-original-open-network-stream)
+	;;(setq erc-server-connect-function 'open-network-stream)
+;;	))
+)
   (progn ;; else
     (message "default settings")
     (setq send-mail-function 'smtpmail-send-it
-	  (setq starttls-use-gnutls t)
+	  starttls-use-gnutls t
 	  message-send-mail-function 'smtpmail-send-it
-	  smtpmail-starttls-credentials
-	  '(("smtp.gmail.com" 587 nil nil))
-	  smtpmail-auth-credentials
-
+	  smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil))
+	  smtpmail-auth-credentials '(("smtp.gmail.com" 587 "0xa1f00@gmail.com" nil))
 	  smtpmail-smtp-server "smtp.gmail.com"
 	  smtpmail-smtp-service 587
 	  smtpmail-debug-info t)
@@ -158,12 +159,23 @@
   (remove-hook 'w3m-mode-hook 'w3m-type-ahead-mode)
 )
 
-(when (require 'bbdb nil t)
-  (setq bbdb-north-american-phone-numbers-p nil
-	bbdb-check-zip-codes-p nil
-	bbdb/mail-auto-create-p t
-	bbdb-offer-save 'always-save
-	))
+(require 'gnus)
+(require 'message)
+(when (require 'bbdb-autoloads nil t)
+  (progn
+    (require 'bbdb)
+    (load "bbdb-com" t)
+    (bbdb-initialize 'gnus 'message);; 'reportmail 'w3)
+    (bbdb-insinuate-message)
+    (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
+    (bbdb-insinuate-sc)
+    (bbdb-insinuate-w3)
+    (setq bbdb-north-american-phone-numbers-p nil
+	  bbdb-check-zip-codes-p nil
+	  bbdb-offer-save 'always-save
+	  bbdb-notice-hook (quote (bbdb-auto-notes-hook))
+	  bbdb/mail-auto-create-p t
+	  bbdb/news-auto-create-p (quote bbdb-ignore-some-messages-hook))))
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
 (setq display-time-string-forms
       '((format "[%s:%s]-[%s/%s/%s]" 24-hours minutes day month year)))
