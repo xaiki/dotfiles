@@ -973,7 +973,11 @@
  '(mode-line ((t (:background "blue4" :foreground "#d4d4d4" :box (:line-width -1 :style released-button)))))
  '(widget-button ((t (:inherit link :underline nil :weight bold))))
  '(widget-field ((t (:background "gray85" :foreground "black"))))
- '(widget-single-line-field ((t (:background "gray85" :foreground "black")))))
+ '(widget-single-line-field ((t (:background "gray85" :foreground "black"))))
+ '(gnus-cite-1 ((t (:foreground "gray45"))))
+ '(message-header-cc ((t (:inherit message-header-to :foreground "lightblue4" :weight nor
+ '(message-header-subject ((t (:foreground "pink3" :weight bold))))
+ '(message-header-to ((t (:foreground "LightBlue" :weight bold))))))
 
 (server-start)
 ;;(require 'gnuserv-compat)
