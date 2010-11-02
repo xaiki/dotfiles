@@ -120,6 +120,10 @@
 
 (setq imap-shell-program "/usr/sbin/dovecot --exec-mail imap")
 
+(add-to-list 'load-path "~/.elisp/offlineimap-el")
+(when (require 'offlineimap nil t)
+  (setq offlineimap-mode-line-mod ""))
+
 ;; Set in GNUS with B blah ...
 (setq gnus-secondary-select-methods
       '((nnfolder "patches"
