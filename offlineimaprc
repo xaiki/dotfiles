@@ -1,7 +1,7 @@
 # -*- conf -*-
 [general]
 ui = Noninteractive.Basic
-accounts = GMail, Sagem
+accounts = Sagem, GMail, Croll
 #, Smartjog
 maxsyncaccounts = 10
 pythonfile = ~/.offlineimap-scripts/offlineimap.py
@@ -40,13 +40,33 @@ autorefresh = 1
 
 [Repository SagemRemote]
 type = IMAP
-remotehost = 10.67.1.6
+remotehost = 10.67.1.6 #ruelm01sc.ads.local
 remoteusereval = get_username("ruelm01sc.ads.local")
 remotepasseval = get_password("ruelm01sc.ads.local")
 ssl = no
 holdconnectionopen = true
 keepalive = 60
 nametrans = lambda foldername: re.sub('^', 'Sagem.', foldername)
+
+#Setting realdelete = yes will Really Delete email from the server.
+#Otherwise "deleting" a message will just remove any labels and
+#retain the message in the All Mail folder.
+realdelete = no
+
+[Account Croll]
+localrepository = LocalIMAP
+remoterepository = CrollRemote
+autorefresh = 1
+
+[Repository CrollRemote]
+type = IMAP
+remotehost = imap.croll.fr
+remoteusereval = get_username("imap.croll.fr")
+remotepasseval = get_password("imap.croll.fr")
+ssl = yes
+holdconnectionopen = true
+keepalive = 60
+nametrans = lambda foldername: re.sub('^', 'Croll.', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and

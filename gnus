@@ -75,6 +75,7 @@
 			'("xaiki@cxhome.ath.cx"
 			  "xaiki@debian.org"
 			  "xaiki@evilgiggle.com"
+			  "xaiki@croll.fr"
 			  "niv.sardi@sagemcom.com"
 ;;			  "nsardi@smartjog.com"
 ;;			  "niv.sardi@smartjog.com"
