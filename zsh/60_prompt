@@ -66,14 +66,43 @@ precmd() {
     (( psvar[3]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
 }
 
+_xa1_num_to_color() {
+    case "$1" in
+	    0|5)
+		    echo "blue";
+		    ;;
+	    1|6)
+		    echo "green";
+		    ;;
+	    2|7)
+		    echo "blue";
+		    ;;
+	    3|8)
+		    echo "yellow";
+		    ;;
+	    4|9)
+		    echo "magenta";
+		    ;;
+	    *)
+		    echo "pink";
+		    ;;
+    esac
+}
+
+
 _mad_prompt_setup() {
     local rst
     local -a pcc
     local -A pc
 
     rst="%{$reset_color%}"
-    pcc[1]="%{${1:-$fg_bold[green]}%}"
-    pcc[2]="%{${2:-$fg_no_bold[red]}%}"
+    a=$(hostname | tr a-z 0-9); echo $(($a/256)) | egrep -oe '..$' | sed s/./\&' '/g | while read f b; do
+	    c1=$(_xa1_num_to_color $f)
+	    c2=$(_xa1_num_to_color $b)
+	    echo "$c1 $c2"
+    done;
+    pcc[1]="%{${1:-$fg_bold[$c1]}%}"
+    pcc[2]="%{${2:-$fg_no_bold[$c2]}%}"
 
 #%{$'\e[s\e[A\e[4Dasd┐\e[u'$rst%}
 #%{$'\e[400C\e[20D'%}"────────────────────
