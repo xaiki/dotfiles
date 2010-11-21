@@ -1,7 +1,7 @@
 # -*- conf -*-
 [general]
 ui = Noninteractive.Basic
-accounts = Sagem, GMail, Croll
+accounts = GMail, Croll
 #, Smartjog
 maxsyncaccounts = 10
 pythonfile = ~/.offlineimap-scripts/offlineimap.py
