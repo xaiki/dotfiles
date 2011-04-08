@@ -15,7 +15,7 @@ autorefresh = 1
 type = IMAP
 remotehost = localhost
 port = 143
-preauthtunnel = /usr/sbin/dovecot --exec-mail imap
+preauthtunnel = /usr/lib/dovecot/imap
 
 [Repository GMailRemote]
 type = Gmail

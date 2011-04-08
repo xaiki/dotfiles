@@ -13,10 +13,18 @@ export DEBFULLNAME=$FULLNAME
 #export GIT_AUTHOR_EMAIL=$DEBEMAIL
 #export GIT_COMMITTER_EMAIL=$DEBEMAIL
 
+if which colormake > /dev/null; then
+	export MAKE=colormake
+fi
+
+if which emacsclient.emacs-snapshot > /dev/null; then
+	export EMACS_FLAVOUR=.emacs-snapshot;
+fi
+
 export CVS_RSH="ssh"
 export MANWIDTH=80
-export EDITOR='TMPDIR=/tmp emacsclient -a nano'
-export VISUAL='TMPDIR=/tmp emacsclient -a nano'
+export EDITOR='TMPDIR=/tmp emacsclient${EMACS_FLAVOUR} -a nano'
+export VISUAL='TMPDIR=/tmp emacsclient${EMACS_FLAVOUR} -a nano'
 export CCACHE_DIR=$HOME/.ccache
 
 export RLWRAP_HOME=~/.cache/rlwrap/
@@ -26,3 +34,21 @@ export LC_MESSAGES=C
 export LC_ALL=
 
 export HOME=`readlink -f $HOME`
+
+if [ "$PS1" ] ; then
+   mkdir -p -m 0700 /sys/fs/cgroup/cpu/user/$$ > /dev/null 2>&1
+   echo $$ > /sys/fs/cgroup/cpu/user/$$/tasks
+   echo "1" > /sys/fs/cgroup/cpu/user/$$/notify_on_release
+fi
+
+if [[ "$TERM" == "dumb" ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+fi
+
+

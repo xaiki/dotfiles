@@ -118,7 +118,8 @@
 (defun turn-off-backup ()
   (set (make-local-variable 'backup-inhibited) t))
 
-(setq imap-shell-program "/usr/sbin/dovecot --exec-mail imap")
+;;(setq imap-shell-program "/usr/sbin/dovecot --exec-mail imap")
+(setq imap-shell-program "/usr/lib/dovecot/imap")
 
 (add-to-list 'load-path "~/.elisp/offlineimap-el")
 (when (require 'offlineimap nil t)
@@ -410,6 +411,7 @@
 (add-hook 'gnus-article-display-hook 'gnus-article-de-quoted-unreadable)
 ;; met en valeur les *machins* et autres _trucs_
 (add-hook 'gnus-article-display-hook 'gnus-article-emphasize)
+(add-hook 'gnus-article-display-hook 'bhaak-wash-this-article)
 
 ;; Pour ne pas afficher les tags débiles des ML...
 (setq gnus-list-identifiers
@@ -814,7 +816,7 @@
 ;; ====== Zone expérimentale ================================
 
 ;affichage des anciens message lus (assez pour afficher les threads)
-(setq gnus-fetch-old-headers t) ;'some)
+(setq gnus-fetch-old-headers 'some) ;'some)
 (setq gnus-build-sparse-threads 'more) ;'some)
 
 ;; On garde les threads en un seul morceau meme si le sujet change
