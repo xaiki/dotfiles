@@ -24,10 +24,56 @@
 ;; Planed to be used:
 ;; namazu2	Full text search engine (namazu binary and cgi)v
 
-;; Répertoire des scripts
-(add-to-list 'load-path "~/.elisp")
-(add-to-list 'load-path "~/.elisp/naquadah-theme")
-(require 'naquadah-theme)
+(add-to-list 'load-path "~/.elisp/g-client")
+(load-library "g")
+(setq g-user-email "0xa1f00@gmail.com")
+
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+(require 'el-get)
+
+(setq el-get-sources
+      '(cssh
+	el-get
+	vkill
+	nxhtml
+	xcscope
+	yasnippet
+	org-mode
+	naquadah-theme
+	gitsum
+	google-maps
+	google-weather
+	nognus
+	gnus-gravatar
+	gnus-identities
+	offlineimap
+
+     (:name emms
+	    :after ((require 'emms-setup)
+		    (emms-standard)
+		    (emms-default-players)))
+
+     (:name git-commit-mode
+	    :after ((add-hook 'git-commit-mode-hook 'turn-on-flyspell)
+		    (setq git-append-signed-off-by t)
+		    (add-hook 'git-commit-mode-hook (lambda () (toggle-save-place 0)))))
+;;     (:name bongo
+;;	    :after (lambda () (autoload 'bongo "bongo"
+;;				"Start Bongo by switching to a Bongo buffer.")))
+
+     (:name twittering-mode
+	    :after ((setq twittering-use-master-password t)
+		    (setq twittering-convert-fix-size 64)
+		    (setq twittering-status-format "%ZEBRA{       %s (%S) %RT{RT via %s}\n%i%T\n       %@ // from %f %L%r%R}")
+		    (setq twittering-icon-mode t)                ; Show icons
+		    (setq twittering-timer-interval 300)         ; Update your timeline each 300 seconds (5 minutes)
+		    (setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
+		    (add-hook 'twittering-edit-mode-hook (lambda () (ispell-minor-mode) (flyspell-mode)))))
+     (:name magit
+	    :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)))
+))
+
+(el-get)
 
 (if (string-match "ads.local" (system-name))
     (progn
@@ -64,8 +110,6 @@
 	  smtpmail-debug-info t)
     (require 'smtpmail)))
 
-;(add-to-list 'load-path "~/.elisp/auto-complete")
-;(require 'auto-complete)
 (add-to-list 'load-path "~/.emacs.d/")
 (when (require 'auto-complete-config nil t)
   (add-to-list 'ac-dictionary-directories "~/.emacs.d//ac-dict")
@@ -143,16 +187,6 @@
 
 (require 'cl nil t)
 
-(add-to-list 'load-path "~/.elisp/bongo")
-(autoload 'bongo "bongo"
-  "Start Bongo by switching to a Bongo buffer.")
-(require 'bongo nil t)
-
-;;(add-to-list 'load-path "~/.elisp/emms/lisp")
-;;(require 'emms-setup)
-;;(emms-devel)
-;;(emms-default-players)
-
 (setq-default scroll-step 1)  ; turn off jumpy scroll
 (setq-default visible-bell t) ; no beeps, flash on errors
 ;; Syntaxe highlighting pour tout
@@ -163,14 +197,6 @@
 (require 'git nil t)
 (require 'git-blame nil t)
 (require 'vc-git nil t)
-(add-to-list 'load-path "~/.elisp/git-commit-mode")
-(require 'git-commit)
-(add-hook 'git-commit-mode-hook 'turn-on-flyspell)
-(add-hook 'git-commit-mode-hook (lambda () (toggle-save-place 0)))
-(add-to-list 'load-path "~/.elisp/gitsum")
-(require 'gitsum)
-
-(setq git-append-signed-off-by t)
 
 ;;(require 'ecb)
 
@@ -286,6 +312,11 @@
             tags-completion-table)
       (find-tag (ido-completing-read "Tag: " tag-names))))
   )
+
+(if (require 'hl-line)
+    (progn
+      (set-face-background 'hl-line "yellow4")
+))
 
 (when (require 'ibuffer nil t)
   (setq ibuffer-saved-filter-groups
@@ -720,20 +751,11 @@
 ;;   )
 
 ;; Theme
-;;(color-theme-blue-mood)
-;;(color-theme-parus)
-;;(color-theme-deep-blue)
-;;(color-theme-resolve)
-;;(color-theme-subtle-hacker)
-;;(color-theme-whateveryouwant)
-;;(color-theme-word-perfect)
-
+(require 'naquadah-theme)
 (setq window-system-default-frame-alist
       '((x
 	 (alpha . 95)
-	 (font . "Monospace-10")
-	 (background-color . "gray20")
-	 (foreground-color . "gray85")
+	 (font . "ProFontWindows-10")
 	 )))
   ;;    (set-fontset-font (frame-parameter nil 'font)
   ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
@@ -820,18 +842,10 @@
 ;; Calendar
 (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
 
-;; google maps
-(add-to-list 'load-path "~/.elisp/google-maps")
-(when (require 'google-maps nil t)
-  (message "Google Maps"))
-
-(add-to-list 'load-path "~/.elisp/google-weather-el")
-(when (require 'google-weather nil t)
-  (message "Google Weather"))
-
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (when (require 'org nil t)
+  (run-at-time "00:59" 3600 'org-save-all-org-buffers)
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
   (setq org-directory "~/org/")
   (when (require 'org-latex nil t)
