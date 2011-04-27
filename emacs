@@ -915,6 +915,7 @@
   (setq org-clock-persist 'history)
   (org-clock-persistence-insinuate)
 
+  (setq org-src-fontify-natively t)
   (add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
   (add-hook 'mail-mode-hook 'turn-on-orgstruct++)
   ;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
