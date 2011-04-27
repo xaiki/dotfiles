@@ -1106,7 +1106,6 @@ more then one article."
 		(lambda ()
 		  (hl-line-mode)))
 ))
-
 (add-hook 'gnus-group-mode-hook
 	  (lambda ()
 	    (setq header-line-format "    Ticked    New     Unread   Group" )))
