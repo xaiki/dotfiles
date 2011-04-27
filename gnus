@@ -374,17 +374,19 @@
 
 ; Couper les lignes à X caractáres pour rédiger
 ;;(require 'filladapt)
-(defun sk-gnus-message-hook ()
-  (set-fill-column 72)
-  (turn-on-auto-fill)
-;;  (filladapt-mode)
-  (flyspell-mode)
-  (setq default-justification 'left)
-  (setq footnote-spaced-footnotes nil
-	footnote-section-tag "")
-  (footnote-mode)
-  )
-(add-hook 'message-mode-hook 'sk-gnus-message-hook)
+(setq message-mode-hook
+      (quote (orgstruct++-mode
+	      (lambda nil (setq fill-column 72
+				default-justification 'left
+				footnote-spaced-footnotes nil
+				footnote-section-tag "")
+		(flyspell-mode 1)
+		(set-fill-column 72))
+	      orgtbl-mode
+	      turn-on-auto-fill
+	      bbdb-define-all-aliases
+	      footnote-mode
+	      )))
 
 ; Mes ch'tits headers
 ;(setq gnus-ignored-headers ".*")
