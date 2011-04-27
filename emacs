@@ -923,7 +923,6 @@
   (setq org-agenda-include-diary t)
   (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
 
-
   ;; google maps
   (when (require 'org-location-google-maps)
     (message "Org google maps"))
@@ -965,20 +964,20 @@
     )
 )
 
-
+(server-start)
+;;(require 'gnuserv-compat)
+;;(gnuserv-start)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/.org/TODO.org"))))
+ '(gnus-summary-tool-bar (quote gnus-summary-tool-bar-gnome))
+ '(message-tool-bar (quote message-tool-bar-gnome))
+ '(org-agenda-files (quote ("~/chela/xaiki-mece.org" "~/.org/TODO.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-(server-start)
-;;(require 'gnuserv-compat)
-;;(gnuserv-start)
