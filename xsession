@@ -1,19 +1,29 @@
 #!/bin/sh
-export LANG=en_US.UTF-8
-export XA1_WM="awesome"
+if test -z $XA1_LAUNCHED; then
+	export XA1_LAUNCHED=1
+	export LANG=en_US.UTF-8
+	export XA1_WM="awesome"
 
-setxkbmap dvorak &
-$XA1_WM &
-gnome-terminal & xcompmgr &
+	ck-launch-session sh `realpath $0`
+	pause
+fi
+
+xcompmgr &
+gnome-terminal &
 gnome-settings-daemon &
 gnome-keyring-daemon &
 gnome-volume-manager &
 # gnome-panel &
-# gnome-power-manager &
+gnome-power-manager &
 xset b off &
 
-for i in `grep OnlyShowIn=GNOME /etc/xdg/autostart/*.desktop | sed s/':'/' '/g | awk {'print $1'}`; do grep 'Exec=' $i | sed s/'Exec='// | sh & echo $i; done
-cat .config/autostart/*.desktop | grep Exec | sed s/'Exec='// | sed s/$/' \&'/g | sh
+$XA1_WM &
 
-pause
+for i in `grep OnlyShowIn=GNOME /etc/xdg/autostart/*.desktop | cut -d':' -f1 && ls .config/autostart/*.desktop | xargs -n1`; do
+	echo "$i";
+	r=`grep 'Exec=' $i | cut -d'=' -f2`;
+	$r;
+done
 
+setxkbmap dvorak -option compose:caps &
+xmodmap ~/.xmodmap &
