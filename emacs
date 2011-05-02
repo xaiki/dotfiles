@@ -247,7 +247,7 @@
 	  bbdb-offer-save 'always-save
 	  bbdb-notice-hook (quote (bbdb-auto-notes-hook))
 	  bbdb/mail-auto-create-p t
-	  bbdb/news-auto-create-p (quote bbdb-ignore-some-messages-hook))))
+	  bbdb/news-auto-create-p nil)))
 ;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
 (setq display-time-string-forms
       '((format "[%s:%s]-[%s/%s/%s]" 24-hours minutes day month year)))
