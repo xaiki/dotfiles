@@ -967,6 +967,21 @@ depending on network status."
   /*]]>*/-->
    </style>")
 
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  (setq org-babel-load-languages (quote ((emacs-lisp . t)
+					 (dot . t)
+					 (ditaa . t)
+					 (R . t)
+					 (python . t)
+					 (ruby . t)
+					 (gnuplot . t)
+					 (clojure . t)
+					 (sh . t)
+					 (ledger . t)
+					 (org . t)
+					 (plantuml . t)
+					 (latex . t))))
+
   (setq org-default-notes-file (concat org-directory "/notes.org")
 	org-agenda-files '("~/.org/TODO.org" "~/.org/WORK.org" "~/.org/PERSONAL.org" "~/.org/w.org"))
   (global-set-key "\C-cr" 'org-remember)
