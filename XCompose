@@ -447,12 +447,14 @@
 <Multi_key> <asciicircum> <underbar> <a>	: "ª" U00AA # FEMININE ORDINAL INDICATOR
 <dead_circumflex> <2>	: "²" U00B2 # SUPERSCRIPT TWO
 <Multi_key> <asciicircum> <2>	: "²" U00B2 # SUPERSCRIPT TWO
+<Multi_key> <2> <2>	: "²" U00B2 # SUPERSCRIPT TWO
 <dead_circumflex> <KP_Space>	: "²" U00B2 # SUPERSCRIPT TWO
 <Multi_key> <asciicircum> <KP_Space>	: "²" U00B2 # SUPERSCRIPT TWO
 <dead_circumflex> <KP_2>	: "²" U00B2 # SUPERSCRIPT TWO
 <Multi_key> <asciicircum> <KP_2>	: "²" U00B2 # SUPERSCRIPT TWO
 <dead_circumflex> <3>	: "³" U00B3 # SUPERSCRIPT THREE
 <Multi_key> <asciicircum> <3>	: "³" U00B3 # SUPERSCRIPT THREE
+<Multi_key> <3> <3>	: "³" U00B3 # SUPERSCRIPT THREE
 <dead_circumflex> <KP_3>	: "³" U00B3 # SUPERSCRIPT THREE
 <Multi_key> <asciicircum> <KP_3>	: "³" U00B3 # SUPERSCRIPT THREE
 <Multi_key> <m> <u>	: "µ" U00B5 # MICRO SIGN
