@@ -24,57 +24,121 @@
 ;; Planed to be used:
 ;; namazu2	Full text search engine (namazu binary and cgi)v
 
+(add-to-list 'load-path "~/.elisp")
 (add-to-list 'load-path "~/.elisp/g-client")
 (load-library "g")
 (setq g-user-email "0xa1f00@gmail.com")
 
+(add-to-list 'load-path "~/.elisp/google")
+
+(require 'google-contacts)
+(require 'google-calendar)
+
+(setq google-contacts-user           "0xa1f00@gmail.com")
+(setq google-contacts-code-directory "~/.elisp/google/code")
+(setq google-contacts-directory      "/tmp")
+(setq google-contacts-auto-update    t )
+(setq google-calendar-url            "https://www.google.com/calendar/ical/0xa1f00%40gmail.com/private-a7a66d7c1aadc4236f06bb3a0372bd5d/basic.ics")
+(setq google-calendar-user           "0xa1f00@gmail.com")
+(setq google-calendar-code-directory "~/.elisp/google/code")
+(setq google-calendar-directory      "/tmp")
+(setq google-calendar-auto-update    t )
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-(require 'el-get)
+(unless (require 'el-get nil t)
+  (url-retrieve
+   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
+   (lambda (s)
+     (end-of-buffer)
+     (eval-print-last-sexp))))
 
 (setq el-get-sources
-      '(cssh
-	el-get
-	vkill
-	nxhtml
-	xcscope
-	yasnippet
-	org-mode
-	naquadah-theme
-	gitsum
-	google-maps
-	google-weather
-	nognus
-	gnus-gravatar
-	gnus-identities
-	offlineimap
+      '((:name bbdb
+	       :after (lambda () (require 'xa1-bbdb)))
+	(:name erc
+	       :after (lambda () (require 'xa1-erc)))
+	(:name twittering-mode
+	       :after (lambda () (require 'xa1-twittering)))
 
-     (:name emms
-	    :after ((require 'emms-setup)
-		    (emms-standard)
-		    (emms-default-players)))
+	(:name naquadah-theme
+	       :after (lambda ()		       ;; Theme
+		       (require 'naquadah-theme)
+		       (setq window-system-default-frame-alist
+			     '((x
+				(alpha . 95)
+				(font . "ProFontWindows-10")
+				)))
+		       (set-fringe-style 'half)
+		       (setq indicate-buffer-boundaries 'left)))
+		       ;;    (set-fontset-font (frame-parameter nil 'font)
+	;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
 
-     (:name git-commit-mode
-	    :after ((add-hook 'git-commit-mode-hook 'turn-on-flyspell)
-		    (setq git-append-signed-off-by t)
-		    (add-hook 'git-commit-mode-hook (lambda () (toggle-save-place 0)))))
-;;     (:name bongo
-;;	    :after (lambda () (autoload 'bongo "bongo"
-;;				"Start Bongo by switching to a Bongo buffer.")))
-     (:name twittering-mode
-	    :after (lambda () (setq twittering-use-master-password t)
-		     (setq twittering-convert-fix-size 32)
-		     (setq twittering-status-format "!%s (%S), %RT{, ♺%s} %@ from %f%L%r%R:\n%i%FOLD[   ]{%T}") ;"%ZEBRA{       %s (%S) %RT{RT via %s}\n%i%T\n       %@ // from %f %L%r%R}")
-		     (setq twittering-icon-mode t)                ; Show icons
-		     (setq twittering-timer-interval 300)         ; Update your timeline each 300 seconds (5 minutes)
-		     (setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
-		     (add-hook 'twittering-edit-mode-hook (lambda () (ispell-minor-mode) (flyspell-mode)))))
-     (:name magit
-	    :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)
-		     (setq magit-commit-signoff t)
-		     ))
+	(:name org-mode
+	       :after (lambda () (require 'xa1-org)))
+
+	(:name google-maps
+	       :after (lambda () (require 'org-location-google-maps)
+			(message "Org google maps")))
+	(:name google-weather
+	       :after (lambda () (require 'org-google-weather)
+			 (message "Org google weather")
+			 (setq org-google-weather-format "%i %-15L, %-15c, %2l-%-2h %s")))
+
+	(:name remember
+	       :after (lambda ()			 ;; Remember
+			(when (require 'org-remember nil t)
+			  (progn
+			   (org-remember-insinuate)
+
+			   (setq remember-annotation-functions '(org-remember-annotation))
+			   (setq remember-handler-functions '(org-remember-handler))
+			   (add-hook 'remember-mode-hook 'org-remember-apply-template)
+
+			   (autoload 'remember "remember" nil t)
+			   (autoload 'remember-region "remember" nil t)
+
+			   (define-key global-map "\M-R" 'remember-region)))))
+
+	(:name git-commit-mode
+	       :after (lambda () (add-hook 'git-commit-mode-hook 'turn-on-flyspell)
+		       (setq git-append-signed-off-by t)
+		       (add-hook 'git-commit-mode-hook (lambda () (toggle-save-place 0)))))
+	;;     (:name bongo
+	;;	    :after (lambda () (autoload 'bongo "bongo"
+	;;				"Start Bongo by switching to a Bongo buffer.")))
+	(:name magit
+	       :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)
+			(setq magit-commit-signoff t)))
+	(:name coffee-mode
+	       :after (lambda()
+			(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
+			(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))))
 ))
 
-(el-get)
+(setq xa1-packages
+      (append
+       '(cssh
+	 js2-mode
+	 el-get
+	 vkill
+	 nxhtml
+	 xcscope
+	 yasnippet
+	 gitsum
+	 nognus
+	 gnus-gravatar
+	 gnus-identities
+	 pymacs
+	 ropemacs
+	 python-mode
+	 offlineimap
+	 erc-extras
+	 erc-highlight-nicknames
+	 erc-track-score)
+       (mapcar 'el-get-source-name el-get-sources)))
+
+(el-get 'sync xa1-packages)
+
 
 (if (string-match "ads.local" (system-name))
     (progn
@@ -213,6 +277,7 @@
   (setq font-lock-maximum-size nil)	; trun off limit on font lock mode
   (global-font-lock-mode t)
   )
+(setq indicate-buffer-boundaries 'left)
 
 (when (if (= emacs-major-version 23)
 	   (require 'w3m-load nil t)
@@ -233,22 +298,7 @@
 
 (require 'gnus)
 (require 'message)
-(when (require 'bbdb-autoloads nil t)
-  (progn
-    (require 'bbdb)
-    (load "bbdb-com" t)
-    (bbdb-initialize 'gnus 'message);; 'reportmail 'w3)
-    (bbdb-insinuate-message)
-    (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-    (bbdb-insinuate-sc)
-    (bbdb-insinuate-w3)
-    (setq bbdb-north-american-phone-numbers-p nil
-	  bbdb-check-zip-codes-p nil
-	  bbdb-offer-save 'always-save
-	  bbdb-notice-hook (quote (bbdb-auto-notes-hook))
-	  bbdb/mail-auto-create-p t
-	  bbdb/news-auto-create-p nil)))
-;; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
+; Ajout de la date ,de l'heure,de la ligne et de la colonne dans la modeline
 (setq display-time-string-forms
       '((format "[%s:%s]-[%s/%s/%s]" 24-hours minutes day month year)))
 (setq line-number-mode t)
@@ -477,33 +527,6 @@ depending on network status."
 (set-input-mode t nil 0 7)
 (set-language-environment 'UTF-8)
 
-(require 'tls)
-
-(when (require 'erc nil t)
-;;        This is actually a bug in Emacs redisplay code, rather than in ERC. A fix for it is to set
-;;        erc-input-line-position to a value other than nil or -1.
-;;        E.g. do:
-(setq erc-input-line-position -2)
-(setq erc-timestamp-format "[%H:%M] ")
-;;(require 'erc-tab)
-;;(erc-tab-mode 1)
-(setq erc-current-nick-highlight-type 'nick)
-(setq erc-keywords '("\\berc[-a-z]*\\b" "\\bemms[-a-z]*\\b"))
-(defun erc-prepare-mode-line-format (arg) ())
-(setq erc-track-exclude-types '("JOIN" "PART" "QUIT" "NICK" "MODE"))
-(setq erc-track-use-faces t)
-(setq erc-track-faces-priority-list
-      '(erc-current-nick-face erc-keyword-face))
-(setq erc-track-priority-faces-only 'all)
-)
-
-;; (defun xa1-scroll-to-bottom (&optional arg)
-;;   (interactive)
-;;   (progn
-;;     (recenter (1- (- scroll-conservatively)))
-;;     ))
-;; (remove-hook 'erc-send-completed-hook 'xa1-scroll-to-bottom)
-
 (defun recode-buffer ()
   "Recodes buffer in UTF-8"
   (interactive)
@@ -701,9 +724,7 @@ depending on network status."
            (setq font-lock-keywords winmgr-font-lock-keywords)
            (font-lock-fontify-buffer)))
 
-
-(when (require 'xcscope nil t)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
@@ -853,16 +874,6 @@ depending on network status."
 ;;    )
 ;;   )
 
-;; Theme
-(require 'naquadah-theme)
-(setq window-system-default-frame-alist
-      '((x
-	 (alpha . 95)
-	 (font . "ProFontWindows-10")
-	 )))
-  ;;    (set-fontset-font (frame-parameter nil 'font)
-  ;;      'han '("cwTeXHeiBold" . "unicode-bmp"))
-
 ;; Surligne les parenthèses
 (show-paren-mode 1)
 (blink-cursor-mode -1)
@@ -903,6 +914,8 @@ depending on network status."
 ;; On crée un backup directory pour avoir les "~" dans un seul et unique répertoire.
 (defun make-backup-file-name (file)
   (concat "~/.backup/" (file-name-nondirectory file) "~"))
+
+(mkdir "~/.backup" t)
 
 (setq browse-url-epiphany-new-window-is-tab t)
 
@@ -948,154 +961,29 @@ depending on network status."
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (when (require 'org nil t)
-  (run-at-time "00:59" 3600 'org-save-all-org-buffers)
-  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-  (setq org-directory "~/org/")
-  (when (require 'org-latex nil t)
-    (add-to-list 'org-export-latex-packages-alist '("" "listings"))
-    (add-to-list 'org-export-latex-packages-alist '("" "color"))
-    (setq org-export-latex-listings t))
-
-  (setq org-export-html-style
-	"<style type=\"text/css\">
- <!--/*--><![CDATA[/*><!--*/
-.src {
-        background-color: #3f3f3f !important;
-        color: #d8d8d8 !important;
-        border-color: #1E2320 !important;
-        }
-  /*]]>*/-->
-   </style>")
-
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  (setq org-babel-load-languages (quote ((emacs-lisp . t)
-					 (dot . t)
-					 (ditaa . t)
-					 (R . t)
-					 (python . t)
-					 (ruby . t)
-					 (gnuplot . t)
-					 (clojure . t)
-					 (sh . t)
-					 (ledger . t)
-					 (org . t)
-					 (plantuml . t)
-					 (latex . t))))
-
-  (setq org-default-notes-file (concat org-directory "/notes.org")
-	org-agenda-files '("~/.org/TODO.org" "~/.org/WORK.org" "~/.org/PERSONAL.org" "~/.org/w.org"))
-  (global-set-key "\C-cr" 'org-remember)
-  (global-set-key "\C-cl" 'org-store-link)
-  (global-set-key "\C-ca" 'org-agenda)
-  (global-set-key "\C-cb" 'org-iswitchb)
-  (setq org-completion-use-ido t)
-  (setq org-link-abbrev-alist
-	'(("rt" . "https://intranet.fr.smartjog.net/rt/Ticket/Display.html?id=")))
-
-  (add-hook 'org-remember-after-finalize-hook 'org-agenda-to-appt) ;; allows agenda items to be added after meeting remember.
-
-  (defun xa1/org-remember-finalize ()
-    "Finalize the remember process."
-    (interactive)
-    (unless org-remember-mode
-      (error "This does not seem to be a remember buffer for Org-mode"))
-    (run-hooks 'org-remember-before-finalize-hook)
-    (unless (fboundp 'remember-finalize)
-      (defalias 'remember-finalize 'remember-buffer))
-    (when (and org-clock-marker
-	       (equal (marker-buffer org-clock-marker) (current-buffer)))
-      ;; the clock is running in this buffer.
-      (when (and (equal (marker-buffer org-clock-marker) (current-buffer))
-		 (or (eq org-remember-clock-out-on-exit t)
-		   (and org-remember-clock-out-on-exit
-			(y-or-n-p "The clock is running in this buffer.  Clock out now? "))))
-	(let (org-log-note-clock-out) (org-clock-out))))
-    (when buffer-file-name
-      (do-auto-save))
-    (remember-finalize)
-    (run-hooks 'org-remember-after-finalize-hook))
-
-  (setq org-todo-keywords
-	'((sequence "TODO(t)" "|" "DONE(d!)")
-	  (sequence "AI(a)" "|" "CLOSED(t!)")
-	  (seqence  "TEST(T)" "KO(k!)" "|" "OK(o!)")
-	  (sequence "|" "MEETING(m)")
-	  (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f!)")
-	  (sequence "|" "CANCELED(c!)")))
-  (setq org-log-done 'time)
-  (setq org-remember-templates
-	'(("Meeting" ?m "* MEETING %^{Meeting Date and Time}T%? %:subject\n:PROPERTIES:\n:LOCATION: %^{Location}\n:END:\n %i\n %a" "~/.org/WORK.org" "Meetings")
-	  ("Todo" ?t "* TODO %?\n  %i\n  %a" "~/.org/TODO.org" "Tasks")
-	  ("Journal" ?j "* %U %?\n\n  %i\n  %a" "~/.org/JOURNAL.org")
-	  ("Idea" ?i "* %^{Title}\n  %i\n  %a" "~/.org/JOURNAL.org" "New Ideas")))
-
-  (setq org-icalendar-store-UID t)
-  (setq org-clock-persist 'history)
-  (org-clock-persistence-insinuate)
-
-  (setq org-src-fontify-natively t)
-  (add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
-  (add-hook 'mail-mode-hook 'turn-on-orgstruct++)
-  ;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
-  (add-hook 'mail-mode-hook 'turn-on-orgtbl++)
-  (setq org-agenda-include-diary t)
-  (add-hook 'org-agenda-mode-hook '(lambda () (hl-line-mode 1)))
-
-  ;; google maps
-  (when (require 'org-location-google-maps)
-    (message "Org google maps"))
-
-  ;; google weather
-  (when (require 'org-google-weather)
-    (message "Org google weather")
-    (setq org-google-weather-format "%i %-15L, %-15c, %2l-%-2h %s"))
-
-  ;; Remember
-  (when (require 'remember nil t)
-    (org-remember-insinuate)
-
-    (setq remember-annotation-functions '(org-remember-annotation))
-    (setq remember-handler-functions '(org-remember-handler))
-    (add-hook 'remember-mode-hook 'org-remember-apply-template)
-
-    (autoload 'remember "remember" nil t)
-    (autoload 'remember-region "remember" nil t)
-
-    (define-key global-map "\M-R" 'remember-region))
-
-  (when (require 'appt nil t) ;; from http://article.gmane.org/gmane.emacs.orgmode/5271
-    (add-hook 'diary-display-hook 'diary-fancy-display)
-    (setq appt-time-msg-list nil)
-    (setq appt-display-format 'echo)
-    (setq appt-display-mode-line t)
-    (setq appt-message-warning-time 120)
-    (org-agenda-to-appt)
-
-    (defadvice  org-agenda-redo (after org-agenda-redo-add-appts)
-      "Pressing `r' on the agenda will also add appointments."
-      (progn
-	(setq appt-time-msg-list nil)
-	(org-agenda-to-appt)))
-
-    (ad-activate 'org-agenda-redo)
-    (appt-activate 1)
-    )
 )
 
 (server-start)
 ;;(require 'gnuserv-compat)
 ;;(gnuserv-start)
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom stamp spelling track)))
  '(gnus-summary-tool-bar (quote gnus-summary-tool-bar-gnome))
+ '(indicate-buffer-boundaries t)
+ '(js2-basic-offset 4)
+ '(js2-bounce-indent-p t)
+ '(js2-cleanup-whitespace t)
+ '(js2-mirror-mode t)
+ '(js2-mode-indent-ignore-first-tab nil)
  '(message-tool-bar (quote message-tool-bar-gnome))
  '(org-agenda-files (quote ("~/chela/xaiki-mece.org" "~/.org/TODO.org"))))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(erc-current-nick-face ((((class color) (min-colors 65535)) (:foreground "yellow" :inherit (quote egocentric-face))) (t (:foreground "yellow" :inherit (quote egocentric-face))))))
