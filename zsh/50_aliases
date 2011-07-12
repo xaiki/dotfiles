@@ -27,6 +27,12 @@ alias egrep='egrep --color=tty -d skip'
 alias fgrep='fgrep --color=tty -d skip'
 alias grep='grep --color=tty -d skip'
 
+alias egrp='egrep --color=always -d skip'
+alias fgrp='fgrep --color=always -d skip'
+alias grp='grep --color=always -d skip'
+
+alias less='less -R'
+
 alias md='mkdir'
 alias rd='rmdir'
 alias rm='rm -i'

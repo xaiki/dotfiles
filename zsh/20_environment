@@ -35,11 +35,6 @@ export LC_ALL=
 
 export HOME=`readlink -f $HOME`
 
-if [ "$PS1" ] ; then
-   mkdir -p -m 0700 /sys/fs/cgroup/cpu/user/$$ > /dev/null 2>&1
-   echo $$ > /sys/fs/cgroup/cpu/user/$$/tasks
-   echo "1" > /sys/fs/cgroup/cpu/user/$$/notify_on_release
-fi
 
 if [[ "$TERM" == "dumb" ]]
 then
