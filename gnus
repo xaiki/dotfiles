@@ -12,6 +12,8 @@
 ;; gnu.emacs.help
 ;; voir ici pour les listes : http://savannah.gnu.org/mail/?group_id=40
 
+(load-library "org-table")
+
 (copy-face 'default 'gnus-default)
 ;;(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
 
@@ -127,11 +129,11 @@
 
 ;; Set in GNUS with B blah ...
 (setq gnus-secondary-select-methods
-      '((nnfolder "patches"
-		  (nnfolder-directory "~/Wrk/pending-patches/")
-		  (nnfolder-active-file "~/Wrk/pending-patches/active")
-		  (nnfolder-save-buffer-hook 'turn-off-backup)
-		  (nnfolder-get-new-mail t))
+      '(;;(nnfolder "patches"
+	;;	  (nnfolder-directory "~/Wrk/pending-patches/")
+	;;	  (nnfolder-active-file "~/Wrk/pending-patches/active")
+	;;	  (nnfolder-save-buffer-hook 'turn-off-backup)
+	;;		  (nnfolder-get-new-mail t))
 	(nnimap "LocalMail"
 		(nnimap-address "localhost")
 		(nnimap-stream shell)
@@ -319,8 +321,10 @@
 
 ; Mise en couleur de la signature
 (setq gnus-treat-highlight-signature 'last)
+(setq gnus-treat-from-gravatar t)
+(setq gnus-treat-mail-gravatar t)
 
-(setq gnus-treat-unsplit-urls t)
+(setq gnus-treat-unsplit-urls 'head)
 (setq gnus-treat-hide-citation t)
 (setq gnus-treat-x-pgp-sig 'head)
 
@@ -384,7 +388,6 @@
 		(set-fill-column 72))
 	      orgtbl-mode
 	      turn-on-auto-fill
-	      bbdb-define-all-aliases
 	      footnote-mode
 	      )))
 
@@ -688,8 +691,6 @@
 ;; This snippet comes from the info docs Gnus->Finding the Parent.
 (setq gnus-refer-article-method
       '(current
-	(nnimap "ruelm01sc.ads.local")
-;;	(nnimap "imap-eu.smartjog.net")
 	(nntp "news.gmane.org")
 	(nnweb "google" (nnweb-type google))))
 (when
