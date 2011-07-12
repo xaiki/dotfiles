@@ -14,7 +14,7 @@
 
 (global-set-key "\C-cec" (lambda () (interactive)
 			   (erc :server "core.evilgiggle.com" :port "6667"
-				:nick "xaiki" :password "caca"))))
+				:nick "xaiki" :password "caca")))
 
 (eval-after-load 'erc-track
   '(progn

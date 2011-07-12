@@ -112,8 +112,7 @@
 	(:name coffee-mode
 	       :after (lambda()
 			(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-			(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))))
-))
+			(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))))))
 
 (setq xa1-packages
       (append
@@ -138,7 +137,6 @@
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync xa1-packages)
-
 
 (if (string-match "ads.local" (system-name))
     (progn
