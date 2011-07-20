@@ -112,7 +112,21 @@
 	(:name coffee-mode
 	       :after (lambda()
 			(add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
-			(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))))))
+			(add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))))
+;;	(:name pymacs
+;;	       :after (lambda ()
+;;			(autoload 'pymacs-apply "pymacs")
+;;			(autoload 'pymacs-call "pymacs")
+;;			(autoload 'pymacs-eval "pymacs" nil t)
+;;			(autoload 'pymacs-exec "pymacs" nil t)
+;;			(autoload 'pymacs-load "pymacs" nil t)
+;;			(eval-after-load "pymacs"
+;;			  '(add-to-list 'pymacs-load-path "~/bin"))))
+;;	(:name ropemacs
+;;	       :after (lambda ()
+;;			(require 'pymacs)
+;;			(pymacs-load "ropemacs" "rope-")))
+))
 
 (setq xa1-packages
       (append
@@ -127,11 +141,9 @@
 	 nognus
 	 gnus-gravatar
 	 gnus-identities
-	 pymacs
-	 ropemacs
-	 python-mode
 	 offlineimap
-	 erc-extras
+	 python-mode
+;;	 erc-extras
 	 erc-highlight-nicknames
 	 erc-track-score)
        (mapcar 'el-get-source-name el-get-sources)))
