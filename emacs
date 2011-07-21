@@ -25,24 +25,6 @@
 ;; namazu2	Full text search engine (namazu binary and cgi)v
 
 (add-to-list 'load-path "~/.elisp")
-(add-to-list 'load-path "~/.elisp/g-client")
-(load-library "g")
-(setq g-user-email "0xa1f00@gmail.com")
-
-(add-to-list 'load-path "~/.elisp/google")
-
-(require 'google-contacts)
-(require 'google-calendar)
-
-(setq google-contacts-user           "0xa1f00@gmail.com")
-(setq google-contacts-code-directory "~/.elisp/google/code")
-(setq google-contacts-directory      "/tmp")
-(setq google-contacts-auto-update    t )
-(setq google-calendar-url            "https://www.google.com/calendar/ical/0xa1f00%40gmail.com/private-a7a66d7c1aadc4236f06bb3a0372bd5d/basic.ics")
-(setq google-calendar-user           "0xa1f00@gmail.com")
-(setq google-calendar-code-directory "~/.elisp/google/code")
-(setq google-calendar-directory      "/tmp")
-(setq google-calendar-auto-update    t )
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil t)
@@ -137,7 +119,8 @@
 	 nxhtml
 	 xcscope
 	 yasnippet
-	 gitsum
+	 sudo-save
+	; gitsum
 	 nognus
 	 gnus-gravatar
 	 gnus-identities
@@ -149,6 +132,25 @@
        (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync xa1-packages)
+
+(add-to-list 'load-path "~/.elisp/g-client")
+(load-library "g")
+(setq g-user-email "0xa1f00@gmail.com")
+
+(add-to-list 'load-path "~/.elisp/google")
+
+(require 'google-contacts nil t)
+(require 'google-calendar nil t)
+
+(setq google-contacts-user           "0xa1f00@gmail.com")
+(setq google-contacts-code-directory "~/.elisp/google/code")
+(setq google-contacts-directory      "/tmp")
+(setq google-contacts-auto-update    t )
+(setq google-calendar-url            "https://www.google.com/calendar/ical/0xa1f00%40gmail.com/private-a7a66d7c1aadc4236f06bb3a0372bd5d/basic.ics")
+(setq google-calendar-user           "0xa1f00@gmail.com")
+(setq google-calendar-code-directory "~/.elisp/google/code")
+(setq google-calendar-directory      "/tmp")
+(setq google-calendar-auto-update    t )
 
 (if (string-match "ads.local" (system-name))
     (progn
