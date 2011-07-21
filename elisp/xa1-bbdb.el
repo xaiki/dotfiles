@@ -4,8 +4,8 @@
 (bbdb-initialize 'gnus 'message);; 'reportmail 'w3)
 (bbdb-insinuate-message)
 (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus)
-(bbdb-insinuate-sc)
-(bbdb-insinuate-w3)
+;;(bbdb-insinuate-sc)
+;;(bbdb-insinuate-w3)
 (setq bbdb-north-american-phone-numbers-p nil
       bbdb-check-zip-codes-p nil
       bbdb-offer-save 'always-save
