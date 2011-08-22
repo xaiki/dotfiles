@@ -3,6 +3,7 @@
 (setq erc-timestamp-format "[%H:%M] ")
 ;;(require 'erc-tab)
 ;;(erc-tab-mode 1)
+(setq erc-log-channels-directory "~/.erc/")
 (setq erc-current-nick-highlight-type 'nick)
 (setq erc-keywords '("\\berc[-a-z]*\\b" "\\bemms[-a-z]*\\b"))
 (defun erc-prepare-mode-line-format (arg) ())
@@ -18,6 +19,7 @@
 
 (eval-after-load 'erc-track
   '(progn
+     (setq erc-track-enable-keybindings t)
      (defun erc-bar-move-back (n)
        "Moves back n message lines. Ignores wrapping, and server messages."
        (interactive "nHow many lines ? ")

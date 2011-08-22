@@ -5,7 +5,7 @@
   (add-to-list 'org-export-latex-packages-alist '("" "listings"))
   (add-to-list 'org-export-latex-packages-alist '("" "color"))
   (setq org-export-latex-listings t))
-
+(setq org-indent-mode nil)
 (setq org-export-html-style
       "<style type=\"text/css\">
  <!--/*--><![CDATA[/*><!--*/
@@ -161,6 +161,7 @@
 
 (setq org-src-fontify-natively t)
 (add-hook 'org-mode-hook 'turn-on-font-lock)  ; org-mode buffers only
+(add-hook 'org-mode-hook 'org-indent-mode)    ; org-mode buffers only
 (add-hook 'mail-mode-hook 'turn-on-orgstruct++)
 ;;(add-hook 'mail-mode-hook 'turn-on-orgstruct)
 (add-hook 'mail-mode-hook 'turn-on-orgtbl++)
