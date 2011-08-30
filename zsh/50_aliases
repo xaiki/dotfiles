@@ -6,8 +6,8 @@ alias vlc='G_SLICE=always-malloc vlc'
 autoload zmv
 alias mmv='noglob zmv -W'
 
-alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
-alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; sudo'
+#alias su='export XAUTHORITY=${HOME}/.Xauthority ; sudo -s'
+alias sudo='export XAUTHORITY=${HOME}/.Xauthority ; export PATH=~root/bin:/usr/local/sbin:/usr/sbin:/sbin:$PATH; sudo'
 
 alias du="du -hcs"
 alias df="df -h"
