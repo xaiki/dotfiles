@@ -8,7 +8,7 @@ if test -z $XA1_LAUNCHED; then
 	pause
 fi
 
-xcompmgr &
+xcompmgr -cnf -D3&
 gnome-terminal &
 gnome-settings-daemon &
 gnome-keyring-daemon &

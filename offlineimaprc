@@ -4,7 +4,7 @@ ui = Noninteractive.Basic
 accounts = GMail
 #, Smartjog
 maxsyncaccounts = 10
-pythonfile = ~/.offlineimap-scripts/offlineimap.py
+pythonfile = ~/dotfiles/offlineimap-authinfo.py
 
 [Account GMail]
 localrepository = LocalIMAP
@@ -19,34 +19,13 @@ preauthtunnel = /usr/lib/dovecot/imap
 
 [Repository GMailRemote]
 type = Gmail
-#remoteuser = 0xa1f00@gmail.com
-remoteusereval = get_username("imap.gmail.com")
-remotepasseval = get_password("imap.gmail.com")
+remoteuser = 0xa1f00@gmail.com
+remotepasseval = get_authinfo_password("imap.gmail.com", "0xa1f00@gmail.com", "imap")
 # remotepass = super_secret_password
 holdconnectionopen = true
 keepalive = 60
 nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
 folderfilter = lambda foldername: re.search('INBOX|multix', foldername)
-
-#Setting realdelete = yes will Really Delete email from the server.
-#Otherwise "deleting" a message will just remove any labels and
-#retain the message in the All Mail folder.
-realdelete = no
-
-[Account Sagem]
-localrepository = LocalIMAP
-remoterepository = SagemRemote
-autorefresh = 1
-
-[Repository SagemRemote]
-type = IMAP
-remotehost = 10.67.1.6 #ruelm01sc.ads.local
-remoteusereval = get_username("ruelm01sc.ads.local")
-remotepasseval = get_password("ruelm01sc.ads.local")
-ssl = no
-holdconnectionopen = true
-keepalive = 60
-nametrans = lambda foldername: re.sub('^', 'Sagem.', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
@@ -61,8 +40,8 @@ autorefresh = 1
 [Repository CrollRemote]
 type = IMAP
 remotehost = imap.croll.fr
-remoteusereval = get_username("imap.croll.fr")
-remotepasseval = get_password("imap.croll.fr")
+remoteusereval = xaiki
+remotepasseval = get_password("imap.croll.fr", "xaiki@croll.fr", "imap")
 ssl = yes
 holdconnectionopen = true
 keepalive = 60

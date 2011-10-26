@@ -26,6 +26,9 @@
 
 (add-to-list 'load-path "~/.elisp")
 
+(package-initialize)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 (unless (require 'el-get nil t)
   (url-retrieve
@@ -120,6 +123,7 @@
 	 xcscope
 	 yasnippet
 	 sudo-save
+	 po-mode
 	; gitsum
 	 nognus
 	 gnus-gravatar
@@ -186,6 +190,9 @@
 	  smtpmail-smtp-service 587
 	  smtpmail-debug-info t)
     (require 'smtpmail)))
+
+(setq smtpmail-auth-credentials "~/.authinfo.gpg")
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
 
 (add-to-list 'load-path "~/.emacs.d/")
 (when (require 'auto-complete-config nil t)
@@ -979,10 +986,10 @@ depending on network status."
 ;;(require 'gnuserv-compat)
 ;;(gnuserv-start)
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(erc-modules (quote (autoaway autojoin button completion fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring scrolltobottom stamp spelling track)))
  '(gnus-summary-tool-bar (quote gnus-summary-tool-bar-gnome))
  '(indicate-buffer-boundaries t)
@@ -992,10 +999,12 @@ depending on network status."
  '(js2-mirror-mode t)
  '(js2-mode-indent-ignore-first-tab nil)
  '(message-tool-bar (quote message-tool-bar-gnome))
- '(org-agenda-files (quote ("~/chela/xaiki-mece.org" "~/.org/TODO.org"))))
+ '(org-agenda-files (quote ("~/Documents/org/chela/xaiki-mece.org"))))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(erc-current-nick-face ((((class color) (min-colors 65535)) (:foreground "yellow" :inherit (quote egocentric-face))) (t (:foreground "yellow" :inherit (quote egocentric-face))))))
+(put 'narrow-to-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)

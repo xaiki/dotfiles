@@ -14,6 +14,9 @@
 
 (load-library "org-table")
 
+(require 'epa-file)
+(epa-file-enable)
+
 (copy-face 'default 'gnus-default)
 ;;(set-face-attribute 'gnus-default nil :font "ProFontWindows-9")
 
