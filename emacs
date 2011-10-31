@@ -999,7 +999,7 @@ depending on network status."
  '(js2-mirror-mode t)
  '(js2-mode-indent-ignore-first-tab nil)
  '(message-tool-bar (quote message-tool-bar-gnome))
- '(org-agenda-files (quote ("~/Documents/org/chela/xaiki-mece.org"))))
+ '(org-agenda-files (quote ("~/Documents/org/notes.org" "~/Documents/org/chela/xaiki-mece.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
