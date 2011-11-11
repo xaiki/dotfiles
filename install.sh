@@ -14,3 +14,4 @@ for i in `ls $c/dotfiles | grep -ve '#'`; do
 done
 cd $d
 echo "done."
+mkdir ~/.zsh_cache
