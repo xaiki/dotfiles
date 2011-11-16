@@ -25,7 +25,7 @@ remotepasseval = get_authinfo_password("imap.gmail.com", "0xa1f00@gmail.com", "i
 holdconnectionopen = true
 keepalive = 60
 nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
-folderfilter = lambda foldername: re.search('INBOX|multix', foldername)
+folderfilter = lambda foldername: re.search('INBOX|multix|minga|Covetel', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and

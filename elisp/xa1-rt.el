@@ -9,7 +9,28 @@
     (setq rt-liber-update-default-queue "CNTI")
     (require 'rt-liberation-storage nil t)
     (require 'rt-liberation-multi nil t)
+    (require 'rt-liberation-gnus)
 
+    ;; FIXME, this is going to bite later.
+    (setq org-todo-keyword-faces
+	  '(("rejected" . org-warning)))
+
+    (global-set-key "\C-ctm" (lambda () (interactive)
+			       (xa1/rt-display-mine)))
+
+    (global-set-key "\C-ctu" (lambda () (interactive)
+			       (xa1/rt-display-unassigned)))
+
+    (setq rt-liber-gnus-comment-address "casos@covetel.com.ve"
+           rt-liber-gnus-address        "casos@covetel.com.ve"
+	   rt-liber-gnus-subject-name    "COVETEL"
+           rt-liber-gnus-answer-headers  '(("From" . "xaiki@covetel.com.ve")
+					   ("Gcc" . "nnml:Send-Mail")
+					   ("X-Ethics" . "Use GNU"))
+           rt-liber-gnus-signature       "--
+Saludos bichitos"
+
+	   rt-org-todo-keywords "new(n) open(o) | resolved(r) | invalid rejected")
 
     (defun xa1/rt-get-passwd (host user)
       (let* ((auth-source-creation-prompts
@@ -35,6 +56,15 @@
 
     (xa1/rt-get-passwd rt-liber-host rt-liber-username)
 
+    (defun xa1/rt-sort-by-status (ticket-list)
+      "Sort TICKET-LIST lexicographically by owner."
+      (rt-liber-sort-ticket-list
+       ticket-list
+       #'(lambda (a b)
+	   (rt-liber-lex-lessthan-p a b "Status"))))
+
+    (setq rt-liber-browser-default-sorting-function 'xa1/rt-sort-by-status)
+
     (defun xa1/rt-display-queue (queue-id)
       "Display queue in the ticket-browser."
       (interactive "MQueue: ")
@@ -56,10 +86,14 @@
 
     (defun xa1/rt-display-unassigned ()
       (interactive)
+      (xa1/rt-display-new-open "Nobody"))
+
+    (defun xa1/rt-display-new-open (user)
+      (interactive "Muser: ")
       (rt-liber-browse-query
        (rt-liber-compile-query
-	(or (and (owner "Nobody") (status "new"))
-	    (and (owner "Nobody") (status "open"))
+	(or (and (owner user) (status "new"))
+	    (and (owner user) (status "open"))
 	    ))))
 
     (defun rt-liber-ticketlist-browser-redraw-f (ticket)
@@ -76,8 +110,5 @@
 			     '(face font-lock-comment-face)))
       (newline)
       (insert (rt-liber-format "    %o <== %R" ticket)))
-
-    (setq rt-org-todo-keywords
-	  '((sequence "new(n)" "|" "open(o)" "|" "resolved(r)" "|" "invalid" )))
     (provide 'xa1-rt)
     ))

@@ -281,6 +281,32 @@
 	gnus-thread-sort-by-date
 	))
 
+(setq gnus-summary-gather-subject-limit 20)
+(setq gnus-simplify-subject-functions
+      '(gnus-simplify-subject-re
+	gnus-simplify-whitespace
+	gnus-simplify-subject-fuzzy))
+(setq gnus-simplify-ignored-prefixes
+      (concat
+       "\\`\\[?\\("
+       (mapconcat
+	'identity
+	'("looking"
+	  "wanted" "followup" "summary\\( of\\)?"
+	  "help" "query" "problem" "question"
+	  "answer" "reference" "announce"
+	  "How can I" "How to" "Comparison of"
+	  "[Comment]" "Caso resuelto:"
+	  ;; ...
+	  )
+	"\\|")
+       "\\)\\s *\\("
+       (mapconcat 'identity
+		  '("for" "for reference" "with" "about")
+		  "\\|")
+       "\\)?\\]?:?[ \t]*"))
+
+
 ; Ne mettre en cache que les articles définis comme persistants
 ;(setq gnus-use-cache 'passive)
 
@@ -828,6 +854,7 @@
 ;; On garde les threads en un seul morceau meme si le sujet change
 ;(setq gnus-gather-loose-threads t) ;???
 (setq gnus-summary-thread-gathering-function
+;;      'gnus-gather-threads-by-references)
       'gnus-gather-threads-by-subject) ;'gnus-gather-threads-by-references
 
 ;;archivage des messages
