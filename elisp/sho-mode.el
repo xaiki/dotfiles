@@ -28,13 +28,14 @@
 ;; match host >$ commands -i subarg --args `sub-commands` # comments
 ;; match host ># commands -i subarg --args `sub-commands` # comments
 (setq sho-lock-keywords
-      '(("\\( -?-[^ ]+\\)" 1 font-lock-variable-name-face)
-	(">[\\$\\|#]\\(.*\\)" 1 font-lock-function-name-face keep)
-	("\".*\"" 0 font-lock-string-face prepend)
+      '(("[\'\"].*[\'\"]" 0 font-lock-string-face keep)
+	("\\( -?-[^ ]+\\)" 1 font-lock-variable-name-face)
+	("\\$\\([^ ]*\\)" 1 font-lock-constant-face)
+	(">?[\\$\\|#] *\\([^ ]*\\)" 1 font-lock-function-name-face keep)
 	("sudo" 0 font-lock-comment-face prepend)
 	("(gdb)\\(.*\\)" 1 font-lock-function-name-face keep)
 	("(gdb)" 0 font-lock-warning-face prepend)
-	(".*>[\\$\\|#]" 0 font-lock-warning-face prepend)
+	("\\(.*>[\\$\\|#]\\||\\|>\\)" 1 font-lock-warning-face prepend)
 	(">#" 0 font-lock-comment-delimiter-face prepend)
 	(">\\$" 0 font-lock-type-face prepend)
 	("×" 0 font-lock-type-face prepend)
