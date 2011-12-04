@@ -21,6 +21,7 @@ if which emacsclient.emacs-snapshot > /dev/null; then
 	export EMACS_FLAVOUR=.emacs-snapshot;
 fi
 
+export LANG=en_HK.UTF-8
 export CVS_RSH="ssh"
 export MANWIDTH=80
 export EDITOR="env TMPDIR=/tmp emacsclient${EMACS_FLAVOUR} -a nano"
@@ -45,5 +46,3 @@ then
   unfunction preexec
   PS1='$ '
 fi
-
-
