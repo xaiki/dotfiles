@@ -7,6 +7,9 @@
 <Multi_key> <period> <minus>		: "…" U2026 # HORIZONTAL ELLIPSIS
 <Multi_key> <less> <3>			: "♥" U2665 # BLACK HEART SUIT
 <Multi_key> <P> <H>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
+<Multi_key> <*> <*>			: "★" U2605 # BLACK STAR
+<Multi_key> <*> <.>			: "☆" U2606 # WHITE STAR
+
 
 # Part 1 - Manual definitions
 
@@ -82,6 +85,7 @@
 <Multi_key> <space> <minus>		: "~"	asciitilde
 <Multi_key> <minus> <greater>		: "→"  U2192
 <Multi_key> <lower> <minus>		: "←"  U2190
+<Multi_key> <lower> <greater>		: "↔"  U2194
 
 # Spaces
 <Multi_key> <space> <space> : " " nobreakspace # NO-BREAK SPACE
