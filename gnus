@@ -140,7 +140,7 @@
 	(nnimap "LocalMail"
 		(nnimap-address "localhost")
 		(nnimap-stream shell)
-		(nnimap-nov-is-evil t))
+		(nnimap-nov-is-evil nil))
 	(nntp "gmane"
 	      (nntp-address "news.gmane.org"))))
 
@@ -848,7 +848,7 @@
 ;; ====== Zone expérimentale ================================
 
 ;affichage des anciens message lus (assez pour afficher les threads)
-(setq gnus-fetch-old-headers 'some) ;'some)
+(setq gnus-fetch-old-headers 100) ;'some)
 (setq gnus-build-sparse-threads 'more) ;'some)
 
 ;; On garde les threads en un seul morceau meme si le sujet change
@@ -1239,7 +1239,7 @@ more then one article."
 
 ;;modification de message-expand-name pour chercher dans eudc si défini
 ;;puis dans bbdb
-(setq message-expand-name-databases '(eudc bbdb));'(eudc bbdb))
+;;(setq message-expand-name-databases '(eudc bbdb));'(eudc bbdb))
 ;; (defun message-expand-name ()
 ;;   (let ((res nil) (dbs message-expand-name-databases))
 ;;      (while (and dbs (null res))
