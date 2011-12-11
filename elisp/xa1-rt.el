@@ -21,6 +21,10 @@
     (global-set-key "\C-ctu" (lambda () (interactive)
 			       (xa1/rt-display-unassigned)))
 
+    (global-set-key "\C-ctU" (lambda (user)
+			       (interactive "Muser: ")
+			       (xa1/rt-display-user user)))
+
     (setq rt-liber-gnus-comment-address "casos@covetel.com.ve"
            rt-liber-gnus-address        "casos@covetel.com.ve"
 	   rt-liber-gnus-subject-name    "COVETEL"
@@ -54,7 +58,11 @@ Saludos bichitos"
 	  (message "not found")
 	  nil)))
 
-    (xa1/rt-get-passwd rt-liber-host rt-liber-username)
+    ;; hack around the clock tonight.
+    (defalias 'rt-liber-query-runner-old (symbol-function 'rt-liber-query-runner))
+    (defun rt-liber-query-runner (op query-string)
+      (xa1/rt-get-passwd rt-liber-host rt-liber-username)
+      (rt-liber-query-runner-old op query-string))
 
     (defun xa1/rt-sort-by-status (ticket-list)
       "Sort TICKET-LIST lexicographically by owner."
@@ -72,6 +80,13 @@ Saludos bichitos"
        (rt-liber-compile-query
 	(queue queue-id))))
 
+
+     (defun xa1/rt-display-ticket (ticket-id)
+       "Display ticket with TICKET-ID in the ticket-browser."
+       (interactive "MTicket ID: ")
+       (rt-liber-browse-query
+        (rt-liber-compile-query
+     	 (id ticket-id))))
 
     (defun xa1/rt-display-user (user)
       "Display tickets for user in the ticket-browser."
