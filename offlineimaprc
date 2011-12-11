@@ -9,7 +9,7 @@ pythonfile = ~/dotfiles/offlineimap-authinfo.py
 [Account GMail]
 localrepository = LocalIMAP
 remoterepository = GMailRemote
-autorefresh = 1
+autorefresh = 10
 
 [Repository LocalIMAP]
 type = IMAP
