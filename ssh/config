@@ -3,4 +3,4 @@ ControlMaster auto
 ControlPath ~/.ssh/master-%r@%h:%p
 
 Host *covetel.com.ve
- Port 14230
+Port 14230

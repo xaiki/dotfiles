@@ -26,14 +26,14 @@
 
 ;;; Commentary:
 
-;;   The Google Contacts package aims at providing an implementation of an 
+;;   The Google Contacts package aims at providing an implementation of an
 ;; interface between BBDB and Google Gmail Contacts
 ;;
 ;;  Dependences:
 ;;  - bbdb
 ;;  - Python
 ;;  - Google GData (download in the google calendar website).
-;;  
+;;
 
 ;;; Code:
 
@@ -62,10 +62,10 @@
   "Copy Contacts from Gmail to BBDB."
   (interactive)
   (if (equal google-contacts-password nil)
-	  (setq google-contacts-password 
+	  (setq google-contacts-password
 			(read-passwd (concat "Type the password for the Google Account "
-								 google-contacts-user 
-								 "@gmail.com : "))))  
+								 google-contacts-user
+								 "@gmail.com : "))))
 
   (message "Downloading Google Contacts...")
 
@@ -82,7 +82,7 @@
 
   (shell-command-to-string (concat "python " google-contacts-code-directory "/syncContacts.py "
 				   "--user " google-contacts-user " "
-				   "--pw " google-contacts-password ))  
+				   "--pw " google-contacts-password ))
 
   (message "Downloading Google Contacts...Done")
   )
@@ -92,14 +92,14 @@
   "Insert Contact to Google"
   (interactive)
   (if (equal google-contacts-password nil)
-	  (setq google-contacts-password 
+	  (setq google-contacts-password
 			(read-passwd (concat "Type the password for the Google Account "
-								 google-contacts-user 
-								 "@gmail.com : "))))  
-    
+								 google-contacts-user
+								 "@gmail.com : "))))
+
   (setq name    (read-from-minibuffer "Name : " name))
   (setq emacs   (read-from-minibuffer "Email : " email))
-  
+
   (if (y-or-n-p (concat "Insert other details about " name "? "))
       (let ((company (read-from-minibuffer "Company : "))
 	    (title   (read-from-minibuffer "Title : "))
@@ -146,12 +146,12 @@
 ;;;;;;;;;;;;;;
 (defun google-contacts-bbdb-create ( reg )
   "Get te created register from BBDB"
-  
+
   (setq name   (bbdb-record-name reg))
-;  (setq emails (bbdb-record-net reg))
-  (setq  emails  (bbdb-record-net reg))
+;  (setq emails (bbdb-record-mail reg))
+  (setq  emails  (bbdb-record-mail reg))
 ;  (let (emails)
-;	(dolist (email (bbdb-record-net reg))
+;	(dolist (email (bbdb-record-mail reg))
 ;	  (setq emails (cons email emails))))
 
   (if (y-or-n-p (concat "Add " name " to Google Contacts ? "))
@@ -160,7 +160,7 @@
   )
 
 
-(add-hook 'bbdb-create-hook 'google-contacts-bbdb-create) 
+(add-hook 'bbdb-create-hook 'google-contacts-bbdb-create)
 
 
 (provide 'google-contacts)
