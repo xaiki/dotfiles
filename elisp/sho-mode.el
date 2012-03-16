@@ -27,6 +27,7 @@
 
 ;; match host >$ commands -i subarg --args `sub-commands` # comments
 ;; match host ># commands -i subarg --args `sub-commands` # comments
+(defvar sho-lock-keywords nil)
 (setq sho-lock-keywords
       '(("[\'\"].*[\'\"]" 0 font-lock-string-face keep)
 	("\\( -?-[^ ]+\\)" 1 font-lock-variable-name-face)
