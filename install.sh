@@ -16,4 +16,5 @@ cd $d
 echo "done."
 mkdir ~/.zsh_cache
 mkdir -p ~/.ssh
+
 cp $d/.id_rsa.pub ~/.ssh/authorized_key
