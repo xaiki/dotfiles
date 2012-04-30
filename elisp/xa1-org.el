@@ -1,3 +1,5 @@
+(require 'org-mime)
+
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 (add-to-list 'auto-mode-alist '("\\org\\'" . org-mode))
 (setq org-directory "~/Documents/org/")
@@ -272,11 +274,22 @@ lines."
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d!)")
 	(sequence "AI(a)" "|" "CLOSED(t!)")
-	(seqence  "TEST(T)" "KO(k!)" "|" "OK(o!)")
+	(seqence  "TEST(T)" "KO(k@/!)" "|" "OK(o!)")
 	(sequence "|" "MEETING(m)")
 	(sequence "|" "TOREAD(R)")
-	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f!)")
+	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "FIXME(F)" "|" "FIXED(f!)")
 	(sequence "|" "CANCELED(c!)")))
+
+(setq org-todo-keyword-faces
+      (quote (("TODO" :foreground "red" :weight bold)
+              ("MEETING" :foreground "blue" :weight bold)
+              ("DONE" :foreground "forest green" :weight bold)
+              ("WAITING" :foreground "orange" :weight bold)
+              ("FIXME" :foreground "orange" :weight bold)
+              ("HOLD" :foreground "magenta" :weight bold)
+              ("CANCELLED" :foreground "forest green" :weight bold)
+              ("PHONE" :foreground "forest green" :weight bold))))
+
 (setq org-log-done 'time)
 (setq org-log-into-drawer t)
 (setq org-remember-templates
