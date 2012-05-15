@@ -18,6 +18,7 @@ type = IMAP
 remotehost = localhost
 port = 143
 remoteuser = xaiki
+nametrans = lambda foldername: re.sub('^Gmail.', '', foldername)
 remotepasseval = get_authinfo_password("localhost", "xaiki", "imap")
 preauthtunnel = /usr/lib/dovecot/imap
 idlefolders = ['INBOX']

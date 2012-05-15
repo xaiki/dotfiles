@@ -40,5 +40,5 @@
 [url "git://github.com/"]
      insteadof = github:
 
-[url "git://github.com/xaiki/"]
+[url "ssh://git@github.com/xaiki/"]
      insteadof = gh:
