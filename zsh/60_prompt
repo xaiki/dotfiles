@@ -109,7 +109,7 @@ _mad_prompt_setup() {
 $pcc[1]┌[%{$fg_bold[magenta]%}%\$(print -P %3v)<...<%~%<<%(3v.%{$fg_bold[yellow]%}:%{$fg_bold[red]%}%2v%{$fg_bold[cyan]%}%1v.)%{$fg_bold[red]%}$pcc[1]]
 $pcc[1]└[$pcc[2]%m%s$pcc[1]] $rst"
     if [[ "$TERM" != "eterm-color" ]]; then
-	    RPROMPT="%(?..%{$fg_bold[red]%}%? )$pcc[1]($pcc[2]%T$pcc[1])"$rst%{$'\e[s\e[A\e[${#TZ}D\e[2D$ppc[1][$ppc[2]${TZ}$ppc[1]]┐\e[u'$rst%}
+	    RPROMPT="%(?..%{$fg_bold[red]%}%? )$pcc[1]($pcc[2]%T$pcc[1])"$rst
 	    else
 	    RPROMPT=""
     fi
@@ -134,4 +134,3 @@ if [[ "$TERM" == "screen" ]]; then
         echo -ne "\ek$CMD\e\\"
     }
 fi
-
