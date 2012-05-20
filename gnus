@@ -408,17 +408,11 @@
 ; Couper les lignes à X caractáres pour rédiger
 ;;(require 'filladapt)
 (setq message-mode-hook
-      (quote (orgstruct++-mode
-	      (lambda nil (setq fill-column 72
-				default-justification 'left
-				footnote-spaced-footnotes nil
-				footnote-section-tag "")
-		(flyspell-mode 1)
-		(set-fill-column 72))
-	      orgtbl-mode
-	      turn-on-auto-fill
-	      footnote-mode
-	      )))
+      (quote (lambda nil
+              (orgstruct++-mode)
+              (orgtbl-mode)
+              (flyspell-mode 1)
+              (footnote-mode))))
 
 ; Mes ch'tits headers
 ;(setq gnus-ignored-headers ".*")
