@@ -271,6 +271,16 @@ lines."
   (remember-finalize)
   (run-hooks 'org-remember-after-finalize-hook))
 
+;; [[info:org#Breaking%20down%20tasks][info:org#Breaking down tasks]]
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+(setq org-hierarchical-todo-statistics nil)
+(setq org-provide-todo-statistics t)
+
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d!)")
 	(sequence "AI(a)" "|" "CLOSED(t!)")

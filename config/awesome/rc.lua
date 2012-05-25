@@ -41,7 +41,8 @@ modkey = "Mod4"
 
 --Lancement d'applications
 run_once("nm-applet")
-run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
+run_once("xcompmgr",'xcompmgr -ncfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
+run_once("syndaemon", 'syndaemon -i 0.5 -k -d')
 run_once("udisks-glue")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
@@ -261,7 +262,7 @@ require("blingbling")
   my_net:set_height(18)
   --activate popup with ip informations on the net widget
 
-  my_net:set_ippopup()
+--  my_net:set_ippopup()
   my_net:set_show_text(true)
   my_net:set_v_margin(3)
   my_net:set_background_text_color("#00000000")

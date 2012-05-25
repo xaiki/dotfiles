@@ -100,7 +100,7 @@
 	       :after (progn (add-hook 'git-commit-mode-hook 'turn-on-flyspell)
 		       (setq git-append-signed-off-by t)
 ;;		       (add-hook 'git-commit-mode-hook (progn (toggle-save-place 0)))
-))
+		       ))
 	;;     (:name bongo
 	;;	    :after (progn (autoload 'bongo "bongo"
 	;;				"Start Bongo by switching to a Bongo buffer.")))
@@ -117,6 +117,7 @@
 			(require 'jade-mode)
 			(add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
 			(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))))
+
 	(:name smex
 	       :after (progn
 			    (require 'smex)
@@ -126,22 +127,6 @@
 			    (global-set-key (kbd "C-x x") 'smex)
 			    (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
 
-	(:name auto-complete
-	       :after (progn
-			(ac-config-default)
-
-			(setq ac-auto-start t)
-			(setq ac-quick-help-delay 0.5)
-			(setq ac-trigger-key nil)
-			(ac-set-trigger-key "<C-tab>")))
-
-	(:name auto-complete-clang
-	       :after (progn
-			(require 'auto-complete-clang)
-			(defun xa1/ac-clang-mode-setup ()
-			  (setq ac-sources (append '(ac-source-clang) ac-sources)))
-
-			(add-hook 'c-mode-hook 'xa1/ac-clang-mode-setup)))
 
 	;; (:name auto-complete-etags
 	;;        :after (progn
@@ -168,6 +153,7 @@
 
 (setq xa1-packages
       (append
+       (mapcar 'el-get-source-name el-get-sources)
        '(cssh
 	 js2-mode
 	 el-get
@@ -194,11 +180,12 @@
 	 rt-liberation
 	 lua-mode
 	 auto-complete
-;	 auto-complete-etags
+	 auto-complete-clang
 	 auto-complete-css)
 ;	 auto-complete-latex
 
-       (mapcar 'el-get-source-name el-get-sources)))
+
+       ))
 
 (el-get nil xa1-packages)
 (el-get 'wait)
@@ -709,7 +696,7 @@ depending on network status."
 (require 'flymake)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 (add-hook 'haskell-mode-hook '(progn (capitalized-words-mode t)))
-(add-hook 'c-mode-hook 'flymake-clang-c-load)
+(add-hook 'c-mode-common-hook 'flymake-clang-c-load)
 
 ;; Torvalds a dit:
 (defun linux-c-mode ()
@@ -733,8 +720,17 @@ depending on network status."
 (add-to-list 'auto-mode-alist '("*.make$" . makefile-gmake-mode))
 (add-to-list 'auto-mode-alist '("Makefile.*" . makefile-gmake-mode))
 
+(defun gtk-c-mode ()
+  "C mode with adjusted values for Gtk+."
+  (interactive)
+  (c-mode)
+  (c-set-style "K&R")
+  (setq tab-width 2)
+  (setq indent-tabs-mode nil)
+  (setq c-basic-offset 2))
+
 (defun ffmpeg-c-mode ()
-  "C mode with adjusted values for videolan."
+  "C mode with adjusted values for FFMPEG/LibAV."
   (interactive)
   (c-mode)
   (c-set-style "K&R")
@@ -788,6 +784,21 @@ depending on network status."
 ;; (autoload 'pymacs-call "pymacs")
 ;; (setq interpreter-mode-alist(cons '("python" . python-mode)
 ;; 				  interpreter-mode-alist))
+
+(require 'auto-complete)
+(ac-config-default)
+
+(setq ac-auto-start t)
+(setq ac-quick-help-delay 0.5)
+(setq ac-trigger-key nil)
+(ac-set-trigger-key "<C-tab>")
+
+(message "loading clang support")
+(require 'auto-complete-clang)
+(defun xa1/ac-clang-mode-setup ()
+  (setq ac-sources (append '(ac-source-clang) ac-sources)))
+
+(add-hook 'c-mode-hook 'xa1/ac-clang-mode-setup)
 
 ;; Hooks pour le texte
 
@@ -948,7 +959,7 @@ depending on network status."
 ;; Org mode
 ;; The following lines are always needed.  Choose your own keys.
 (when (require 'org nil t)
-)
+  )
 
 (server-start)
 ;;(require 'gnuserv-compat)
