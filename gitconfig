@@ -42,3 +42,6 @@
 
 [url "ssh://git@github.com/xaiki/"]
      insteadof = gh:
+
+[url "ssh://git@core.evilgiggle.com/xaiki/"]
+     inteadof  = sh:

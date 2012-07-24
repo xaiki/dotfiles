@@ -14,6 +14,112 @@
 
 (load-library "org-table")
 
+(require 'dbus)
+(defvar nm-dbus-registration nil)
+(setq nm-dbus-registration nil)
+(defvar nm-connected-hook nil
+  "Functions to run when network is connected.")
+(defvar nm-connecting-hook nil
+  "Functions to run when network is connecting.")
+(defvar nm-disconnected-hook nil
+  "Functions to run when network is disconnected.")
+
+(defun nntp-nuke-server-processes()
+ "Brutally kill running NNTP server background processes. Useful
+when Gnus hangs on network outs or changes."
+  (interactive)
+  (let ((sm (if gnus-select-method
+                (cons gnus-select-method gnus-secondary-select-methods)
+              gnus-secondary-select-methods)))
+    (while sm
+      (let ((method (car (car sm)))
+            (vserv (nth 1 (car sm))))
+        (when (and (eq 'nntp method)
+                   (buffer-local-value 'nntp-process (get-buffer (nntp-find-connection-buffer vserv))))
+          (gnus-message 6 "Killing NNTP process for server %s" vserv)
+          (delete-process (buffer-local-value 'nntp-process (get-buffer (nntp-find-connection-buffer vserv))))))
+      (setq sm (cdr sm)))))
+
+(defun gnus-nm-agent-unplug()
+  "Kill IMAP server processes and unplug Gnus agent."
+  (gnus-message 6 "Network is disconnected, unplugging Gnus agent.")
+  (with-current-buffer gnus-group-buffer
+    ;;(nntp-nuke-server-processes) ; optional, help prevent hangs in IMAP processes when network has gone down.
+    (gnus-agent-toggle-plugged nil))
+  (when (offlineimap-kill) (message "killed offlineimap"))
+  )
+
+(defun gnus-nm-agent-plug()
+  "Plug Gnus agent."
+  (gnus-message 6 "Network is connected, plugging Gnus agent.")
+  (with-current-buffer gnus-group-buffer
+    (gnus-agent-toggle-plugged t))
+  (when (offlineimap) (message "launched offlineimap"))
+  )
+
+(defun nm-state-dbus-signal-handler (nmstate)
+  "Handles NetworkManager signals and runs appropriate hooks."
+  (cond ((= 20 nmstate)
+	   (progn (message "Network changed: disconnected")
+		  (run-hooks 'nm-disconnected-hook)))
+	  ((= 70 nmstate)
+	   (progn (message "Network changed: connected")
+		  (run-hooks 'nm-connected-hook)))
+	  ((= 40 nmstate)
+	   (progn (message "Network changed: connecting")
+		  (run-hooks 'nm-connecting-hook)))
+	  (t (message "unhandled Network change state %d" nmstate))))
+
+(defun nm-enable()
+  "Enable integration with NetworkManager."
+  (interactive)
+  (when (not nm-dbus-registration)
+    (progn (setq nm-dbus-registration
+                 (dbus-register-signal :system
+                  "org.freedesktop.NetworkManager" "/org/freedesktop/NetworkManager"
+                  "org.freedesktop.NetworkManager" "StateChanged"
+                  'nm-state-dbus-signal-handler))
+           (message "Enabled integration with NetworkManager"))))
+
+(defun nm-disable()
+  "Disable integration with NetworkManager."
+  (interactive)
+  (when nm-dbus-registration
+      (progn (dbus-unregister-object nm-dbus-registration)
+             (setq nm-dbus-registration nil)
+             (message "Disabled integration with NetworkManager"))))
+
+;; Add hooks for plugging/unplugging on network state change:
+(add-hook 'nm-connected-hook 'gnus-nm-agent-plug)
+(add-hook 'nm-disconnected-hook 'gnus-nm-agent-unplug)
+
+;; If you want to start up Gnus in offline or online state depending on the current network status, you can add a custom Gnus startup function in ~/.emacs, something like this:
+
+(defun nm-is-connected()
+  (equal 3 (dbus-get-property
+            :system "org.freedesktop.NetworkManager" "/org/freedesktop/NetworkManager"
+            "org.freedesktop.NetworkManager" "State")))
+(defun switch-to-or-startup-gnus ()
+  "Switch to Gnus group buffer if it exists, otherwise start Gnus in plugged or unplugged state,
+depending on network status."
+  (interactive)
+  (if (or (not (fboundp 'gnus-alive-p))
+          (not (gnus-alive-p)))
+      (if (nm-is-connected)
+          (progn
+	    (gnus)
+	    (offlineimap))
+        (gnus-unplugged))
+    (switch-to-buffer gnus-group-buffer)
+    (delete-other-windows)))
+
+(nm-enable)
+
+(require 'smtpmail)
+(defun message-multi-smtp-send-mail ()
+  (progn
+  (smtpmail-send-it)))
+
 (require 'epa-file)
 (epa-file-enable)
 
@@ -1428,44 +1534,35 @@ more then one article."
 
 ;;;========== configuration GPG / PGG ==============================
 ;;**EC 2005-08-16 21:13 - PGG auto sign or encrypt !
-(setq pgg-cache-passphrase t
-      pgg-passphrase-cache-expiry 1800
-      pgg-default-user-id "xaiki@cxhome.ath.cx" ;;<<<<----- là tu dois mettre _ton_ ID
-      pgg-encrypt-for-me nil
-      ;;pgg-gpg-program "/opt/local/bin/gpg" ;; vérifie que c'est juste !
-      pgg-query-keyserver t)
 
-(autoload 'pgg-encrypt-region "pgg" "Encrypt the current region." t)
-(autoload 'pgg-decrypt-region "pgg" "Decrypt the current region." t)
-(autoload 'pgg-sign-region    "pgg" "Sign the current region."    t)
-(autoload 'pgg-verify-region  "pgg" "Verify the current region."  t)
-(autoload 'pgg-insert-key     "pgg"  "Insert the ASCII armored public key." t)
-(autoload 'pgg-snarf-keys-region "pgg" "Import public keys in the current region." t)
+(require 'epg-config)
+ (setq mml2015-use 'epg
 
-;; Tells Gnus to inline the part
-(eval-after-load "mm-decode"
-  '(add-to-list 'mm-inlined-types "application/pgp$"))
-;; Tells Gnus how to display the part when it is requested
-(eval-after-load "mm-decode"
-  '(add-to-list 'mm-inline-media-tests '("application/pgp$"
-					 mm-inline-text identity)))
-;; Tell Gnus not to wait for a request, just display the thing
-;; straight away.
-(eval-after-load "mm-decode"
-  '(add-to-list 'mm-automatic-display "application/pgp$"))
-;; But don't display the signatures, please.
-(eval-after-load "mm-decode"
-  (quote (setq mm-automatic-display (remove "application/pgp-signature"
-					    mm-automatic-display))))
+       mml2015-verbose t
+       epg-user-id 'CF953E76C24B9018
+       mml2015-encrypt-to-self t
+       mml2015-always-trust nil
+       mml2015-cache-passphrase t
+       mml2015-passphrase-cache-expiry '36000
+       mml2015-sign-with-sender t
 
-;; verify GnuPG signature on incoming mail
-(setq mm-verify-option 'always)
+       gnus-message-replyencrypt t
+       gnus-message-replysign t
+       gnus-message-replysignencrypted t
+       gnus-treat-x-pgp-sig t
 
-;; decrypt mails on incoming mail
-(setq mm-decrypt-option 'always)
+;;       mm-sign-option 'guided
+;;       mm-encrypt-option 'guided
+       mm-verify-option 'always
+       mm-decrypt-option 'always
 
-;; add buttons
-(setq gnus-buttonized-mime-types '("multipart/encrypted" "multipart/signed" "text/html" "text/richtext"))
+       gnus-buttonized-mime-types
+       '("multipart/alternative"
+         "multipart/encrypted"
+         "multipart/signed")
+
+      epg-debug t ;;  then read the *epg-debug*" buffer
+)
 
 ; Je ne veux pas de HTML, ni de richText, non mais oh !
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"));'("text/html" "text/richtext"))
@@ -1508,7 +1605,7 @@ more then one article."
 (require 'nnmairix)
 
 ;; speed-up !
-(gnus-compile)
+;;(gnus-compile)
 
 
 ;; Local Variables:

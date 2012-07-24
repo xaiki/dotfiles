@@ -4,11 +4,12 @@ if test -z $XA1_LAUNCHED; then
 	export LANG=en_US.UTF-8
 	export XA1_WM="awesome"
 
-	ck-launch-session sh `realpath $0`
-	pause
+	ck-launch-session sh $0
+	~/bin/pause
+	exit
 fi
 
-xcompmgr -cnf -D3&
+#xcompmgr -cnf -D3&
 gnome-terminal &
 gnome-settings-daemon &
 gnome-keyring-daemon &

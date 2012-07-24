@@ -1,6 +1,6 @@
 # -*- conf -*-
 [general]
-ui = Noninteractive.Basic
+ui = blinkenlights
 accounts = GMail
 #, Smartjog
 maxsyncaccounts = 10
@@ -30,10 +30,11 @@ remotepasseval = get_authinfo_password("imap.gmail.com", "0xa1f00@gmail.com", "i
 # remotepass = super_secret_password
 #holdconnectionopen = true
 #keepalive = 3600
-idlefolders = ['INBOX', 'minga', '[Gmail]/All Mail']
+idlefolders = ['INBOX', 'SoftwareLibreConCFK', 'OrgAr']
 nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
-folderfilter = lambda foldername: re.search('INBOX', foldername)
+folderfilter = lambda foldername: re.search('INBOX|SoftwareLibreConCFK|OrgAr', foldername)
 #folderfilter = lambda foldername: re.search('INBOX|multix|Covetel', foldername)
+cert_fingerprint = f3043dd689a2e7dddfbef82703a6c65ea9b634c1
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and

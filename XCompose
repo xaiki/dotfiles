@@ -9,7 +9,9 @@
 <Multi_key> <P> <H>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
 <Multi_key> <*> <*>			: "★" U2605 # BLACK STAR
 <Multi_key> <*> <.>			: "☆" U2606 # WHITE STAR
-
+<Multi_key> <m> <e>			: "∈" U2208 # ELEMENT OF
+<Multi_key> <m> <n>			: "ℕ" U2115 # DOUBLE-STRUCK CAPITAL N
+<Multi_key> <m> <r>			: "ℝ" U211D # DOUBLE-STRUCK CAPITAL R
 
 # Part 1 - Manual definitions
 

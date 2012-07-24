@@ -28,7 +28,7 @@ config_dir = awful.util.getdir("config")
 beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminal"
+terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 browser="luakit"
@@ -41,7 +41,7 @@ modkey = "Mod4"
 
 --Lancement d'applications
 run_once("nm-applet")
-run_once("xcompmgr",'killall xcompmgr; xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
+run_once("xcompmgr",'xcompmgr -CcfF -I "20" -O "10" -D "1" -t "-5" -l "-5" -r "4.2" -o ".82" &')
 run_once("udisks-glue")
 ---- Table of layouts to cover with awful.layout.inc, order matters.
 layouts =
@@ -100,7 +100,6 @@ mysystray = widget({ type = "systray" })
 
 -- Create a wibox for each screen and add it
 my_top_wibox = {}
-my_bottom_wibox ={}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
@@ -176,7 +175,7 @@ require("blingbling")
  cpuwidget=blingbling.classical_graph.new()
  cpuwidget:set_height(18)
  cpuwidget:set_width(100)
- cpuwidget:set_text_color(beautiful.fg_urgent)
+-- cpuwidget:set_text_color(beautiful.fg_urgent)
  cpuwidget:set_background_text_color("#00000000")
  cpuwidget:set_tiles_color("#00000022")
  cpuwidget:set_show_text(true)
@@ -223,7 +222,7 @@ require("blingbling")
  memwidget:set_height(18)
  memwidget:set_width(100)
  memwidget:set_tiles_color("#00000022")
- memwidget:set_text_color(beautiful.fg_urgent)
+-- memwidget:set_text_color(beautiful.fg_urgent)
  memwidget:set_background_text_color("#00000000")
  memwidget:set_show_text(true)
  memwidget:set_label("MEM: $percent %")
@@ -268,11 +267,8 @@ require("blingbling")
   my_net:set_background_text_color("#00000000")
 
 --Volume
-  volume_label = widget({ type = "textbox"})
-  volume_label.text='<span '..pango_small..'><span color="'..beautiful.fg_urgent..'">Vol.: </span></span>'
   my_volume=blingbling.volume.new()
   my_volume:set_height(16)
-  my_volume:set_v_margin(3)
   my_volume:set_width(20)
   my_volume:update_master()
   my_volume:set_master_control()
@@ -280,14 +276,6 @@ require("blingbling")
   my_volume:set_background_graph_color("#00000099")
   my_volume:set_graph_color("#00ccffaa")
 -- wiboxs
-    my_bottom_wibox[s] = awful.wibox({ position = "bottom", screen = s, height=10 })
-
-    my_bottom_wibox[s].widgets = {
-       separator,
---       mytasklist[s],
-       separator,
-       layout = awful.widget.layout.horizontal.leftright
-    }
 
     my_top_wibox[s] = awful.wibox({ position = "top", screen = s, height=16 })
 
@@ -299,14 +287,6 @@ require("blingbling")
 	  mytaglist[s],
 	  separator,
 	  mypromptbox[s],
-	  separator,
-	  mycore1.widget, mycore2.widget, mycore3.widget, mycore4.widget,
-	  separator,
-	  cpuwidget.widget,
-	  separator,
-	  memwidget.widget,
-	  separator,
-	  udisks_glue.widget,
 	  separator,
 	  layout = awful.widget.layout.horizontal.leftright
        },
@@ -320,9 +300,17 @@ require("blingbling")
 	  s == 1 and mysystray or nil,
 	  separator,
 	  my_volume.widget,
-	  volume_label,
 	  separator,
 	  my_net.widget,
+	  separator,
+	  mycore1.widget, mycore2.widget, mycore3.widget, mycore4.widget,
+	  separator,
+	  cpuwidget.widget,
+	  separator,
+	  memwidget.widget,
+	  separator,
+	  udisks_glue.widget,
+
 
 	  layout = awful.widget.layout.horizontal.rightleft
        },
