@@ -7,8 +7,8 @@
 <Multi_key> <period> <minus>		: "…" U2026 # HORIZONTAL ELLIPSIS
 <Multi_key> <less> <3>			: "♥" U2665 # BLACK HEART SUIT
 <Multi_key> <P> <H>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
-<Multi_key> <*> <*>			: "★" U2605 # BLACK STAR
-<Multi_key> <*> <.>			: "☆" U2606 # WHITE STAR
+<Multi_key> <space> <o>			: "★" U2605 # BLACK STAR
+<Multi_key> <space> <period>		: "☆" U2606 # WHITE STAR
 
 
 # Part 1 - Manual definitions
@@ -84,8 +84,8 @@
 <Multi_key> <minus> <space>		: "~"	asciitilde
 <Multi_key> <space> <minus>		: "~"	asciitilde
 <Multi_key> <minus> <greater>		: "→"  U2192
-<Multi_key> <lower> <minus>		: "←"  U2190
-<Multi_key> <lower> <greater>		: "↔"  U2194
+<Multi_key> <less> <minus>		: "←"  U2190
+<Multi_key> <less> <greater>		: "↔"  U2194
 
 # Spaces
 <Multi_key> <space> <space> : " " nobreakspace # NO-BREAK SPACE
@@ -166,6 +166,9 @@
 <Multi_key> <equal> <c>			: "€" EuroSign # EURO SIGN
 <Multi_key> <E> <equal>			: "€" EuroSign # EURO SIGN
 <Multi_key> <equal> <E>			: "€" EuroSign # EURO SIGN
+<Multi_key> <e> <equal>			: "€" EuroSign # EURO SIGN
+<Multi_key> <equal> <e>			: "€" EuroSign # EURO SIGN
+
 
 <Multi_key> <bar> <c>			: "¢" U00A2 # CENT SIGN
 <Multi_key> <bar> <C>			: "¢" U00A2 # CENT SIGN
@@ -179,6 +182,9 @@
 <Multi_key> <minus> <L> 		: "£" U00a3 # POUND SIGN
 <Multi_key> <Y> <equal>			: "¥" yen
 <Multi_key> <equal><Y>			: "¥" yen
+<Multi_key> <y> <equal>			: "¥" yen
+<Multi_key> <equal><y>			: "¥" yen
+
 
 # Long S
 <Multi_key> <f> <s>	: "ſ" U017f # LONG S
