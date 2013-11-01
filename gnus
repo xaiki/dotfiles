@@ -1507,10 +1507,6 @@ more then one article."
 ;; Index
 (require 'nnmairix)
 
-;; speed-up !
-(gnus-compile)
-
-
 ;; Local Variables:
 ;; time-stamp-format: "%02d/%02m/%:y %02H:%02M %u@%s"
 ;; End:
