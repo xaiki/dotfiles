@@ -2,3 +2,4 @@ config
 authorized_keys
 id_rsa*
 known_hosts*
+*.pyc
