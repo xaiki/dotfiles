@@ -2,6 +2,8 @@
 
 autoload colors && colors
 
+. /etc/profile.d/vte.sh
+
 function title() {
   # escape '%' chars in $1, make nonprintables visible
   a=${(V)1//\%/\%\%}
