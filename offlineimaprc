@@ -1,7 +1,7 @@
 # -*- conf -*-
 [general]
 ui = Noninteractive.Basic
-accounts = GMail
+accounts = GMail, UNQ
 #, Smartjog
 maxsyncaccounts = 10
 pythonfile = ~/dotfiles/offlineimap-authinfo.py
@@ -18,7 +18,8 @@ type = IMAP
 remotehost = localhost
 port = 143
 remoteuser = xaiki
-nametrans = lambda foldername: re.sub('^Gmail.', '', foldername)
+nametrans = lambda foldername: \
+          re.sub('^(Gmail|UNQ).', '', foldername)
 remotepasseval = get_authinfo_password("localhost", "xaiki", "imap")
 preauthtunnel = /usr/lib/dovecot/imap
 idlefolders = ['INBOX']
@@ -40,6 +41,26 @@ folderfilter = lambda foldername: re.search('INBOX', foldername)
 #Otherwise "deleting" a message will just remove any labels and
 #retain the message in the All Mail folder.
 realdelete = no
+
+[Account UNQ]
+localrepository = LocalIMAP
+remoterepository = UNQRemote
+autorefresh = 1
+
+[Repository UNQRemote]
+type = IMAP
+remotehost = imap.correo.unq.edu.ar
+remoteusereval = 'niv.sardi@unq.edu.ar'
+cert_fingerprint = 232b08bb708a7a71b450831d660799bbee2cc277
+remotepasseval = get_authinfo_password ("imap.correo.unq.edu.ar", "niv.sardi@unq.edu.ar", "imap")
+ssl = yes
+holdconnectionopen = true
+keepalive = 60
+nametrans = lambda foldername: re.sub('^', 'UNQ.', foldername)
+idlefolders = ['INBOX']
+folderfilter = lambda foldername: \
+          re.search('^UNQ', foldername)
+
 
 [Account Croll]
 localrepository = LocalIMAP
