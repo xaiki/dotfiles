@@ -21,7 +21,7 @@ if which emacsclient.emacs-snapshot > /dev/null; then
 	export EMACS_FLAVOUR=.emacs-snapshot;
 fi
 
-export LANG=`echo $LANG | sed s/utf-8/UTF-8/`
+export LANG=`echo $LANG | sed s/utf8/UTF8/`
 export CVS_RSH="ssh"
 export MANWIDTH=80
 export EDITOR="env TMPDIR=/tmp emacsclient${EMACS_FLAVOUR} -a nano"
