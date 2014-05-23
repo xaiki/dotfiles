@@ -2,7 +2,7 @@
 import re, os
 
 
-def get_authinfo_password(machine, login, port=''):
+def get_password(machine, login, port=''):
     mc = re.compile("machine %s" % machine)
     po = re.compile("port %s" % port)
     lg = re.compile("login %s" % login)
@@ -17,4 +17,4 @@ def get_authinfo_password(machine, login, port=''):
 
 if __name__ == '__main__':
     import sys
-    print get_authinfo_password(sys.argv[0], sys.argv[1], sys.argv[2])
+    sys.stdout.write(get_password(sys.argv[1], sys.argv[2], sys.argv[3]).strip())

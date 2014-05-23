@@ -37,8 +37,20 @@ alias md='mkdir'
 alias rd='rmdir'
 alias rm='rm -i'
 
-alias e="emacsclient -n -a nano"
-alias t="emacsclient -t -a nano"
+e() {
+    local TMP;
+    if [[ "$1" == "-" ]]; then
+        TMP="$(mktemp /tmp/emacsstdinXXX)";
+        cat >"$TMP";
+        if ! emacsclient --alternate-editor /usr/bin/false --eval "(let ((b (create-file-buffer \"*stdin*\"))) (switch-to-buffer b) (insert-file-contents \"${TMP}\") (delete-file \"${TMP}\"))"; then
+            emacs --eval "(let ((b (create-file-buffer \"*stdin*\"))) (switch-to-buffer b) (insert-file-contents \"${TMP}\") (delete-file \"${TMP}\"))" &
+        fi;
+    else
+        emacsclient --alternate-editor "emacs" --no-wait "$@" > /dev/null 2>&1 &
+    fi;
+}
+
+alias t="e -t"
 alias v=$VISUAL
 
 #alias v="/usr/share/vim/vim63/macros/less.sh -u NONE -U NONE -c 'set ft=man mouse=a'"

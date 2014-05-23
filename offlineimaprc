@@ -7,43 +7,65 @@ maxsyncaccounts = 10
 pythonfile = ~/dotfiles/offlineimap-authinfo.py
 
 [Account GMail]
-localrepository = LocalIMAP
+localrepository = LocalGmailIMAP
 remoterepository = GMailRemote
-autorefresh = 60
+autorefresh = 1
 quick = 10
 status_backend = sqlite
 
-[Repository LocalIMAP]
+[Repository LocalUNQIMAP]
 type = IMAP
 remotehost = localhost
 port = 143
 remoteuser = xaiki
 nametrans = lambda foldername: \
-          re.sub('^(Gmail|UNQ).', '', foldername)
+          re.sub('^UNQ\/', '', 
+          re.sub('\.', '/', foldername))
+folderfilter = lambda foldername: re.search ('UNQ', foldername)
 remotepasseval = get_authinfo_password("localhost", "xaiki", "imap")
 preauthtunnel = /usr/lib/dovecot/imap
-idlefolders = ['INBOX']
+#idlefolders = ['UNQ.INBOX']
+
+[Repository LocalGmailIMAP]
+type = IMAP
+remotehost = localhost
+port = 143
+remoteuser = xaiki
+nametrans = lambda foldername: \
+          re.sub('^Gmail\/', '', 
+          re.sub('\.', '/', foldername))
+folderfilter = lambda foldername: re.search ('Gmail', foldername)
+remotepasseval = get_authinfo_password("localhost", "xaiki", "imap")
+preauthtunnel = /usr/lib/dovecot/imap
+#idlefolders = ['INBOX']
+
 
 [Repository GMailRemote]
 type = Gmail
 remoteuser = 0xa1f00@gmail.com
 remotepasseval = get_authinfo_password("imap.gmail.com", "0xa1f00@gmail.com", "imap")
-cert_fingerprint = 6d1b5b5ee0180ab493b71d3b94534b5ab937d042
+cert_fingerprint = 89091347184d41768bfc0da9fad94bfe882dd358
 # remotepass = super_secret_password
 #holdconnectionopen = true
 #keepalive = 3600
-idlefolders = ['INBOX', 'minga', '[Gmail]/All Mail']
-nametrans = lambda foldername: re.sub('^', 'Gmail.', foldername)
-folderfilter = lambda foldername: re.search('INBOX', foldername)
+idlefolders = ['INBOX', 'xaiki@inaes/opcode']
+nametrans = lambda foldername: \
+          re.sub('^', 'Gmail.', \
+          re.sub('/', '.',      \
+          re.sub('.*Sent.*', 'Sent', foldername)))
+folderfilter = lambda foldername: \
+          re.search('INBOX|opcode|SoftwareLibre|Sent', foldername)
+
 #folderfilter = lambda foldername: re.search('INBOX|multix|Covetel', foldername)
 
 #Setting realdelete = yes will Really Delete email from the server.
 #Otherwise "deleting" a message will just remove any labels and
 #retain the message in the All Mail folder.
 realdelete = no
+postsynchook = notmuch new
 
 [Account UNQ]
-localrepository = LocalIMAP
+localrepository = LocalUNQIMAP
 remoterepository = UNQRemote
 autorefresh = 1
 
@@ -56,11 +78,13 @@ remotepasseval = get_authinfo_password ("imap.correo.unq.edu.ar", "niv.sardi@unq
 ssl = yes
 holdconnectionopen = true
 keepalive = 60
-nametrans = lambda foldername: re.sub('^', 'UNQ.', foldername)
+nametrans = lambda foldername: \
+          re.sub('^', 'UNQ.',  \
+          re.sub('/', '.', foldername))
 idlefolders = ['INBOX']
-folderfilter = lambda foldername: \
-          re.search('^UNQ', foldername)
-
+#folderfilter = lambda foldername: \
+#                                     re.search('Gmail', foldername)
+postsynchook = notmuch new
 
 [Account Croll]
 localrepository = LocalIMAP

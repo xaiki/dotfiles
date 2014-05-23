@@ -49,6 +49,14 @@ hook.addToHook('KeyBoardQuit', function (aEvent) {
 
 // ============================= Key bindings ============================== //
 
+key.setGlobalKey(['C-x', 'b'], function (ev) {
+                   ext.exec("tanything");
+}, "view all tabs", true);
+
+key.setGlobalKey('C-h', function (ev) {
+                   ext.exec("hok-start-continuous-mode");
+}, "hint a key, foreground", true);
+
 key.setGlobalKey('C-M-r', function (ev) {
     userscript.reload();
 }, 'Reload the initialization file', true);
@@ -333,14 +341,6 @@ key.setViewKey([["M-<"], ["g"]], function (ev) {
 key.setViewKey([["M->"], ["G"]], function (ev) {
     goDoCommand("cmd_scrollBottom");
 }, 'Scroll to the bottom of the page', true);
-
-key.setViewKey('l', function (ev) {
-    getBrowser().mTabContainer.advanceSelectedTab(1, true);
-}, 'Select next tab', false);
-
-key.setViewKey('h', function (ev) {
-    getBrowser().mTabContainer.advanceSelectedTab(-1, true);
-}, 'Select previous tab', false);
 
 key.setViewKey(':', function (ev, arg) {
     shell.input(null, arg);

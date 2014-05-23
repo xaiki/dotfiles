@@ -1,6 +1,8 @@
 Host *
 ControlMaster auto
 ControlPath ~/.ssh/master-%r@%h:%p
+Compression yes
+CompressionLevel 9
 
 Host *covetel.com.ve
 Port 14230

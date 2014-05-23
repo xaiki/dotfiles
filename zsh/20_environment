@@ -21,7 +21,7 @@ if which emacsclient.emacs-snapshot > /dev/null; then
 	export EMACS_FLAVOUR=.emacs-snapshot;
 fi
 
-export LANG=`echo $LANG | sed s/utf8/UTF8/`
+#export LANG=`echo $LANG | sed s/utf8/UTF8/`
 export CVS_RSH="ssh"
 export MANWIDTH=80
 export EDITOR="env TMPDIR=/tmp emacsclient${EMACS_FLAVOUR} -a nano"
@@ -35,7 +35,6 @@ export LC_MESSAGES=C
 export LC_ALL=
 
 export HOME=`readlink -f $HOME`
-
 
 if [[ "$TERM" == "dumb" ]]
 then
