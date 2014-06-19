@@ -110,7 +110,7 @@ _mad_prompt_setup() {
     local -A pc
 
     rst="%{$reset_color%}"
-    hostname | md5sum | sed s/./'& '/g | read a a a a f b a;
+    hostname | md5sum | sed s/./'& '/g | read a a f b a;
     c1=$(_xa1_num_to_color $f)
     c2=$(_xa1_num_to_color $b)
     pcc[1]="%{${1:-$fg_bold[$c1]}%}"
