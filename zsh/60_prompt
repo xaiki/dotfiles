@@ -68,29 +68,41 @@ precmd() {
     (( psvar[3]=${COLUMNS} - ${#${(%):-%v}} - 6 ))
 }
 
-_xa1_num_to_color() {
-    case "$1" in
-	    0|5)
-		    echo "red";
-		    ;;
-	    1|6)
-		    echo "green";
-		    ;;
-	    2|7)
-		    echo "cyan";
-		    ;;
-	    3|8)
-		    echo "yellow";
-		    ;;
-	    4|9)
-		    echo "magenta";
-		    ;;
-	    *)
-		    echo "pink";
-		    ;;
-    esac
+__xa1_ntc () {
+  case "$1" in
+    0)
+                   echo "red";
+                   ;;
+    1)
+                   echo "green";
+                   ;;
+    2)
+                   echo "cyan";
+                   ;;
+    3)
+                   echo "yellow";
+                   ;;
+    4)
+                   echo "magenta";
+                   ;;
+    5|*)
+                   echo "pink";
+                   ;;
+  esac
 }
 
+_xa1_num_to_color() {
+        c=$(printf "%d" "0x$1")
+  if [ `echotc Co` -eq 8 ]; then
+      if [ "$c" -lt 6 ]; then
+          print $(__xa1_ntc $c);
+      else
+          print $(__xa1_ntc $(($c%6)));
+      fi
+  else 
+          print $(__xa1_ntc $c);
+  fi
+}
 
 _mad_prompt_setup() {
     local rst
@@ -98,10 +110,9 @@ _mad_prompt_setup() {
     local -A pc
 
     rst="%{$reset_color%}"
-    a=$(hostname | tr a-z 0-9); echo $(($a/256)) | egrep -oe '..$' | sed s/./\&' '/g | while read f b; do
-	    c1=$(_xa1_num_to_color $f)
-	    c2=$(_xa1_num_to_color $b)
-    done;
+    hostname | md5sum | sed s/./'& '/g | read a a a a f b a;
+    c1=$(_xa1_num_to_color $f)
+    c2=$(_xa1_num_to_color $b)
     pcc[1]="%{${1:-$fg_bold[$c1]}%}"
     pcc[2]="%{${2:-$fg_no_bold[$c2]}%}"
 
