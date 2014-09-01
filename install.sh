@@ -3,7 +3,7 @@
 d=$PWD
 c=~/
 f=$@
-test -z $f && f=` $c/dotfiles | egrep -ve '(#|ssh|config)'`
+test -z $f && f=`ls $c/dotfiles | egrep -ve '(#|ssh|config)'`
 
 if echo $PWD | egrep 'dotfiles\/?$' > /dev/null; then
 	c=`echo $PWD | sed s/dotfiles//`
