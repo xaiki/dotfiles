@@ -1,4 +1,4 @@
-#!/bin/sh
+#! sh
 
 d=$PWD
 c=~/
@@ -11,7 +11,7 @@ fi
 cd ~/
 
 echo -n "Installing dotfiles:"
-for i in `echo $f | xargs -n1 | grep -ve 'config`; do
+for i in `echo $f | xargs -n1 | grep -ve 'config'`; do
     echo -n " $i"
     rm -rf .$i
     ln -sf $c/dotfiles/$i .$i
