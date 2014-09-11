@@ -4,7 +4,7 @@ IMAPAccount gmail
 # Address to connect to
 Host imap.gmail.com
 User 0xa1f00@gmail.com
-PassCmd "~/dotfiles/offlineimap-authinfo.py imap.gmail.com 0xa1f00@gmail.com imap"
+PassCmd "~/dotfiles/mail-scripts/oauth2-authinfo.py imap.gmail.com 0xa1f00@gmail.com imap"
 # Use SSL
 UseIMAPS yes
 # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
@@ -53,7 +53,7 @@ IMAPAccount unq
 # Address to connect to
 Host imap.correo.unq.edu.ar
 User niv.sardi@unq.edu.ar
-PassCmd "~/dotfiles/offlineimap-authinfo.py imap.correo.unq.edu.ar niv.sardi@unq.edu.ar imap"
+PassCmd "~/dotfiles/mail-scripts/authinfo.py imap.correo.unq.edu.ar niv.sardi@unq.edu.ar imap"
 # Use SSL
 UseIMAPS yes
 # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
