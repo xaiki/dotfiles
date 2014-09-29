@@ -24,7 +24,8 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 # Exclude everything under the internal [Gmail] folder, except the interesting folders
-Patterns INBOX "*Sent*" "[Google Mail]/Starred" "xaiki@inaes" "xaiki@inaes/opcode*" SoftwareLibreConCFK*q
+Patterns INBOX "*Sent*" "[Google Mail]/Starred"
+
 # Or include everything
 #Patterns *
 # Automatically create missing mailboxes, both locally and on the server
@@ -32,22 +33,37 @@ Create Slave
 # Save the synchronization state files in the relevant directory
 SyncState *
 
-# IMAPStore debian-remote
-# Account gmail
+IMAPStore gmail-folders-remote
+Account gmail
 
-# MaildirStore debian-local
-# # The trailing "/" is important
-# Path ~/Mail/Debian/
-# Inbox ~/Mail/Debian/INBOX
+Channel gmail-folders
+Master :gmail-folders-remote:
+Slave :gmail-local:
+# Exclude everything under the internal [Gmail] folder, except the interesting folders
+Patterns "xaiki@inaes" "xaiki@inaes/opcode*" SoftwareLibreConCFK*
+# Or include everything
+#Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Slave
+# Save the synchronization state files in the relevant directory
+SyncState *
 
-# Channel debian
-# Master :debian-remote:
-# Slave :debian-local:
-# Patterns "*debian*"
-# # Automatically create missing mailboxes, both locally and on the server
-# Create Slave
-# # Save the synchronization state files in the relevant directory
-# SyncState *
+IMAPStore debian-remote
+Account gmail
+
+MaildirStore debian-local
+# The trailing "/" is important
+Path ~/Mail/Debian/
+Inbox ~/Mail/Debian/INBOX
+
+Channel debian
+Master :debian-remote:
+Slave :debian-local:
+Patterns "*debian*"
+# Automatically create missing mailboxes, both locally and on the server
+Create Slave
+# Save the synchronization state files in the relevant directory
+SyncState *
 
 IMAPAccount unq
 # Address to connect to
