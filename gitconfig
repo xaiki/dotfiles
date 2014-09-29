@@ -16,8 +16,11 @@
 	p=!git push origin `git-symbolic-ref HEAD`
 	debtag=!git tag -f -a -s -m `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'` `git-symbolic-ref HEAD | sed -e 's~refs/heads/~~'`/`dpkg-parsechangelog | sed -n 's/^Version: \\(.*:\\)\\?//p'`
 	authors=shortlog -n -s -e
-	lol = log --graph --decorate --pretty=oneline --abbrev-commit
-	lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+        lg = log --pretty=format:'%C(yellow)%h%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+        whatsnew=!git remote update && git wd HEAD...origin/master
+        wd =!git lg -p --word-diff --ignore-all-space
+	lol =!git lg --graph
+	lola =!gitg lol --all
 [sendemail]
 	smtpencryption=tls
 	smtpuser=0xa1f00@gmail.com
