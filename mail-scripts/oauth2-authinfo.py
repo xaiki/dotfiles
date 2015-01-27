@@ -8,7 +8,7 @@ def get_token (machine, login, port=''):
     response =  RefreshToken(tokens[0], tokens[1], tokens[2])
     auth = GenerateOAuth2String (login, response['access_token'])
     import sys
-    sys.stderr.write('will auth: ' + auth + '\n');
+#    sys.stderr.write('will auth: ' + auth + '\n');
     return auth
 
 if __name__ == '__main__':
