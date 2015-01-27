@@ -97,3 +97,37 @@ Slave :unq-local:
 Create Both
 # Save the synchronization state files in the relevant directory
 SyncState *
+
+
+IMAPAccount pct
+# Address to connect to
+Host mail.its.pt
+User xaiki@its.pt
+PassCmd "~/dotfiles/mail-scripts/authinfo.py mail.its.pt xaiki@popcorntime.io imap"
+# Use SSL
+UseIMAPS yes
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+#CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
+#CertificateFile ~/dotfiles/pct.pem
+
+IMAPStore pct-remote
+Account pct
+
+MaildirStore pct-local
+# The trailing "/" is important
+Path ~/Mail/Popcorn/
+Inbox ~/Mail/Popcorn/INBOX
+
+Channel pct
+Master :pct-remote:
+Slave :pct-local:
+# Exclude everything under the internal [PCT] folder, except the interesting folders
+# Patterns "[PCT]/Sent Mail" "[PCT]/Starred" "[PCT]/All Mail" "xaiki@inaes*" SoftwareLibreConCFK*
+# Or include everything
+#Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
