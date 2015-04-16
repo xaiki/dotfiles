@@ -34,6 +34,8 @@ export GTK_IM_MODULE=xim
 export LC_MESSAGES=C
 export LC_ALL=
 
+export MOSH_TITLE_NOPREFIX=true
+
 export HOME=`readlink -f $HOME`
 
 if [[ "$TERM" == "dumb" ]]
