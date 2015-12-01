@@ -35,6 +35,7 @@ precmd() {
 
     psvar=()
     git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
+    export GIT_DIR=$git_dir
     if test -d "$git_dir/../.dotest"; then
         branch="$(git-symbolic-ref HEAD 2>/dev/null)"
         if test -f "$git_dir/../.dotest/rebasing"; then
@@ -135,7 +136,7 @@ if [ $UID -eq 0 ]; then
     PROMPT="$bgc%{$fg_bold[yellow]%}[%{$fg_bold[red]%}%n %m%{$fg_bold[yellow]%}]%{$reset_color%} "
     RPROMPT="$rst%{$fg_no_bold[red]%}(%{$fg_bold[red]%}%~%{$fg_no_bold[red]%})%{$reset_color%} "
 else
-    PATH="/usr/lib/ccache:${HOME}/bin:${HOME}/.local/bin:${PATH}"
+    PATH="./node_modules/.bin:/usr/lib/ccache:${HOME}/bin:${HOME}/.local/bin:${PATH}"
     _mad_prompt_setup
 fi
 

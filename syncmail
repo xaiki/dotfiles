@@ -1,0 +1,7 @@
+#!/bin/sh
+
+cd ~/Mail && git add * && git commit -asm "autocommit pre-sync `date`"
+rsync -avuzP --delete --exclude .git xaiki.net:Mail ~/
+rsync -avuzP --delete --exclude .git ~/Mail xaiki.net:
+cd ~/Mail && git add * && git commit -asm "autocommit post-sync `date`"
+
