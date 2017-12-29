@@ -7,9 +7,11 @@
 <Multi_key> <period> <minus>		: "…" U2026 # HORIZONTAL ELLIPSIS
 <Multi_key> <less> <3>			: "♥" U2665 # BLACK HEART SUIT
 <Multi_key> <P> <H>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
+<Multi_key> <p> <h>			: "𝝋" U1D74B # MATHEMATICAL BOLD ITALIC SMALL PHI
 <Multi_key> <space> <o>			: "★" U2605 # BLACK STAR
 <Multi_key> <space> <period>		: "☆" U2606 # WHITE STAR
-
+<Multi_key> <T> <M>	                : "™" U2122 # TRADE MARK SIGN
+<Multi_key> <t> <m>	                : "™" U2122 # TRADE MARK SIGN
 
 # Part 1 - Manual definitions
 

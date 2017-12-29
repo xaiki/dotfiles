@@ -35,7 +35,7 @@ precmd() {
 
     psvar=()
     git_dir=$(git rev-parse --git-dir 2> /dev/null) || return
-    export GIT_DIR=$git_dir
+#    export GIT_DIR=$git_dir
     if test -d "$git_dir/../.dotest"; then
         branch="$(git-symbolic-ref HEAD 2>/dev/null)"
         if test -f "$git_dir/../.dotest/rebasing"; then

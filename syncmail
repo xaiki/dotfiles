@@ -1,8 +1,8 @@
 #!/bin/sh
 
-ssh xaiki.net "cd Mail && git add . && git commit -sm 'autocommit pre-sync (remote) `date`'"
-cd ~/Mail && git add . && git commit -asm "autocommit pre-sync (local) `date`"
-cd ~/Mail && git pull --rebase
-cd ~/Mail && git push && ssh xaiki.net "cd Mail && git reset --hard && git clean -f"
-
-
+#ssh xaiki.net "cd Mail && git add . && git commit -sm 'autocommit pre-sync (remote) `date`'"
+#cd ~/Mail && git add . && git commit -asm "autocommit pre-sync (local) `date`"
+#cd ~/Mail && git pull --rebase --strategy-option="theirs"
+#cd ~/Mail && git push && ssh xaiki.net "cd Mail && git reset --hard && git clean"
+#mkdir -p ~/Mail/Trash/cur
+cd ~/ && rsync -avuzP --delete --exclude Debian --exclude Lists xaiki.net:Mail/ Mail

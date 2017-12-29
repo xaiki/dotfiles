@@ -46,6 +46,16 @@
 
 [url "ssh://git@github.com/xaiki/"]
      insteadof = gh:
+
+[url "ssh://git@github.com/endlessm/"]
+     insteadof = em:
+
+[url "ssh://git@xaiki.net/xaiki/"]
+     insteadof = x:
+
+[url "ssh://git@xaiki.net/"]
+     insteadof = xn:
+
 [push]
 	default = simple
 

@@ -37,6 +37,8 @@ alias md='mkdir'
 alias rd='rmdir'
 alias rm='rm -i'
 
+alias clbin="curl -F 'clbin=<-' 'https://clbin.com?<hl>'"
+
 e() {
     local TMP;
     if [[ "$1" == "-" ]]; then
