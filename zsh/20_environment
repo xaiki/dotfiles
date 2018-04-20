@@ -30,6 +30,7 @@ export CCACHE_DIR=$HOME/.ccache
 
 export RLWRAP_HOME=~/.cache/rlwrap/
 export GTK_IM_MODULE=xim
+export MOZ_USE_XINPUT2=1
 
 export LC_MESSAGES=C
 export LC_ALL=
