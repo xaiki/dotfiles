@@ -50,14 +50,25 @@
 [url "ssh://git@github.com/endlessm/"]
      insteadof = em:
 
-[url "ssh://git@xaiki.net/xaiki/"]
+[url "ssh://git@github.com/foradoeixo/"]
+     insteadof = fde:
+
+[url "ssh://gitolite3@xaiki.net/xaiki/"]
      insteadof = x:
 
-[url "ssh://git@xaiki.net/"]
+[url "ssh://gitolite3@xaiki.net/"]
      insteadof = xn:
+
+[url "ssh://git@gitlab.com/"]
+     insteadof = gitlab:
 
 [push]
 	default = simple
 
 [rerere]
         enabled = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
