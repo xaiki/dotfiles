@@ -1,0 +1,2 @@
+AUTO_DEBSIGN=${AUTO_DEBSIGN:-no}
+HOOKDIR=~/.pbuilder/hooks

@@ -1,0 +1,6 @@
+#!/bin/sh
+apt-get install -y apt-utils
+echo "deb [trusted=yes] file:///var/cache/pbuilder/deps ./" >> /etc/apt/sources.list
+echo "deb http://incoming.debian.org/debian-buildd buildd-unstable main" >> /etc/apt/sources.list
+(cd /var/cache/pbuilder/deps; apt-ftparchive packages . > Packages)
+apt-get update
