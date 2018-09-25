@@ -2,7 +2,7 @@
 
 IMAPAccount xaiki
 # Address to connect to
-Host xaiki.net
+Host rivera.rhack.net
 User x@btn.sh
 PassCmd "~/dotfiles/mail-scripts/authinfo.py xaiki.net x@btn.sh imaps"
 # Use SSL
@@ -11,7 +11,8 @@ SSLType STARTTLS
 #CertificateFile /etc/ssl/certs/ca-certificates.crt
 #CertificateFile ~/.cert/imap.gmail.com.pem
 #CertificateFile ~/.cert/Equifax_Secure_CA.pem
-CertificateFile ~/dotfiles/certs/xaiki.net.pem
+#CertificateFile ~/dotfiles/certs/xaiki.net.pem
+CertificateFile ~/dotfiles/certs/rivera.pem
 
 IMAPStore xaiki-remote
 Account xaiki
