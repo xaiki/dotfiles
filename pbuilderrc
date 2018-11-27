@@ -1,2 +1,6 @@
 AUTO_DEBSIGN=${AUTO_DEBSIGN:-no}
 HOOKDIR=~/.pbuilder/hooks
+#BUILDRESULT=/var/cache/pbuilder/result/
+APTCACHE=/var/cache/apt/archives
+#APTCACHEHARDLINK=yes
+BINDMOUNTS=../:/var/cache/pbuilder/deps
