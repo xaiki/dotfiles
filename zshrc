@@ -18,3 +18,9 @@ setopt extended_glob
 for zshrc_snipplet in ~/.zsh/[0-9][0-9][^.]#; do
     source $zshrc_snipplet
 done
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/xaiki/src/Butter/Components/butter-ninja/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/xaiki/src/Butter/Components/butter-ninja/node_modules/tabtab/.completions/electron-forge.zsh
+# added by travis gem
+[ -f /home/xaiki/.travis/travis.sh ] && source /home/xaiki/.travis/travis.sh
