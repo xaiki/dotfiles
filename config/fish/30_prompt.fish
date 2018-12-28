@@ -42,3 +42,16 @@ function fish_prompt
     printf '] '
   set_color normal
 end
+
+function fish_title
+    id -un
+    echo '@'
+    prompt_hostname
+    echo ':'
+    pwd
+    echo ' ' $argv
+end
+
+function fish_greeting
+    echo 'save the source, save the world'
+end
