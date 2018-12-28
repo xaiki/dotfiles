@@ -15,7 +15,6 @@ alias btgui "btdownloadgui --max_upload_rate 2 --responsefile"
 alias btnc "btdownloadcurses --max_upload_rate 2 --responsefil"
 alias btm "btlaunchmanycurses"
 
-alias ls "ls --color auto"
 alias la "ls --color always -a"
 alias ll "ls --color always -l"
 alias lla "ls --color always -la"
@@ -31,7 +30,9 @@ alias rm 'rm -i'
 
 alias clbin "curl -F 'clbin <-' 'https://clbin.com?<hl>'"
 
-alias e "emacsclient --alternate-editor \"emacs\" --no-wait \"$argv\" > /dev/null 2>&1 &"
+function e --description 'launch the best editor on the face of the earth'
+    command emacsclient --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
+end
 alias t "e -t"
 alias v "$VISUAL"
 
