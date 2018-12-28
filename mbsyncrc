@@ -2,7 +2,7 @@
 
 IMAPAccount xaiki
 # Address to connect to
-Host rivera.rhack.net
+Host xaiki.net
 User x@btn.sh
 PassCmd "~/dotfiles/mail-scripts/authinfo.py xaiki.net x@btn.sh imaps"
 # Use SSL
