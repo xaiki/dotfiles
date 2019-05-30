@@ -1,6 +1,15 @@
 #!/usr/bin/env fish
 
-test -f ~/.env and . ~/.env
+test -f ~/.env && . ~/.env
+
+set -gx PATH \
+"./node_modules/.bin" \
+"/usr/lib/ccache" \
+"$HOME/bin" \
+"$HOME/.local/bin" \
+"$HOME/.yarn/bin" \
+"$HOME/.cargo/bin" \
+$PATH
 
 set -gx EMAIL xaiki@evilgiggle.com
 set -gx FULLNAME Niv Sardi

@@ -20,9 +20,9 @@ alias ll "ls --color always -l"
 alias lla "ls --color always -la"
 alias lal "ls --color always -la"
 
-alias egrep 'egrep --color tty -d skip'
-alias fgrep 'fgrep --color tty -d skip'
-alias grep 'grep --color tty -d skip'
+alias egrep 'egrep --color'
+alias fgrep 'fgrep --color'
+alias grep 'grep --color'
 
 alias less 'less -R'
 

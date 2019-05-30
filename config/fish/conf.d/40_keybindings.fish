@@ -1,1 +1,1 @@
-bind \cr '__fzf_reverse_isearch'
+bind \cr __fzf_reverse_isearch
