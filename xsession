@@ -4,7 +4,8 @@ if test -z $XA1_LAUNCHED; then
 	export LANG=en_US.UTF-8
 	export XA1_WM="awesome"
 
-	ck-launch-session sh $0
+	io.elementary.terminal &
+
 	~/bin/pause
 	exit
 fi
@@ -19,6 +20,7 @@ gnome-power-manager &
 xset b off &
 
 $XA1_WM &
+
 
 for i in `grep OnlyShowIn=GNOME /etc/xdg/autostart/*.desktop | cut -d':' -f1 && ls .config/autostart/*.desktop | xargs -n1`; do
 	echo "$i";
