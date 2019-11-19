@@ -1,0 +1,98 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "top", // Waybar at the bottom of your screen
+    "height": 24, // Waybar height
+    // "width": 1366, // Waybar width
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["idle_inhibitor", "clock", "cpu", "memory", "custom/spotify"],
+    "modules-right": [ "network", "backlight", "pulseaudio", "battery", "tray"],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{icon}",
+        "format-icons": {
+            "1:web": "🌎",
+            "2:code": "",
+            "3:term": "",
+            "4:work": "",
+            "5:music": "",
+            "6:docs": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "tray": {
+        "icon-size": 15,
+        "spacing": 10
+    },
+    "clock": {
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip-format": "{cal}"
+    },
+    "cpu": {
+        "format": " {usage}%"
+    },
+    "memory": {
+        "format": " {}%"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "<b>{icon}</b> {capacity}%",
+        // "format-good": "", // An empty format will hide the module
+        // "format-full": "",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "interval": 1,
+        "on-click": "exec gnome-terminal --hide-menubar --geometry=80x24 -t nm-tui-window -e nmtui-connect",
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "🡇{bandwidthDownOctets}🡅{bandwidthUpOctets} {signalStrength}%<small>({essid})</small>",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr}  🡇{bandwidthDownBits}🡅{bandwidthUpBits}",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": "{ifname}"
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "🎧",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "backlight": {
+        "format": "{icon}{percent}%",
+        "format-icons": ["🌑", "🌒", "🌓", "🌔", "🌕"]
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "custom/spotify": {
+        "format": " {}",
+        "max-length": 40,
+        "interval": 30, // Remove this if your script is endless and write in loop
+        "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
+        "exec-if": "pgrep spotify"
+    }
+}
