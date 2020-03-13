@@ -43,7 +43,7 @@ else
 end
 
 function e --description 'launch the best editor on the face of the earth'
-    echo "$emacsclient --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &" | sh
+    command flatpak run --command="emacsclient" org.gnu.emacs --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
 end
 alias t "e -t"
 alias v "$VISUAL"
