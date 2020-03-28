@@ -30,8 +30,20 @@ alias rm 'rm -i'
 
 alias clbin "curl -F 'clbin <-' 'https://clbin.com?<hl>'"
 
+if which flatpak 2> /dev/null > /dev/null && flatpak list | grep org.gnu.emacs > /dev/null
+    set emacs 'flatpak run org.gnu.emacs'
+    set emacsclient 'flatpak run --command=emacsclient org.gnu.emacs'
+else
+    for e in emacs emacs-snapshot
+        if test -e /usr/bin/$e
+            set emacs /usr/bin/$e
+            set emacsclient /usr/bin/$e.emacsclient
+        end
+    end
+end
+
 function e --description 'launch the best editor on the face of the earth'
-    command emacsclient --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
+    echo "$emacsclient --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &" | sh
 end
 alias t "e -t"
 alias v "$VISUAL"
