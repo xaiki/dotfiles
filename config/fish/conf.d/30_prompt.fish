@@ -7,6 +7,19 @@ set red (set_color red)
 set gray (set_color -o black)
 set bcyan (set_color -o cyan)
 
+set main_color "red"
+set seg_color "brmagenta"
+
+if test -e "$TOOLBOX_PATH"
+    if test "$LANG" = "C.UTF-8"
+        set toolbox "📦"
+        set main_color green
+    else
+        set -x LANG C.UTF-8
+        fish; exit
+    end
+end
+
 # Fish git prompt
 set __fish_git_prompt_showdirtystate 'yes'
 set __fish_git_prompt_showstashstate 'yes'
@@ -29,18 +42,18 @@ set fish_prompt_pwd_dir_length 32
 
 function fish_prompt
     set last_status $status
-    set_color red
+    set_color $main_color
     printf '┌['
     set_color -o brmagenta
     printf (prompt_pwd)
     set_color -o yellow
     printf '%s' (__fish_git_prompt "%s")
-    set_color red
-    printf ']\n└['
+    set_color $main_color
+    printf ']\n└[%s' $toolbox
     printf (prompt_hostname)
-    set_color red
+    set_color $main_color
     printf '] '
-  set_color normal
+    set_color normal
 end
 
 function fish_title

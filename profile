@@ -6,3 +6,4 @@ export XDG_DATA_DIRS="$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/xaiki/
 
 # include Mycroft commands
 source ~/.profile_mycroft
+test -e "$TOOLBOX_PATH" && export LANG="C.UTF-8"
