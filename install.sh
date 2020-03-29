@@ -1,35 +1,61 @@
 #! sh
+set -e
 
-d=$PWD
-c=~/
+d=`realpath $0 | sed s/'\/install.sh$'//`
+home=$HOME 
+s="config fonts"
+n="bin ssh mail-scripts elisp Pods"
+sr=`echo $s | sed s/' '/'|'/g`
+nr=`echo $n | sed s/' '/'|'/g`
 f=$@
-test -z $f && f=`ls $c/dotfiles | egrep -ve '(#|ssh|config)'`
+test -z $f && f=`ls ${d} | egrep -ve '(#|$nr)'`
 
-if echo $PWD | egrep 'dotfiles\/?$' > /dev/null; then
-	c=`echo $PWD | sed s/dotfiles//`
-fi
-cd ~/
+cd ${home}
 
 echo -n "Installing dotfiles:"
-for i in `echo $f | xargs -n1 | grep -ve 'config'`; do
+for i in `echo $f | xargs -n1 | egrep -ve "^($sr|$nr)$"`; do
     echo -n " $i"
     rm -rf .$i
-    ln -sf $c/dotfiles/$i .$i
+    ln -sf ${d}/$i .$i
 done
 echo "."
 
-if echo $f | grep config > /dev/null; then
-   echo -n "config:"
-   mkdir -p ~/.config
-   for i in `ls $c/dotfiles/config/`; do
-           echo -n " $i"
-           rm -rf .config/$i
-           ln -sf $c/dotfiles/config/$i $c.config/$i
-   done
-   echo "."
-   cd $d
+for e in $s; do
+        if echo $f | grep $e > /dev/null; then
+                echo -n "$e:"
+                mkdir -p ${home}/.$e
+                for i in `ls ${d}/$e/`; do
+                        echo -n " $i"
+                        rm -rf .$e/$i
+                        ln -sf ${d}/$e/$i ${home}/.$e/$i || true
+                done
+                echo "."
+                cd $d
+        fi
+done
+
+e=bin
+mkdir -p ${home}/.local
+if echo $f | grep $e  > /dev/null; then
+        echo -n "$e:"
+        mkdir -p ${home}/.local/$e
+        for i in `ls ${d}/$e/`; do
+                x=`echo $i | sed s/'\.sh$'//`
+                echo -n " $i"
+                rm -rf ${home}/.local/$e/$x
+                ln -sf ${d}/$e/$i ${home}/.local/$e/$x || true
+        done
+        echo "."
+        cd $d
 fi
 
-mkdir -p ~/.zsh_cache
+e=Pods
+if echo $f | grep $e > /dev/null; then
+        mkdir -p ~/.zsh_cache
+        for i in `ls ${d}/$e/`; do
+                echo "$e: $i"
 
+                (cd ${d}/${e}/${i} && podman build -t $i .)
+        done
+fi
 #cp $d/.id_rsa.pub ~/.ssh/authorized_key
