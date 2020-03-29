@@ -8,7 +8,7 @@ pdftk_container=mnuessler/pdftk
 
 
 filename=`realpath ${1}`
-pw=`podman run apg_container -n1`
+pw=`podman run ${apg_container} -n1`
 realname=`echo ${1} | sed s/.org$//`
 realfullname=`echo ${filename} | sed s/.org$//`
 basename=`basename ${realfullname}`
