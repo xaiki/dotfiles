@@ -7,6 +7,8 @@ set -gx PATH \
 "/usr/lib/ccache" \
 "$HOME/bin" \
 "$HOME/.local/bin" \
+"$HOME/.local/bin/flatpak" \
+"$HOME/.local/bin/podman" \
 "$HOME/.yarn/bin" \
 "$HOME/.cargo/bin" \
 $PATH
@@ -29,6 +31,7 @@ set -gx DEBFULLNAME $FULLNAME
 #set -gx LANG `echo $LANG | sed s/utf8/UTF8/`
 set -gx CVS_RSH ssh
 set -gx MANWIDTH 80
+
 set -gx CCACHE_DIR $HOME/.ccache
 
 set -gx RLWRAP_HOME ~/.cache/rlwrap/
