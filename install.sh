@@ -37,13 +37,17 @@ done
 e=bin
 mkdir -p ${home}/.local
 if echo $f | grep $e  > /dev/null; then
-        echo -n "$e:"
-        mkdir -p ${home}/.local/$e
+        p=${home}/.local/$e
+        echo -n "$e -> $p:"
+        mkdir -p $p
         for i in `ls ${d}/$e/`; do
+                b=${d}/${e}/${i}
+                chmod +x ${b}
                 x=`echo $i | sed s/'\.sh$'//`
                 echo -n " $i"
+
                 rm -rf ${home}/.local/$e/$x
-                ln -sf ${d}/$e/$i ${home}/.local/$e/$x || true
+                ln -sf ${b} $p/$x || true
         done
         echo "."
         cd $d
@@ -58,4 +62,11 @@ if echo $f | grep $e > /dev/null; then
                 (cd ${d}/${e}/${i} && podman build -t $i .)
         done
 fi
+
+echo "Making hackish scripts to launch pods"
+sh ${d}/bin/podman-to-bin.sh
+
+echo "Making hackish scripts to launch flatpaks"
+sh ${d}/bin/flatpak-to-bin.sh
+
 #cp $d/.id_rsa.pub ~/.ssh/authorized_key
