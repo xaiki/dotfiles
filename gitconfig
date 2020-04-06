@@ -24,9 +24,9 @@
         prstash = "!f() { git fetch $1 refs/pull-requests/$2/from:$3; } ; f"
 [sendemail]
 	smtpencryption=tls
-	smtpuser=0xa1f00@gmail.com
-	smtpserver=smtp.gmail.com
-	smtpport=587
+	smtpuser=x@btn.sh
+	smtpserver=xaiki.net
+	smtpport=25
 [color]
 	branch=auto
 	diff=auto
