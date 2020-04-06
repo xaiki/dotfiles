@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  nominatim:
+    image: peterevans/nominatim
+    env:
+      - NOMINATIM_PBF_URL=https://download.geofabrik.de/south-america/argentina-latest.osm.pbf
+    volumes:
+      - ./data/nominatim:/srv/nominatim/data:z
+    ports:
+      - "8000:8080"
+    cmd:
+  jupyter:
+    image: jupyter/scipy-notebook
+    env:
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      - ./data/jupyter:/home/jovyan/work
+    ports:
+      - "8888:8888"
+      - "4040:4040"
