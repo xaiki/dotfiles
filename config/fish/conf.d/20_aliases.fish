@@ -45,6 +45,10 @@ end
 function e --description 'launch the best editor on the face of the earth'
     command flatpak run --command="emacsclient" org.gnu.emacs --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
 end
+
+set -gx EDITOR env TMPDIR=/tmp $emacsclient -a nano
+set -gx VISUAL env TMPDIR=/tmp $emacsclient -a nano
+
 alias t "e -t"
 alias v "$VISUAL"
 

@@ -29,8 +29,6 @@ set -gx DEBFULLNAME $FULLNAME
 #set -gx LANG `echo $LANG | sed s/utf8/UTF8/`
 set -gx CVS_RSH ssh
 set -gx MANWIDTH 80
-set -gx EDITOR env TMPDIR=/tmp emacsclient -a nano
-set -gx VISUAL env TMPDIR=/tmp emacsclient -a nano
 set -gx CCACHE_DIR $HOME/.ccache
 
 set -gx RLWRAP_HOME ~/.cache/rlwrap/
