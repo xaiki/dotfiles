@@ -55,11 +55,12 @@ fi
 
 e=Pods
 if echo $f | grep $e > /dev/null; then
-        mkdir -p ~/.zsh_cache
-        for i in `ls ${d}/$e/`; do
-                echo "$e: $i"
+            mkdir -p ~/.zsh_cache
+            find ${d}/${e}/ -mindepth 1 -maxdepth 1 -type d | while read pd; do
+                        i=`basename $pd`
+                        echo "$e: $pd"
 
-                (cd ${d}/${e}/${i} && podman build -t $i .)
+                        (cd ${pd} && podman build -t $i .)
         done
 fi
 
