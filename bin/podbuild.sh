@@ -2,13 +2,14 @@
 set -e
 set -x
 
+apg=`which apg || podman run apg`
 apg_container=apg
 xelatex_container=xelatex
 pdftk_container=mnuessler/pdftk
 
 
 filename=`realpath ${1}`
-pw=`podman run ${apg_container} -n1`
+pw=`${apg} -n1`
 realname=`echo ${1} | sed s/.org$//`
 realfullname=`echo ${filename} | sed s/.org$//`
 basename=`basename ${realfullname}`
