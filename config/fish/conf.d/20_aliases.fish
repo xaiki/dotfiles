@@ -37,17 +37,17 @@ else
     for e in emacs emacs-snapshot
         if test -e /usr/bin/$e
             set emacs /usr/bin/$e
-            set emacsclient /usr/bin/$e.emacsclient
+            set emacsclient /usr/bin/emacsclient.$e
         end
     end
 end
 
-function e --description 'launch the best editor on the face of the earth'
-    command flatpak run --command="emacsclient" org.gnu.emacs --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
-end
-
 set -gx EDITOR env TMPDIR=/tmp $emacsclient -a nano
 set -gx VISUAL env TMPDIR=/tmp $emacsclient -a nano
+
+function e --description 'launch the best editor on the face of the earth'
+    command $emacsclient --alternate-editor emacs --no-wait $argv > /dev/null 2>&1 &
+end
 
 alias t "e -t"
 alias v "$VISUAL"
