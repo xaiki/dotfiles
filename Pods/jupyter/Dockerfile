@@ -1,4 +1,3 @@
-MAINTAINER Niv Sardi <x@btn.sh>
 FROM jupyter/datascience-notebook
 RUN pip install ipywidgets
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
