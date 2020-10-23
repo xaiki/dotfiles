@@ -15,10 +15,13 @@ alias btgui "btdownloadgui --max_upload_rate 2 --responsefile"
 alias btnc "btdownloadcurses --max_upload_rate 2 --responsefil"
 alias btm "btlaunchmanycurses"
 
-alias la "ls --color always -a"
-alias ll "ls --color always -l"
-alias lla "ls --color always -la"
-alias lal "ls --color always -la"
+alias ls "exa"
+alias la "exa --color always -a"
+alias ll "exa --color always -l"
+alias lla "exa --color always -la"
+alias lal "exa --color always -la"
+
+alias ip "ip -c=auto"
 
 alias egrep 'egrep --color'
 alias fgrep 'fgrep --color'
