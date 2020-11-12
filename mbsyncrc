@@ -2,9 +2,9 @@
 
 IMAPAccount xaiki
 # Address to connect to
-Host xaiki.net
+Host mail.xaiki.net
 User x@btn.sh
-PassCmd "~/dotfiles/mail-scripts/authinfo.py xaiki.net x@btn.sh imaps"
+PassCmd "~/dotfiles/mail-scripts/authinfo.py mail.xaiki.net x@btn.sh imaps"
 # Use SSL
 SSLType STARTTLS
 # The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
