@@ -43,4 +43,5 @@ set -gx LC_ALL
 
 set -gx MOSH_TITLE_NOPREFIX true
 
-set -gx HOME (readlink -f $HOME)
+
+#set -gx HOME (readlink -f $HOME)
