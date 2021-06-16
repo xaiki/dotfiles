@@ -34,8 +34,8 @@ alias rm 'rm -i'
 alias clbin "curl -F 'clbin <-' 'https://clbin.com?<hl>'"
 
 if which flatpak 2> /dev/null > /dev/null && flatpak list | grep org.gnu.emacs > /dev/null
-    set emacs 'flatpak run org.gnu.emacs'
-    set emacsclient 'flatpak run --command=emacsclient org.gnu.emacs'
+    set emacs flatpak run org.gnu.emacs
+    set emacsclient flatpak run --command=emacsclient org.gnu.emacs
 else
     for e in emacs emacs-snapshot
         if test -e /usr/bin/$e
