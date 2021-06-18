@@ -11,15 +11,29 @@ end
 alias du "du -hcs"
 alias df "df -h"
 
-alias btgui "btdownloadgui --max_upload_rate 2 --responsefile"
-alias btnc "btdownloadcurses --max_upload_rate 2 --responsefil"
-alias btm "btlaunchmanycurses"
-
-alias ls "exa"
-alias la "exa --color always -a"
-alias ll "exa --color always -l"
-alias lla "exa --color always -la"
-alias lal "exa --color always -la"
+if command -v exa > /dev/null
+    alias ls "exa"
+    alias lstree "exa --long --tree"
+end
+if command -v lsd > /dev/null
+    alias ls "lsd"
+end
+if command -v bat > /dev/null
+    alias cat "bat"
+    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+    function tail --description 'uses bat with tail'
+        command /usr/bin/tail $argv | bat --paging=never -l log
+    end
+end
+if command -v delta > /dev/null
+    set -gx GIT_PAGER delta
+end
+if command -v dust > /dev/null
+    alias du "dust"
+end
+if command -v duf > /dev/null
+    alias df "duf"
+end
 
 alias ip "ip -c=auto"
 
@@ -33,7 +47,7 @@ alias rm 'rm -i'
 
 alias clbin "curl -F 'clbin <-' 'https://clbin.com?<hl>'"
 
-if which flatpak 2> /dev/null > /dev/null && flatpak list | grep org.gnu.emacs > /dev/null
+if command -v flatpak 2> /dev/null > /dev/null && flatpak list | grep org.gnu.emacs > /dev/null
     set emacs flatpak run org.gnu.emacs
     set emacsclient flatpak run --command=emacsclient org.gnu.emacs
 else

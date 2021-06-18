@@ -72,3 +72,11 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[diff]
+    colorMoved = default
+
+[delta]
+    features = unobtrusive-line-numbers decorations diff-highlight
+    line-numbers = true
+    zero-style = dim syntax
