@@ -48,24 +48,27 @@ $gcloud\
 $openstack\
 $crystal\
 $custom\
-$cmd_duration\
 $lua\
 $jobs\
 $time\
-$status\
 $shell\
 [\\]](bold red)
-[└\\[](bold red)$hostname$env_var[\\]](bold red)$character
+[└\\[](bold red)$hostname$env_var[\\]](bold red)$status$character
 """
-
-[nodejs]
-detect_extensions = []
-
 [cmd_duration]
 min_time = 500
 format = "[$duration](bold yellow)\n"
 show_milliseconds = true
-show_notifications = true
+
+[package]
+format = " [$symbol$version]($style)"
+symbol = " "
+
+[nodejs]
+detect_extensions = []
+
+[cmake]
+format = "[($symbol$version)]($style)"
 
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style)"
@@ -84,21 +87,29 @@ disabled = false
 threshold = 50
 style = "bold red"
 
+[status]
+style = "bg:blue"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
 [character]
-success_symbol = "[➜](bold green)"
+success_symbol = "[](bold green)"
 error_symbol = "[✗](bold red)"
 
 [git_branch]
-format = "[:](yellow)[$symbol$branch]($style) "
+format = "[:](bold yellow)[$symbol$branch]($style)"
 symbol = " "
 
 [git_status]
+format = '( [$all_status$ahead_behind]($style))'
+style = 'bold yellow'
 conflicted = "🏳"
 # untracked = "🤷‍"
 stashed = "📦"
 staged = '[++\($count\)](green)'
 deleted = "🗑"
-format = '([$all_status$ahead_behind]($style))'
 ahead = "⇡${count}"
 diverged = "😵⇕⇡${ahead_count}⇣${behind_count}"
 behind = "⇣${count}"
