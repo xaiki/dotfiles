@@ -1,7 +1,5 @@
 #!/usr/bin/env fish
 
-alias vlc 'G_SLICE always-malloc vlc'
-
 #alias su 'export XAUTHORITY ${HOME}/.Xauthority ; sudo -s'
 function sudo --description 'sudo wrapper'
     set -gx XAUTHORITY {$HOME}/.Xauthority
