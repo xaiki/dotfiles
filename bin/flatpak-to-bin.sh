@@ -2,7 +2,7 @@
 bin_path=~/.local/bin/flatpak
 mkdir -p ${bin_path}
 
-flatpak list --columns=ref,active | egrep -ve '.(Platform|PlatformTheme|WaylandDecoration|Locale|KStyle|Gtk3theme).'| egrep -ve '.(Platform|Sdk)' | while read r c; do
+flatpak list --app --columns=ref,active | while read r c; do
         echo $r;
         ostree ls $c --repo /var/lib/flatpak/repo/ files/bin | grep -ve '/files/bin$' | grep -ve '^l' | sed s/' \/files\/bin\/'/'#'/g | cut -d'#' -f2 | while read c; do
                 cat<<EOF > ${bin_path}/$c
