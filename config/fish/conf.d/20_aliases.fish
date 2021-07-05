@@ -18,7 +18,7 @@ if command -v lsd > /dev/null
 end
 if command -v bat > /dev/null
     alias cat "bat"
-    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p'"
+    set -gx MANPAGER "sh -c 'col -bx | bat -l man -p --paging=auto'"
     function tail --description 'uses bat with tail'
         command /usr/bin/tail $argv | bat --paging=never -l log
     end

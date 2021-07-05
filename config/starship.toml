@@ -1,9 +1,11 @@
 format = """
-$cmd_duration[┌\\[](bold red)[$username\
+$status\
+$cmd_duration[┌\\[](bold red)[\
+$battery\
+$username\
 $shlvl\
 $kubernetes\
 $directory](magenta)\
-$battery\
 $vcsh\
 $git_branch\
 $git_commit\
@@ -49,11 +51,9 @@ $openstack\
 $crystal\
 $custom\
 $lua\
-$jobs\
 $time\
-$shell\
 [\\]](bold red)
-[└\\[](bold red)$hostname$env_var[\\]](bold red)$status$character
+[└\\[](bold red)$jobs$hostname$shell$env_var[\\]](bold red)$character
 """
 [cmd_duration]
 min_time = 500
@@ -65,6 +65,9 @@ format = " [$symbol$version]($style)"
 symbol = " "
 
 [nodejs]
+detect_extensions = []
+
+[python]
 detect_extensions = []
 
 [cmake]
@@ -85,12 +88,17 @@ disabled = false
 
 [[battery.display]]
 threshold = 50
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 10
 style = "bold red"
+
 
 [status]
 style = "bg:blue"
 symbol = "🔴"
-format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+format = "[\\[$symbol $common_meaning$signal_name$maybe_int\\]]($style)\n"
 map_symbol = true
 disabled = false
 
