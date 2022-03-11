@@ -4,7 +4,7 @@ set -x
 
 apg=`which apg || podman run apg`
 apg_container=apg
-xelatex_container=xelatex
+xelatex_container=moss/xelatex
 pdftk_container=mnuessler/pdftk
 
 
