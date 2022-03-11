@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 set themes_length (cat ~/.config/fish/themes.json | sed s/"}"/"\n"/g | sed s/".{"//g | grep -e '"name"' | wc -l)
-set theme_id (math (printf "%d" 0x(hostname | shasum | cut -c1-6))%$themes_length)
+set theme_id (math (printf "%d" 0x(hostname | sha1sum | cut -c1-6))%$themes_length)
 
 set colors (string split ' ' (cat ~/.config/fish/themes.json | sed s/"}"/"\n"/g | sed s/".{"//g | grep -e '"name"' | head -$theme_id | tail -1 | sed s/'"#'/"\n"/g | cut -c1-6 | grep -ve '"' | xargs))
 
@@ -11,7 +11,7 @@ set magenta $colors[6]
 set blue $colors[5]
 set yellow $colors[4]
 set green $colors[3]
-set red $colors[2]
+set red $colors[2]1
 set gray $colors[1]
 set bcyan $colors[6]
 

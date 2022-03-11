@@ -42,6 +42,6 @@ set -gx LC_MESSAGES C
 set -gx LC_ALL 
 
 set -gx MOSH_TITLE_NOPREFIX true
-
+set -gx XDG_DATA_DIRS "$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:/home/xaiki/.local/share/flatpak/exports/share"
 
 #set -gx HOME (readlink -f $HOME)
