@@ -11,7 +11,7 @@ set magenta $colors[6]
 set blue $colors[5]
 set yellow $colors[4]
 set green $colors[3]
-set red $colors[2]1
+set red $colors[2]
 set gray $colors[1]
 set bcyan $colors[6]
 
